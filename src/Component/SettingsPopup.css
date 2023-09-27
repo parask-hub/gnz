@@ -22,7 +22,6 @@
     margin-top: auto;
 }
 
-*/
 /* most updated css for popup */
 
 
@@ -74,8 +73,7 @@
 
 .settings-popup-section .settings-popup-toggle,
 .settings-popup-delete {
-    margin-left: 10px;
-    /* padding: 8px 16px; */
+    margin-left: 10;
     font-size: 14px;
     font-weight: bold;
     border: none;
@@ -122,7 +120,6 @@
     color: #000000;
 }
 
-/* Styling for the blur background */
 .blur-background {
 
     position: fixed;
@@ -198,7 +195,6 @@ input:checked+.slider:before {
     transform: translateX(30px);
 }
 
-/* Additional styles for the appearance of the toggle switch */
 .slider:before {
     content: "";
     position: absolute;
@@ -218,8 +214,6 @@ input:checked+.slider:before {
 }
 
 .slider:after {
-    content: "";
-    /* position: absolute; */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
