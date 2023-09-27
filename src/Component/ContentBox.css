@@ -1,0 +1,17 @@
+.box{
+    background-color: #ecf5d8;
+    margin:10px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 25%;
+    min-width: 100px;
+}
+
+.descrption{
+    color: #313131d6;
+    font-size: 16px;
+}
+
+.title{
+    font-size: 1px;
+}

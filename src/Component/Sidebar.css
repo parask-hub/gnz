@@ -1,0 +1,78 @@
+.SidebarList .row {
+    width: 100%;
+    height: 60px;
+    list-style-type: none;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    position: relative;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.SidebarList .row:hover {
+    cursor: pointer;
+    background-color: #cdd5dde2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+
+}
+
+.SidebarList .row.active,
+.SidebarList .row:focus {
+    background-color: #293846;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.row #icon {
+    flex: 30%;
+    display: grid;
+    place-items: center;
+    margin-left: 10px;
+}
+
+.row #title {
+    flex: 70%;
+    margin-left: 10px;
+}
+
+.Sidebar {
+    height: 90vh;
+    width: 250px;
+    background-color: #ecf5d8;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.SidebarList .row {
+    padding-left: 20px;
+    color: #0f0500;
+}
+
+.SidebarList {
+    height: auto;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 20px;
+}
+
+.SidebarList:last-child {
+    margin-top: auto;
+}
+
+.sidebar-text {
+    margin-left: 10px;
+    letter-spacing: 0.7px;
+    font-weight: 600;
+
+}
+
+.SidebarList .row #title {
+    margin-left: 10px;
+}

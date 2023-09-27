@@ -1,0 +1,60 @@
+.logo {
+    padding-left: 20px;
+    color: #0f0500;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    margin-right: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 7px rgb(155, 186, 230);
+}
+
+.user-icon,
+.notification-icon {
+    border-radius: 50%;
+    width: 40px;
+}
+
+
+.right {
+    width: 6%;
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.Navbar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ecf5d8;
+    height: 10vh;
+    width: 100%;
+    padding: 1 10px;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    
+}
+
+.Navbar ul {
+    align-items: center;
+    /* display: flex; */
+    list-style: none;
+    justify-content: space-between;
+}
+
+.right {
+    width: 10%;
+}
+
+.right .profile-icon {
+    border-radius: 50%;
+    width: 35px;
+    border: 2px solid rgb(65, 190, 228);
+}
