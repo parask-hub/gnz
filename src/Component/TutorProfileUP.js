@@ -1,97 +1,156 @@
 import React from "react";
-import "./UserProfile.css";
+import { useParams } from "react-router-dom";
+import "./TutorProfileUP.css";
 
-function UserProfile() {
+import tutorProfiles from "./TutorData";
+
+function TutorProfileUP() {
+  const { tutorId } = useParams();
+  const tutorProfile = tutorProfiles.find(
+    (profile) => profile.id === parseInt(tutorId)
+  );
+
+  const handleCopyLink = () => {
+    const tutorProfileLink = `${window.location.origin}/tutor-profile/${tutorProfile.id}`;
+    navigator.clipboard
+      .writeText(tutorProfileLink)
+      .then(() => alert("Link copied to clipboard"))
+      .catch((error) => console.error("Unable to copy to clipboard", error));
+  };
+
+  if (!tutorProfile) {
+    return <div>Tutor not found</div>;
+  }
+
   return (
-    <>
-      <div className="text">
-        <h2>Nishan Jindal</h2>
-        <p>Your Personal English Tutor</p>
+    <div>
+      <div
+        style={{
+          padding: "10px",
+          background: "rgb(239, 244, 244)",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <p className="logo">
+          <img
+            src="https://png.pngtree.com/element_our/sm/20180518/sm_5afec7f1592f4.jpg"
+            width="40px"
+            alt="logo"
+          />{" "}
+          <span>
+            <h1>GenZ</h1>
+          </span>
+          <span style={{ marginLeft: "20px", fontSize: "18px" }}>
+            <p>Tutor Profile</p>
+          </span>
+        </p>
       </div>
-      <hr />
-      <div className="Pg">
-        <div className="userleftportion">
-          <div className="userprofileBox">
-            <div className="Image">
-              <img
-                style={{
-                  height: "200px",
-                  width: "200px",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
-                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
-                alt=""
-              />
-            </div>
-            <div>
-              <button>Chat Now</button>
-            </div>
-            <div className="cardbody">
-              <div>
-                <div className="profileattributes">
-                  <span>
-                    <b>Interest : </b>
-                  </span>
-                  <span>MyBio</span>
-                </div>
-                <div className="profileattributes">
-                  <span>
-                    <b>Rate Per Call : </b>
-                  </span>
-                  <span>MyBio</span>
-                </div>
-                <div className="profileattributes">
-                  <span>
-                    <b>Voice / Video Call : </b>
-                  </span>
-                  <span>Both</span>
-                </div>
-                <div className="profileattributes">
-                  <span>
-                    <b>Sessions Attended : </b>
-                  </span>
-                  <span>MyBio</span>
-                </div>
-                <div className="profileattributes">
-                  <span>
-                    <b>Ratings : </b>
-                  </span>
-                  <span>0</span>
+
+      <div
+        className="con"
+        style={{
+          background: "#cdd2d5",
+          width: "80vw",
+          margin: "auto",
+          overflowY: "scroll",
+        }}
+      >
+        <div className="text">
+          <h2>{tutorProfile.name}</h2>
+          <p>{tutorProfile.description}</p>
+          <div>
+            <span
+              onClick={handleCopyLink}
+              style={{ color: "blue", cursor: "pointer" }}
+            >
+              {" "}
+              share Profile
+            </span>
+          </div>
+        </div>
+        <hr />
+        <div className="Pg">
+          <div className="userleftportion">
+            <div className="userprofileBox">
+              <div className="Image">
+                <img
+                  style={{
+                    height: "200px",
+                    width: "200px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                  src={tutorProfile.image}
+                  alt={tutorProfile.name}
+                />
+              </div>
+              <div className="chatbtn">
+                <button>Chat Now</button>
+              </div>
+              <div className="cardbody">
+                <div>
+                  <div className="profileattributes">
+                    <span>
+                      <b>Interest : </b>
+                      <br />
+                    </span>
+                    <span>{tutorProfile.description}</span>
+                  </div>
+                  <div className="profileattributes">
+                    <span>
+                      <b>Rate Per Call : </b>
+                    </span>
+                    <span>{tutorProfile.hourlyRate}</span>
+                  </div>
+                  <div className="profileattributes">
+                    <span>
+                      <b>Voice / Video Call : </b>
+                    </span>
+                    <span>Both</span>
+                  </div>
+                  <div className="profileattributes">
+                    <span>
+                      <b>Sessions Attended : </b>
+                    </span>
+                    <span>10</span>
+                  </div>
+                  <div className="profileattributes">
+                    <span>
+                      <b>Ratings : </b>
+                    </span>
+                    <span>8</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="userrightportion">
-          <div className="block">
-            <h3>About The Instructor</h3>
-            <hr />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Voluptatum nobis repellat laudantium assumenda at suscipit aut
-              doloremque modi debitis sequi!
-            </p>
-          </div>
-          <div className="block">
-            <h3>Feedbacks Recieved</h3>
-            <hr />
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Assumenda aut porro, magni rerum distinctio maxime.
-            </p>
-          </div>
-          <div className="block">
-            <h3>Book Session</h3>
-            <hr />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
-            voluptatem atque eveniet eos vitae magnam officia quidem quo
-            cupiditate deleniti?
+          <div className="userrightportion">
+            <div className="block">
+              <h3>About The Instructor</h3>
+              <hr />
+              <p>{tutorProfile.description}</p>
+            </div>
+            <div className="block">
+              <h3>Feedbacks Received</h3>
+              <hr />
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Expedita iusto quis maiores tempora nobis laborum, praesentium
+                dolorem laboriosam quaerat quam.
+              </p>
+            </div>
+            <div className="block">
+              <h3>Book Session</h3>
+              <hr />
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione,
+              eum!
+            </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
-export default UserProfile;
+export default TutorProfileUP;

@@ -16,7 +16,7 @@
 .userprofileBox{
     padding: 10px; 
     text-align: center;
-    width: 300px;
+    width: 100%;
     /* align-items: center; */
     display: flex;
     flex-direction: column;
@@ -41,9 +41,7 @@
     margin: 10px;
     width: 80%;
     text-align: left;
-    display: flex;
-    justify-content: space-between;
-    
+      
 }
 
 .block{
@@ -53,4 +51,21 @@
     margin-top: 0px;
     border-radius: 15px;
     height:100px;
+}
+
+.chatbtn button{
+    background: rgb(23, 91, 0);
+    background: linear-gradient(90deg, rgba(23, 91, 0, 1) 0%, rgba(101, 213, 0, 1) 12%, rgba(9, 69, 0, 1) 96%);
+    color: antiquewhite;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+}
+.chatbtn button :hover{
+    /* background-color: rgb(23, 91, 0); */
+    background-color: violet;
+    transition: 0.1s;
 }

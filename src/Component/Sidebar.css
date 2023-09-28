@@ -10,7 +10,7 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.SidebarList .row:hover {
+.SidebarList .row:hover , .row.active {
     cursor: pointer;
     background-color: #cdd5dde2;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -18,12 +18,12 @@
 
 }
 
-.SidebarList .row.active,
+/* .SidebarList .row.active,
 .SidebarList .row:focus {
     background-color: #293846;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     z-index: 1;
-}
+} */
 
 .row #icon {
     flex: 30%;

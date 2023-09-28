@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Home.css";
-
 import Sidebar from "./Sidebar";
-import ProfilePopup from "./ProfilePopUp";
 import Navbar from "./Navbar";
 import SettingsPopup from "./SettingsPopup";
-import Select from "react-select";
-import Landing from "./Landing";
-import makeAnimated from "react-select/animated";
 import Footer from "./Footer";
-import OneToOne from "./OneToOne";
 import UserProfile from "./UserProfile";
+import OneToOne from "./OneToOne";
 import TutorProfileUP from "./TutorProfileUP";
-
-const animatedComponents = makeAnimated();
+import Landing from "./Landing";
 
 export default function Home() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [selectedTab, setSelectedTab] = useState(
+    isLoggedIn ? "UserProfile" : "QuickLogin"
+  );
 
-  const handleItemClick = () => {
+  const handleItemClick = (tab) => {
     setIsSettingsOpen(false);
+    setSelectedTab(tab);
   };
 
   const handleItemClickSetting = () => {
@@ -35,15 +34,26 @@ export default function Home() {
       <Navbar />
       <div className="the-total-page">
         <Sidebar
+          isLoggedIn={isLoggedIn}
+          selectedTab={selectedTab}
           handleItemClick={handleItemClick}
           handleItemClickSetting={handleItemClickSetting}
         />
         <div className="maincontent">
           <div className="pg">
-            <Landing />
-            <OneToOne />
-            <UserProfile />
-            <TutorProfileUP />
+            {isLoggedIn ? (
+              <>
+                {selectedTab === "UserProfile" && <UserProfile />}
+                {selectedTab === "OneToOne" && <OneToOne />}
+                {selectedTab === "TutorProfileUP" && <TutorProfileUP />}
+                {/* Add other logged-in components as needed */}
+              </>
+            ) : (
+              <>
+                {selectedTab === "QuickLogin" && <Landing />}
+                {/* Add non-logged-in components as needed */}
+              </>
+            )}
             <Footer />
           </div>
         </div>

@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./OneToOne.css";
 import TutorProfileBox from "./TutorProfileBox";
 
-// Import the search icon URL
+import tutorProfiles from "./TutorData";
 
 function OneToOne() {
+  const navigate = useNavigate();
+
+  const [selectedTutorProfile, setSelectedTutorProfile] = useState(null);
+
+  const handleProfileBoxClick = (tutorProfile) => {
+    setSelectedTutorProfile(tutorProfile);
+    // You can navigate to the TutorProfileUP page when a profile is clicked
+    const tutorProfileUPUrl = `/tutor-profile/${tutorProfile.id}`;
+    window.open(tutorProfileUPUrl, "_blank");
+  };
+
   return (
     <>
       <div>
@@ -29,15 +41,16 @@ function OneToOne() {
           </div>
         </div>
         <div className="profilecontainer">
-          <TutorProfileBox />
-          <TutorProfileBox />
-          <TutorProfileBox />
-          <TutorProfileBox />
-          <TutorProfileBox />
-          <TutorProfileBox />
-          <TutorProfileBox />
-          <TutorProfileBox />
-          <TutorProfileBox />
+          {/* Map through tutor profiles and render TutorProfileBox components */}
+          {tutorProfiles.map((tutorProfile) => (
+            <div
+              key={tutorProfile.id}
+              onClick={() => handleProfileBoxClick(tutorProfile)}
+              style={{ cursor: "pointer" }}
+            >
+              <TutorProfileBox tutorProfile={tutorProfile} />
+            </div>
+          ))}
         </div>
       </div>
     </>
