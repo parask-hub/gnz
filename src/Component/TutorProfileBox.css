@@ -1,0 +1,29 @@
+.profileBox{
+    background-color:rgb(239, 244, 244);
+    width: 29%;
+    display: flex;
+    padding: 10px;
+    align-items:center ;
+    justify-content: space-around;
+    border-radius: 15px;
+    min-width:250px;
+    margin: 10px;
+    /* flex-wrap: wrap; */
+}
+
+.rightportion{
+    margin-left: 20px;
+    width: 180px;
+    /* background-color: blueviolet; */
+}
+.page{
+    padding: 10px;
+}
+
+.rightbottom{
+    margin-top: 10px;
+    /* background-color: aqua; */
+    display: flex;
+    justify-content: space-around;
+    font-size: 13px;
+}

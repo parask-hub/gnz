@@ -1,0 +1,79 @@
+.row1{
+    display: flex;
+    /* background-color: yellow; */
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    padding:20px;
+    padding-bottom:10px ;
+}
+
+.row1content{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+.row2content{
+    width: fit-content;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 400px;
+}
+.row2content button{
+    background-color: green;
+    color: white;
+    padding:12px;
+    border: none;
+    border-radius: 15px;
+    
+}
+
+.row2content button:hover{
+    background-color: rgb(1, 81, 1);
+    cursor: pointer;
+}
+.profilecontainer{
+    display: flex;
+    /* background-color: blue; */
+    justify-content: space-around;
+    flex-wrap: wrap;
+    
+}
+
+/* OneToOne.css */
+
+/* Styles for the search bar */
+.searchbar {
+    margin-left: 20px;
+}
+
+.search-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    max-width: 300px;
+    border: 0.5px solid grey;
+}
+
+input[type="text"] {
+    flex: 1;
+    font-size: 16px;
+    padding: 8px;
+    background: transparent;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+/* Style the search icon */
+.search-icon {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    cursor: pointer;
+}

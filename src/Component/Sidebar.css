@@ -40,7 +40,7 @@
 .Sidebar {
     height: 90vh;
     width: 250px;
-    background-color: #ecf5d8;
+    background-color: rgb(239, 244, 244);
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
