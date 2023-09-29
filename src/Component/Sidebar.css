@@ -15,6 +15,8 @@
     background-color: #cdd5dde2;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1;
+    width: 80%;
+    
 
 }
 
@@ -40,7 +42,7 @@
 .Sidebar {
     height: 90vh;
     width: 250px;
-    background-color: rgb(239, 244, 244);
+    background-color:white;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
@@ -70,6 +72,7 @@
     margin-left: 10px;
     letter-spacing: 0.7px;
     font-weight: 600;
+    font-size: 16px;
 
 }
 

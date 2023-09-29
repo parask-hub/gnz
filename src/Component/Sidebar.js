@@ -19,6 +19,12 @@ const Sidebar = ({
               className={`row ${selectedTab === "UserProfile" ? "active" : ""}`}
               onClick={() => handleItemClick("UserProfile")}
             >
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios-filled/50/contract-job.png"
+                alt="contract-job"
+              />
               <span className="sidebar-text">Profile</span>
             </li>
             <li
@@ -26,6 +32,12 @@ const Sidebar = ({
               className={`row ${selectedTab === "OneToOne" ? "active" : ""}`}
               onClick={() => handleItemClick("OneToOne")}
             >
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios-filled/50/video-message.png"
+                alt="video-message"
+              />
               <span className="sidebar-text">1:1 Connect</span>
             </li>
             <li
@@ -33,6 +45,12 @@ const Sidebar = ({
               className={`row ${selectedTab === "Support" ? "active" : ""}`}
               onClick={() => handleItemClick("Support")}
             >
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios-filled/50/customer-support.png"
+                alt="customer-support"
+              />
               <span className="sidebar-text">Support</span>
             </li>
             <li
@@ -40,6 +58,12 @@ const Sidebar = ({
               className={`row ${selectedTab === "Inbox" ? "active" : ""}`}
               onClick={() => handleItemClick("Inbox")}
             >
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios-glyphs/30/download-mail.png"
+                alt="download-mail"
+              />
               <span className="sidebar-text">Inbox</span>
             </li>
           </>
@@ -50,7 +74,12 @@ const Sidebar = ({
               className={`row ${selectedTab === "QuickLogin" ? "" : ""}`}
               onClick={() => handleItemClick("QuickLogin")}
             >
-              <img src="" alt="" />
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/sf-black-filled/64/login-rounded-right.png"
+                alt="login-rounded-right"
+              />
               <span className="sidebar-text">Quick Login</span>
             </li>
             <li
@@ -58,6 +87,12 @@ const Sidebar = ({
               className={`row ${selectedTab === "TTT" ? "active" : ""}`}
               onClick={() => handleItemClick("TTT")}
             >
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/external-ddara-lineal-ddara/64/external-orator-presentation-speaker-speechmaker-talker-christmas-ddara-lineal-ddara.png"
+                alt="external-orator-presentation-speaker-speechmaker-talker-christmas-ddara-lineal-ddara"
+              />
               <span className="sidebar-text">Talk To Tutor</span>
             </li>
             <li
@@ -65,6 +100,12 @@ const Sidebar = ({
               className={`row ${selectedTab === "Support" ? "active" : ""}`}
               onClick={() => handleItemClick("Support")}
             >
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios-filled/50/customer-support.png"
+                alt="customer-support"
+              />
               <span className="sidebar-text">Support / Help</span>
             </li>
             <li
@@ -72,6 +113,12 @@ const Sidebar = ({
               className={`row ${selectedTab === "Inbox" ? "active" : ""}`}
               onClick={() => handleItemClick("Inbox")}
             >
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios-glyphs/30/download-mail.png"
+                alt="download-mail"
+              />
               <span className="sidebar-text">Inbox</span>
             </li>
           </>

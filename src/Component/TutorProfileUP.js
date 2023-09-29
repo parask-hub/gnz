@@ -27,7 +27,7 @@ function TutorProfileUP() {
       <div
         style={{
           padding: "10px",
-          background: "rgb(239, 244, 244)",
+          background: "white",
           display: "flex",
           alignItems: "center",
         }}
@@ -50,7 +50,7 @@ function TutorProfileUP() {
       <div
         className="con"
         style={{
-          background: "#cdd2d5",
+          background: "#dad9d9",
           width: "80vw",
           margin: "auto",
           overflowY: "scroll",
