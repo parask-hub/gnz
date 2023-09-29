@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} />
       <div className="the-total-page">
         <Sidebar
           isLoggedIn={isLoggedIn}

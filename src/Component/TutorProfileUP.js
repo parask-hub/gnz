@@ -23,16 +23,17 @@ function TutorProfileUP() {
   }
 
   return (
-    <div>
+    <div style={{ height: "100vh", overflowY: "scroll !important" }}>
       <div
         style={{
           padding: "10px",
+
           background: "white",
           display: "flex",
           alignItems: "center",
         }}
       >
-        <p className="logo">
+        <p className="log">
           <img
             src="https://png.pngtree.com/element_our/sm/20180518/sm_5afec7f1592f4.jpg"
             width="40px"
@@ -69,8 +70,7 @@ function TutorProfileUP() {
             </span>
           </div>
         </div>
-        <hr />
-        <div className="Pg">
+        <div className="Pg" style={{ paddingTop: "0px" }}>
           <div className="userleftportion">
             <div className="userprofileBox">
               <div className="Image">

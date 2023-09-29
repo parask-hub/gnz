@@ -4,11 +4,6 @@ import "./UserProfile.css";
 function UserProfile() {
   return (
     <>
-      <div className="text">
-        <h2>Abhinav Garg</h2>
-        <p>Welcome to your profile</p>
-      </div>
-      <hr />
       <div className="Pg">
         <div className="userleftportion">
           <div className="userprofileBox">
@@ -30,31 +25,31 @@ function UserProfile() {
                   <span>
                     <b>Interest : </b>
                   </span>
-                  <span>MyBio</span>
+                  <span className="ans">MyBio</span>
                 </div>
                 <div className="profileattributes">
                   <span>
                     <b>Achievements : </b>
                   </span>
-                  <span>MyBio</span>
+                  <span className="ans">MyBio</span>
                 </div>
                 <div className="profileattributes">
                   <span>
                     <b>Gender : </b>
                   </span>
-                  <span>MyBio</span>
+                  <span className="ans">MyBio</span>
                 </div>
                 <div className="profileattributes">
                   <span>
                     <b>English Fluency: </b>
                   </span>
-                  <span>MyBio</span>
+                  <span className="ans">MyBio</span>
                 </div>
                 <div className="profileattributes">
                   <span>
                     <b>Sessions Attended : </b>
                   </span>
-                  <span>0</span>
+                  <span className="ans">0</span>
                 </div>
               </div>
             </div>
@@ -64,7 +59,7 @@ function UserProfile() {
           <div className="block">
             <h3>Previous Session History</h3>
             <hr />
-            <p>
+            <p className="ans">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Voluptatum nobis repellat laudantium assumenda at suscipit aut
               doloremque modi debitis sequi!
@@ -73,7 +68,7 @@ function UserProfile() {
           <div className="block">
             <h3>Wallet Details</h3>
             <hr />
-            <p>
+            <p className="ans">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               Assumenda aut porro, magni rerum distinctio maxime.
             </p>
@@ -81,9 +76,11 @@ function UserProfile() {
           <div className="block">
             <h3>Feedback Recieved</h3>
             <hr />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
-            voluptatem atque eveniet eos vitae magnam officia quidem quo
-            cupiditate deleniti?
+            <p className="ans">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+              voluptatem atque eveniet eos vitae magnam officia quidem quo
+              cupiditate deleniti?
+            </p>
           </div>
         </div>
       </div>

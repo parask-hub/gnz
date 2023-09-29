@@ -2,6 +2,10 @@ import React from "react";
 import "../App.css";
 import "./Sidebar.css";
 
+const profileLogo = process.env.PUBLIC_URL + "/Logos/profile.png";
+const connectLogo = process.env.PUBLIC_URL + "/Logos/connect.png";
+const supportLogo = process.env.PUBLIC_URL + "/Logos/support.png";
+
 const Sidebar = ({
   isLoggedIn,
   selectedTab,
@@ -20,10 +24,11 @@ const Sidebar = ({
               onClick={() => handleItemClick("UserProfile")}
             >
               <img
-                width="30"
+                width="25"
                 height="30"
-                src="https://img.icons8.com/ios-filled/50/contract-job.png"
-                alt="contract-job"
+                // src="https://img.icons8.com/ios-filled/50/contract-job.png"
+                src={profileLogo}
+                alt="profile"
               />
               <span className="sidebar-text">Profile</span>
             </li>
@@ -35,7 +40,8 @@ const Sidebar = ({
               <img
                 width="30"
                 height="30"
-                src="https://img.icons8.com/ios-filled/50/video-message.png"
+                // src="https://img.icons8.com/ios-filled/50/video-message.png"
+                src={connectLogo}
                 alt="video-message"
               />
               <span className="sidebar-text">1:1 Connect</span>
@@ -48,7 +54,8 @@ const Sidebar = ({
               <img
                 width="30"
                 height="30"
-                src="https://img.icons8.com/ios-filled/50/customer-support.png"
+                // src="https://img.icons8.com/ios-filled/50/customer-support.png"
+                src={supportLogo}
                 alt="customer-support"
               />
               <span className="sidebar-text">Support</span>
@@ -77,7 +84,8 @@ const Sidebar = ({
               <img
                 width="30"
                 height="30"
-                src="https://img.icons8.com/sf-black-filled/64/login-rounded-right.png"
+                // src="https://img.icons8.com/sf-black-filled/64/login-rounded-right.png"
+                src={profileLogo}
                 alt="login-rounded-right"
               />
               <span className="sidebar-text">Quick Login</span>
@@ -90,7 +98,8 @@ const Sidebar = ({
               <img
                 width="30"
                 height="30"
-                src="https://img.icons8.com/external-ddara-lineal-ddara/64/external-orator-presentation-speaker-speechmaker-talker-christmas-ddara-lineal-ddara.png"
+                // src="https://img.icons8.com/external-ddara-lineal-ddara/64/external-orator-presentation-speaker-speechmaker-talker-christmas-ddara-lineal-ddara.png"
+                src={connectLogo}
                 alt="external-orator-presentation-speaker-speechmaker-talker-christmas-ddara-lineal-ddara"
               />
               <span className="sidebar-text">Talk To Tutor</span>
@@ -103,10 +112,11 @@ const Sidebar = ({
               <img
                 width="30"
                 height="30"
-                src="https://img.icons8.com/ios-filled/50/customer-support.png"
+                // src="https://img.icons8.com/ios-filled/50/customer-support.png"
+                src={supportLogo}
                 alt="customer-support"
               />
-              <span className="sidebar-text">Support / Help</span>
+              <span className="sidebar-text">Support</span>
             </li>
             <li
               key="InboxNotLoggedIn"

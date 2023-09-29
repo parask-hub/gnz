@@ -1,16 +1,12 @@
-.text {
-    text-align: start;
-    margin-left: 20px;
-    margin-top: 10px;
-}
 
 
 
 .userleftportion {
     width: 35%;
     background-color: white;
-    border-radius: 15px;
+    border-radius: 40px;
     min-width: 300px;
+    margin-right: 10px;
 }
 
 .userprofileBox{
@@ -23,7 +19,7 @@
 }
 
 .Pg{
-    padding: 20px;
+    padding: 30px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -33,7 +29,8 @@
 .userrightportion{
     width:60%;
     min-width:500px;
-    margin-top: 10px;
+    margin-left: 10px;
+    /* margin-top: 10px; */
     /* padding: 20px; */
 }
 
@@ -49,7 +46,7 @@
     padding: 20px;
     margin:20px;
     margin-top: 0px;
-    border-radius: 15px;
+    border-radius: 40px;
     height:100px;
 }
 
@@ -68,4 +65,8 @@
     /* background-color: rgb(23, 91, 0); */
     background-color: violet;
     transition: 0.1s;
+}
+
+.ans{
+    color: rgb(93, 93, 93);
 }

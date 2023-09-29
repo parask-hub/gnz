@@ -5,14 +5,8 @@ import ContentBox from "./ContentBox";
 function Landing() {
   return (
     <>
-      <div>
-        <div className="text">
-          <h1>Welcome To GenZ</h1>
-          <p>Find your Verified English practice tutor here</p>
-        </div>
-        <hr></hr>
+      <div style={{ marginTop: "15px" }}>
         <h2>Connect with your 1:1 Tutor Now Free!!</h2>
-        <hr></hr>
         <div className="content">
           <div className="title">
             <b>Why Choose us?</b>

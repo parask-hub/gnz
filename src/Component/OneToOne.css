@@ -58,7 +58,7 @@
     border-radius: 5px;
     overflow: hidden;
     max-width: 300px;
-    border: 0.5px solid grey;
+    border: 0.5px solid rgb(255, 253, 253);
 }
 
 input[type="text"] {
@@ -69,6 +69,7 @@ input[type="text"] {
     border-radius: 10px;
     border: none;
     outline: none;
+    color: rgb(69, 68, 68);
 }
 
 /* Style the search icon */

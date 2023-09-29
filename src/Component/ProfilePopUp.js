@@ -1,17 +1,29 @@
-// good win for close button
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import { Edit, Bookmark, Description, ExitToApp } from "@mui/icons-material";
 import SettingsPage from "./SettingsPage";
 import "./ProfilePopUp.css";
 
-const ProfilePopUp = () => {
-  //   const navigate = useNavigate();
-  const handleLogout = () => {
-    // navigate("/");
-  };
+const ProfilePopUp = ({ isLoggedIn }) => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  useEffect(() => {
+    // Add event listener to close the popup when clicking outside of it
+    const handleOutsideClick = (event) => {
+      if (isOpen && !event.target.closest(".ProfilePopup")) {
+        setIsOpen(false);
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isOpen]);
 
   const handlePopupToggle = () => {
     setIsOpen(!isOpen);
@@ -31,16 +43,20 @@ const ProfilePopUp = () => {
     setIsSettingsOpen(false);
   };
 
+  const handleLogout = () => {
+    // handle logout logic
+  };
+
   return (
-    <div className="ProfilePopup">
-      <div className="right-profile" onClick={handlePopupToggle}>
+    <div className="ProfilePopup" onClick={handlePopupToggle}>
+      <div className="right-profile">
         <img
           className="profile-icon"
           src="https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg"
           alt="Profile"
         />
         <div style={{ marginLeft: "5px" }}>
-          <h4>Login</h4>
+          {isLoggedIn ? <h4>Profile</h4> : <h4>Login</h4>}
         </div>
       </div>
       {isOpen && (

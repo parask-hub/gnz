@@ -3,6 +3,7 @@
     color: #0f0500;
     display: flex;
     align-items: center;
+    width: 200px;
 }
 
 .logo img {
@@ -22,6 +23,8 @@
     width: 6%;
     margin-right: 20px;
     display: flex;
+    position: absolute;
+    right: 10px;
     justify-content: space-around;
     align-items: center;
 }
@@ -29,13 +32,13 @@
 .Navbar {
 
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     background: white;
     box-shadow: #0f0500;
-    height: 10vh;
+    height: 14vh;
     width: 100%;
-    padding: 1 10px;
+    padding: 5 10px;
     top: 0;
     left: 0;
     right: 0;
@@ -58,4 +61,10 @@
     border-radius: 50%;
     width: 35px;
     border: 2px solid rgb(65, 190, 228);
+}
+
+.text {
+    text-align: start;
+    letter-spacing: 0.8px;
+    padding: 10px;
 }

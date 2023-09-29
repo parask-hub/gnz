@@ -1,7 +1,6 @@
 .text {
     text-align: start;
-    margin-left: 20px;
-    margin-top: 10px;
+    padding: 20px;
 }
 
 .title{
@@ -14,4 +13,11 @@
 .Box-row{
     display: flex;
    
+}
+
+.content{
+    margin-top: 10px;
+}
+.impcontent{
+    padding: 20px;
 }

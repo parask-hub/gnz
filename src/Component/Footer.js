@@ -4,7 +4,11 @@ import "./Footer.css";
 function Footer() {
   return (
     <div className="footer">
-      <p>Here Is The footer</p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus
+        nam dolore laboriosam minima excepturi velit voluptas dicta adipisci
+        eaque reprehenderit.
+      </p>
     </div>
   );
 }

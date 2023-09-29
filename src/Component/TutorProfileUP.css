@@ -4,3 +4,10 @@
     margin: "auto";
     overflow-y: "scroll";
 }
+
+.log{
+    padding-left: 20px;
+    color: #0f0500;
+    display: flex;
+    align-items: center;
+}

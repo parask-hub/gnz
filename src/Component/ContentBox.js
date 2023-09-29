@@ -5,11 +5,16 @@ function ContentBox({ title, description }) {
   return (
     <div className="box">
       <p>
-        <span className="title">
+        <div
+          style={{
+            padding: "5px",
+            fontSize: "16px",
+            borderRadius: "40px",
+          }}
+        >
           <b>{title}</b>
-        </span>
-        <br></br>
-        <br></br>
+        </div>
+        {/* <br></br> */}
         <span className="description">{description}</span>
       </p>
     </div>

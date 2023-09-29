@@ -1,17 +1,15 @@
 .box{
     background-color: white;
-    margin:10px;
-    padding: 20px;
-    border-radius: 10px;
+    margin:12px;
+    padding: 6px;
+    border-radius: 40px;
     width: 25%;
     min-width: 100px;
 }
 
-.descrption{
-    color: #313131d6;
-    font-size: 16px;
+.description{
+    color: #656565d6;
+    font-size: 15px;
+    border-radius: 40px;
 }
 
-.title{
-    font-size: 1px;
-}
