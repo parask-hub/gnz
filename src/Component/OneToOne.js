@@ -4,7 +4,7 @@ import "./OneToOne.css";
 import TutorProfileBox from "./TutorProfileBox";
 
 import tutorProfiles from "./TutorData";
-
+const connectLogo = process.env.PUBLIC_URL + "/Logos/connect.png";
 function OneToOne() {
   const navigate = useNavigate();
 
@@ -26,7 +26,14 @@ function OneToOne() {
       <div style={{ minHeight: "86vh" }}>
         <div className="row1">
           <div className="row1content">
-            <h3>1:1 Connect</h3>
+            <img
+              width="30"
+              height="30"
+              // src="https://img.icons8.com/ios-filled/50/video-message.png"
+              src={connectLogo}
+              alt="video-message"
+            />
+            <h3 style={{ marginLeft: "10px" }}>1:1 Connect</h3>
           </div>
           <div className="row2content">
             <p>Available Balance: Rs 200</p>

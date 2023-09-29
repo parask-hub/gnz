@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../App.css";
 import "./Sidebar.css";
 
@@ -13,8 +13,28 @@ const Sidebar = ({
   handleSettingsClick,
   handleItemClickSetting,
 }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
+  const handleItemClickAndClose = (tab) => {
+    handleItemClick(tab);
+    closeSidebar();
+  };
   return (
-    <div className="Sidebar">
+    <div className={`Sidebar ${isSidebarOpen ? "open" : ""}`}>
+      <div className="Overlay" onClick={closeSidebar}></div>
+      <div className="ToggleBtn" onClick={toggleSidebar}>
+        <div className="HamburgerLine"></div>
+        <div className="HamburgerLine"></div>
+        <div className="HamburgerLine"></div>
+      </div>
       <ul className="SidebarList">
         {isLoggedIn ? (
           <>
