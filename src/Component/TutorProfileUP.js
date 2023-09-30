@@ -23,7 +23,13 @@ function TutorProfileUP() {
   }
 
   return (
-    <div style={{ height: "100vh", overflowY: "scroll !important" }}>
+    <div
+      style={{
+        height: "100vh",
+        overflowY: "scroll !important",
+        padding: "10px",
+      }}
+    >
       <div
         style={{
           padding: "10px",
@@ -52,9 +58,9 @@ function TutorProfileUP() {
         className="con"
         style={{
           background: "#dad9d9",
-          width: "80vw",
+          width: "100vw",
           margin: "auto",
-          overflowY: "scroll",
+          borderRadius: "40px",
         }}
       >
         <div className="text">
@@ -70,7 +76,7 @@ function TutorProfileUP() {
             </span>
           </div>
         </div>
-        <div className="Pg" style={{ paddingTop: "0px" }}>
+        <div className="Pg">
           <div className="userleftportion">
             <div className="userprofileBox">
               <div className="Image">

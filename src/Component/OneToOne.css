@@ -83,3 +83,17 @@ input[type="text"] {
     padding: 5px;
     cursor: pointer;
 }
+
+@media (max-width: 768px){
+    .row1{
+        flex-direction: column;
+    }
+    .row1content{
+        padding: 10px;
+
+    }
+    .row2content{
+        padding: 20px;
+        width: 100vw;
+    }
+}

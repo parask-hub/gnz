@@ -10,9 +10,9 @@
 }
 
 
+
 .Box-row{
     display: flex;
-   
 }
 
 .content{
@@ -21,3 +21,9 @@
 .impcontent{
     padding: 20px;
 }
+@media (max-width: 768px){
+    .Box-row{
+        flex-wrap: wrap;
+    }
+}
+

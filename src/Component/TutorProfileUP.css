@@ -1,5 +1,5 @@
 .con{
-    background-color: cdd2d5 !important;
+    background: "#dad9d9";
     width: "80vw";
     margin: "auto";
     overflow-y: "scroll";
@@ -11,3 +11,36 @@
     display: flex;
     align-items: center;
 }
+
+
+@media (max-width: 768px) {
+        .userrightportion {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .block {
+            background-color: white;
+            padding: 20px;
+            width: 80vw;
+            margin: 20px;
+            border-radius: 40px;
+            height: fit-content;
+        }
+
+        .userprofileBox {
+            padding: 10px;
+            text-align: center;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+        }
+                userleftportion {
+                    width: 90vw;
+                }
+        .text{
+            display: none;
+        }
+    }
