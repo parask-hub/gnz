@@ -49,6 +49,10 @@
 /* Styles for the search bar */
 .searchbar {
     margin-left: 20px;
+    display: flex;
+    width: 90%;
+    align-items: center;
+    /* justify-content: space-between; */
 }
 
 .search-input {

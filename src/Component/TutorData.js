@@ -6,6 +6,8 @@ const tutorProfiles = [
     orders: 800,
     description: "Mathematics Tutor / Experienced / Patient",
     hourlyRate: 50,
+    experience: 7,
+    rating: 4.5,
   },
   {
     id: 2,
@@ -14,6 +16,8 @@ const tutorProfiles = [
     orders: 1200,
     description: "English Literature Tutor / Writer / Book Enthusiast",
     hourlyRate: 60,
+    experience: 4,
+    rating: 4.2,
   },
   {
     id: 3,
@@ -22,6 +26,8 @@ const tutorProfiles = [
     orders: 600,
     description: "Physics Tutor / Researcher / Science Geek",
     hourlyRate: 55,
+    experience: 9,
+    rating: 4.8,
   },
   {
     id: 4,
@@ -30,6 +36,8 @@ const tutorProfiles = [
     orders: 1500,
     description: "Programming Tutor / Web Developer / Coding Enthusiast",
     hourlyRate: 70,
+    experience: 2,
+    rating: 4.0,
   },
   {
     id: 5,
@@ -38,6 +46,8 @@ const tutorProfiles = [
     orders: 1000,
     description: "History Tutor / Historian / Storyteller",
     hourlyRate: 65,
+    experience: 6,
+    rating: 4.6,
   },
   {
     id: 6,
@@ -46,6 +56,8 @@ const tutorProfiles = [
     orders: 900,
     description: "Chemistry Tutor / Lab Scientist / Analytical Thinker",
     hourlyRate: 58,
+    experience: 8,
+    rating: 4.7,
   },
   {
     id: 7,
@@ -54,6 +66,8 @@ const tutorProfiles = [
     orders: 1100,
     description: "Language Tutor / Polyglot / Cultural Enthusiast",
     hourlyRate: 55,
+    experience: 3,
+    rating: 4.1,
   },
   {
     id: 8,
@@ -62,6 +76,8 @@ const tutorProfiles = [
     orders: 1300,
     description: "Art Tutor / Painter / Creative Soul",
     hourlyRate: 75,
+    experience: 5,
+    rating: 4.9,
   },
   {
     id: 9,
@@ -70,6 +86,8 @@ const tutorProfiles = [
     orders: 700,
     description: "Music Tutor / Pianist / Melody Maker",
     hourlyRate: 68,
+    experience: 1,
+    rating: 3.8,
   },
   {
     id: 10,
@@ -78,6 +96,8 @@ const tutorProfiles = [
     orders: 950,
     description: "Fitness Tutor / Personal Trainer / Health Advocate",
     hourlyRate: 80,
+    experience: 10,
+    rating: 5.0,
   },
 ];
 

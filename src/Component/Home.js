@@ -8,6 +8,7 @@ import UserProfile from "./UserProfile";
 import OneToOne from "./OneToOne";
 import TutorProfileUP from "./TutorProfileUP";
 import Landing from "./Landing";
+import Support from "./Support";
 
 export default function Home() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -46,11 +47,14 @@ export default function Home() {
                 {selectedTab === "UserProfile" && <UserProfile />}
                 {selectedTab === "OneToOne" && <OneToOne />}
                 {selectedTab === "TutorProfileUP" && <TutorProfileUP />}
-                {/* Add other logged-in components as needed */}
+                {selectedTab === "Support" && <Support />}
+                {selectedTab === "Inbox" && <Support />}
               </>
             ) : (
               <>
                 {selectedTab === "QuickLogin" && <Landing />}
+                {selectedTab === "Support" && <Support />}
+                {selectedTab === "Inbox" && <Support />}
                 {/* Add non-logged-in components as needed */}
               </>
             )}

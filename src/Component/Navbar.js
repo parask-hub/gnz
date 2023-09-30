@@ -18,7 +18,7 @@ export default function Navbar({ isLoggedIn }) {
         </p>
       </div>
       <div className="text">
-        <span style={{ fontSize: "18px" }}>
+        <span style={{ fontSize: "20px" }}>
           {isLoggedIn ? <h2>Abhinav Garg</h2> : <h2>Welcome To GenZ</h2>}
         </span>
         <span style={{ fontSize: "15px", color: "grey" }}>

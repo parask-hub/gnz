@@ -1,0 +1,40 @@
+.sort-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;    
+}
+
+.sort-button {
+    cursor: pointer;
+}
+
+.options-container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #ffffffe9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 200px;
+   
+}
+
+.options-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    /* Adjust the font size as needed */
+}
+
+.options-container input {
+    margin-right: 5px;
+}
+
+.sort-container img {
+    vertical-align: middle;
+}

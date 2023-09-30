@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./OneToOne.css";
 import TutorProfileBox from "./TutorProfileBox";
-
+import SortButton from "./SortButton";
 import tutorProfiles from "./TutorData";
 const connectLogo = process.env.PUBLIC_URL + "/Logos/connect.png";
+
 function OneToOne() {
   const navigate = useNavigate();
 
   const [selectedTutorProfile, setSelectedTutorProfile] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState(null);
 
   const handleProfileBoxClick = (tutorProfile) => {
     setSelectedTutorProfile(tutorProfile);
@@ -17,22 +19,42 @@ function OneToOne() {
     window.open(tutorProfileUPUrl, "_blank");
   };
 
-  const filteredProfiles = tutorProfiles.filter((tutorProfile) =>
-    tutorProfile.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleSort = (option) => {
+    setSortOption(option);
+  };
+
+  const filteredProfiles = tutorProfiles
+    .filter((tutorProfile) =>
+      tutorProfile.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortOption === "experienceHighToLow") {
+        return b.experience - a.experience;
+      } else if (sortOption === "experienceLowToHigh") {
+        return a.experience - b.experience;
+      } else if (sortOption === "ordersHighToLow") {
+        return b.orders - a.orders;
+      } else if (sortOption === "ordersLowToHigh") {
+        return a.orders - b.orders;
+      } else if (sortOption === "priceHighToLow") {
+        return b.hourlyRate - a.hourlyRate;
+      } else if (sortOption === "priceLowToHigh") {
+        return a.hourlyRate - b.hourlyRate;
+      } else if (sortOption === "ratingHighToLow") {
+        return b.rating - a.rating;
+      } else if (sortOption === "ratingLowToHigh") {
+        return a.rating - b.rating;
+      } else {
+        return 0;
+      }
+    });
 
   return (
     <>
       <div style={{ minHeight: "86vh" }}>
         <div className="row1">
           <div className="row1content">
-            <img
-              width="30"
-              height="30"
-              // src="https://img.icons8.com/ios-filled/50/video-message.png"
-              src={connectLogo}
-              alt="video-message"
-            />
+            <img width="30" height="30" src={connectLogo} alt="video-message" />
             <h3 style={{ marginLeft: "10px" }}>1:1 Connect</h3>
           </div>
           <div className="row2content">
@@ -42,7 +64,7 @@ function OneToOne() {
         </div>
 
         <div className="searchbar">
-          <div className="search-input">
+          <span className="search-input">
             <input
               type="text"
               placeholder="Search..."
@@ -54,7 +76,11 @@ function OneToOne() {
               alt="Search"
               className="search-icon"
             />
-          </div>
+          </span>
+          <span>
+            {/* Pass the handleSort function to SortButton */}
+            <SortButton onSort={handleSort} />
+          </span>
         </div>
         <div className="profilecontainer">
           {filteredProfiles.length === 0 ? (
