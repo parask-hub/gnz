@@ -41,7 +41,10 @@ const Sidebar = ({
             <li
               key="Profile"
               className={`row ${selectedTab === "UserProfile" ? "active" : ""}`}
-              onClick={() => handleItemClick("UserProfile")}
+              onClick={() => {
+                handleItemClick("UserProfile");
+                toggleSidebar();
+              }}
             >
               <img
                 width="25"
@@ -55,7 +58,10 @@ const Sidebar = ({
             <li
               key="OneToOne"
               className={`row ${selectedTab === "OneToOne" ? "active" : ""}`}
-              onClick={() => handleItemClick("OneToOne")}
+              onClick={() => {
+                handleItemClick("OneToOne");
+                toggleSidebar();
+              }}
             >
               <img
                 width="30"
@@ -69,7 +75,10 @@ const Sidebar = ({
             <li
               key="SupportLoggedIn"
               className={`row ${selectedTab === "Support" ? "active" : ""}`}
-              onClick={() => handleItemClick("Support")}
+              onClick={() => {
+                handleItemClick("Support");
+                toggleSidebar();
+              }}
             >
               <img
                 width="30"
@@ -83,7 +92,10 @@ const Sidebar = ({
             <li
               key="InboxLoggedIn"
               className={`row ${selectedTab === "Inbox" ? "active" : ""}`}
-              onClick={() => handleItemClick("Inbox")}
+              onClick={() => {
+                handleItemClick("Inbox");
+                toggleSidebar();
+              }}
             >
               <img
                 width="30"
@@ -99,7 +111,10 @@ const Sidebar = ({
             <li
               key="QuickLogin"
               className={`row ${selectedTab === "QuickLogin" ? "" : ""}`}
-              onClick={() => handleItemClick("QuickLogin")}
+              onClick={() => {
+                handleItemClick("QuickLogin");
+                toggleSidebar();
+              }}
             >
               <img
                 width="30"
@@ -113,7 +128,10 @@ const Sidebar = ({
             <li
               key="TTT"
               className={`row ${selectedTab === "TTT" ? "active" : ""}`}
-              onClick={() => handleItemClick("TTT")}
+              onClick={() => {
+                handleItemClick("TTT");
+                toggleSidebar();
+              }}
             >
               <img
                 width="30"
@@ -127,7 +145,10 @@ const Sidebar = ({
             <li
               key="SupportNotLoggedIn"
               className={`row ${selectedTab === "Support" ? "active" : ""}`}
-              onClick={() => handleItemClick("Support")}
+              onClick={() => {
+                handleItemClick("Support");
+                toggleSidebar();
+              }}
             >
               <img
                 width="30"
@@ -141,7 +162,10 @@ const Sidebar = ({
             <li
               key="InboxNotLoggedIn"
               className={`row ${selectedTab === "Inbox" ? "active" : ""}`}
-              onClick={() => handleItemClick("Inbox")}
+              onClick={() => {
+                handleItemClick("Inbox");
+                toggleSidebar();
+              }}
             >
               <img
                 width="30"
