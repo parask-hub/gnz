@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./OneToOne.css";
+import "./styles/OneToOne.css";
 import TutorProfileBox from "./TutorProfileBox";
 import SortButton from "./SortButton";
 import tutorProfiles from "./TutorData";

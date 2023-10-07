@@ -1,5 +1,5 @@
 import React from "react";
-import "./TutorProfileBox.css";
+import "./styles/TutorProfileBox.css";
 
 function TutorProfileBox({ tutorProfile }) {
   const { name, image, orders, description, hourlyRate } = tutorProfile;

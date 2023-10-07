@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SettingsPage from "./SettingsPage";
-import "./ProfilePopUp.css";
+import LoginForm from "./LoginForm";
+import "./styles/ProfilePopUp.css";
+import SmallMenuPopUp from "./SmallMenuPopUp";
 
-const ProfilePopUp = ({ isLoggedIn }) => {
+const ProfilePopUp = ({ isLoggedIn, handleClose }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isLoginFormVisible, setLoginFormVisibility] = useState(false);
 
   useEffect(() => {
     // Add event listener to close the popup when clicking outside of it
@@ -27,15 +29,9 @@ const ProfilePopUp = ({ isLoggedIn }) => {
 
   const handlePopupToggle = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleItemClick = (item) => {
-    console.log(`Clicked on ${item}`);
-
-    if (item === "Edit Profile") {
-      setIsSettingsOpen(true);
-    } else {
-      setIsSettingsOpen(false);
+    // If the user is not logged in and the popup is opened, show the login form
+    if (!isLoggedIn && !isOpen) {
+      setLoginFormVisibility(true);
     }
   };
 
@@ -47,6 +43,10 @@ const ProfilePopUp = ({ isLoggedIn }) => {
     // handle logout logic
   };
 
+  const handleCloseForm = () => {
+    setLoginFormVisibility(false);
+  };
+
   return (
     <div className="ProfilePopup" onClick={handlePopupToggle}>
       <div className="right-profile">
@@ -56,37 +56,28 @@ const ProfilePopUp = ({ isLoggedIn }) => {
           alt="Profile"
         />
         <div style={{ marginLeft: "5px" }}>
-          {isLoggedIn ? <h4>Profile</h4> : <h4>Login</h4>}
+          {isLoggedIn ? (
+            <div>
+              <h4>Profile</h4>
+              <SmallMenuPopUp
+                isOpen={isOpen}
+                handleCloseSettings={handleCloseSettings}
+                handleLogout={handleLogout}
+                isSettingsOpen={isSettingsOpen}
+              />
+            </div>
+          ) : (
+            <div>
+              <h3>Login</h3>
+              <div>
+                {isLoginFormVisible && (
+                  <LoginForm handleCloseForm={handleCloseForm} />
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      {isOpen && (
-        <div className="popup-container">
-          <ul className="popup-menu">
-            <li
-              className="popup-item"
-              onClick={() => handleItemClick("Edit Profile")}
-            >
-              <span className="popup-item-text">Edit Profile</span>
-            </li>
-            <li
-              className="popup-item"
-              onClick={() => handleItemClick("Bookmarks")}
-            >
-              <span className="popup-item-text">Bookmarks</span>
-            </li>
-            <li
-              className="popup-item"
-              onClick={() => handleItemClick("Reports")}
-            >
-              <span className="popup-item-text">Reports</span>
-            </li>
-            <li className="popup-item" onClick={handleLogout}>
-              <span className="popup-item-text">Logout</span>
-            </li>
-          </ul>
-        </div>
-      )}
-      {isSettingsOpen && <SettingsPage handleClose={handleCloseSettings} />}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../App.css";
-import "./Sidebar.css";
+import "./styles/Sidebar.css";
 
 const profileLogo = process.env.PUBLIC_URL + "/Logos/profile.png";
 const connectLogo = process.env.PUBLIC_URL + "/Logos/connect.png";
@@ -178,8 +178,9 @@ const Sidebar = ({
           </>
         )}
       </ul>
-      <ul className="SidebarList" style={{ display: "none" }}>
-        {isLoggedIn && (
+      <ul className="SidebarList">
+        {/* {isLoggedIn && ( */}
+        {/* {
           <li
             key="Settings"
             className={`row ${selectedTab === "Settings" ? "active" : ""}`}
@@ -188,7 +189,7 @@ const Sidebar = ({
             <span className="sidebar-text">Settings</span>
             <li onClick={handleSettingsClick}></li>
           </li>
-        )}
+        } */}
       </ul>
     </div>
   );

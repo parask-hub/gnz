@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import "./TutorProfileUP.css";
+import "./styles/TutorProfileUP.css";
 
 import tutorProfiles from "./TutorData";
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./SortButton.css"; // Make sure to import the CSS file
+import "./styles/SortButton.css"; // Make sure to import the CSS file
 
 const SortButton = ({ onSort }) => {
   const [isOpen, setIsOpen] = useState(false);

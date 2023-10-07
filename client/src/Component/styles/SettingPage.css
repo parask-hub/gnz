@@ -9,30 +9,59 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 400px;
-    height: 300px;
+    padding: 30px;
     background-color: #f2f2f2;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     justify-content: space-between;
+    border-radius: 20px;
 }
+
+.countrycode{
+    background-color: #cdcbcb;
+    font-size: 16px;
+    padding: 10px;
+    margin-left: 10px;
+}
+
 
 .SettingsPage h1 {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 20px;
+    
     text-align: center;
 }
 
+.numberfields span{
+    display: flex;
+    align-items: center;
+}
+
+.numberfields{
+    padding: 5px 20px;
+    font-size: 16px;
+    border: 2px solid grey;
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.numberfields input{
+    border: 1px solid black;
+    outline: none;font-size: 18px;
+    padding: 10px 20px;
+    background: transparent;
+}
+
 .SettingsPage p {
-    font-size: 18px;
+    font-size: px;
     text-align: center;
-    margin-top: -48px;
+  
 }
 
 .SettingsPage .button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #004998;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -68,24 +97,3 @@
     color: #555;
 }
 
-.dark-mode .SettingsPage {
-    background-color: #333;
-    color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.dark-mode .SettingsPage h1 {
-    color: #fff;
-}
-
-.dark-mode .SettingsPage p {
-    color: #ccc;
-}
-
-.dark-mode .SettingsPage .button {
-    background-color: #0056b3;
-}
-
-.dark-mode .SettingsPage .close-button {
-    color: #999;
-}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Home.css";
+import "./styles/Home.css";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import SettingsPopup from "./SettingsPopup";
@@ -12,7 +12,7 @@ import Support from "./Support";
 
 export default function Home() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedTab, setSelectedTab] = useState(
     isLoggedIn ? "UserProfile" : "QuickLogin"
   );
@@ -32,7 +32,11 @@ export default function Home() {
 
   return (
     <>
-      <Navbar isLoggedIn={isLoggedIn} />
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        handleItemClickSetting={handleItemClickSetting}
+        handleClose={handleClose}
+      />
       <div className="the-total-page">
         <Sidebar
           isLoggedIn={isLoggedIn}
@@ -62,7 +66,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {isSettingsOpen && <SettingsPopup handleClose={handleClose} />}
+      {/* {isSettingsOpen && <SettingsPopup handleClose={handleClose} />} */}
     </>
   );
 }

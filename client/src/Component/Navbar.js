@@ -1,10 +1,14 @@
 // Navbar.js
 
 import React from "react";
-import "./Navbar.css";
+import "./styles/Navbar.css";
 import ProfilePopup from "./ProfilePopUp";
 
-export default function Navbar({ isLoggedIn }) {
+export default function Navbar({
+  isLoggedIn,
+  handleSettingsClick,
+  handleClose,
+}) {
   return (
     <div className="Navbar">
       <div
@@ -36,7 +40,11 @@ export default function Navbar({ isLoggedIn }) {
         </div>
       </div>
       <div className="right">
-        <ProfilePopup isLoggedIn={isLoggedIn} />
+        <ProfilePopup
+          isLoggedIn={isLoggedIn}
+          handleSettingsClick={handleSettingsClick}
+          handleClose={handleClose}
+        />
       </div>
     </div>
   );

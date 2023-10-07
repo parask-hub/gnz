@@ -1,5 +1,5 @@
 import React from "react";
-import "./ContentBox.css";
+import "./styles/ContentBox.css";
 
 function ContentBox({ title, description }) {
   return (

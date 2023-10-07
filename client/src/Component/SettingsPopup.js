@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./SettingsPopup.css";
+import "./styles/SettingsPopup.css";
 
 const BlurBackground = () => {
   return <div className="blur-background"></div>;
