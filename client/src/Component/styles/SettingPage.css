@@ -47,7 +47,9 @@
     align-items: center;
 }
 .numberfields input{
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border-bottom: 10px solid grey;
+    margin-left: 20px;
     outline: none;font-size: 18px;
     padding: 10px 20px;
     background: transparent;
@@ -77,6 +79,11 @@
 .SettingsPage .button:focus {
     outline: none;
 }
+.button{
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
 
 .close-button {
     position: absolute;
@@ -95,5 +102,44 @@
 
 .close-button:hover {
     color: #555;
+}
+
+.otp-input{
+    margin-left: 100x;
+}
+
+/* .otp-input input{
+    padding: 5px;
+    margin: 0px;
+    color: #004998;
+} */
+
+.namefield{
+    border: 2px solid grey;
+    margin: 20px;
+    padding: 20px;
+   
+   
+    /* width: 100%; */
+
+}
+.namefield p{
+font-weight: 400;
+text-align: left;
+}
+
+.input-box{
+    display: flex;
+    flex-wrap: wrap;
+    
+
+}
+
+.input-box input{
+        min-width: 200px;
+        width: "50%";
+        border-bottom: 10px solid grey;
+        margin: 10px 5px;
+        border-color: grey;
 }
 

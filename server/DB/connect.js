@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 // dotenv.config({ path: "./config.env" });
 const DB =
-  "mongodb+srv://paraskhilosiyapk24:pzue1Ggd96vI3PMd@cluster0.hyc2iff.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://Paras:1gNs9uruEMpL8YzZ@cluster0.etcgzf0.mongodb.net/Genz?retryWrites=true&w=majority";
 
 const connectDB = () =>
   mongoose

@@ -1,0 +1,30 @@
+.popup {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    color: #fff;
+    width: fit-content;
+    text-align: center;
+    z-index: 1000;
+    border-radius: 5px;
+}
+
+.success-popup {
+    background-color: #28a745;
+    /* Green color for success */
+}
+
+.success-popup ::after{
+    content:"✅";
+}
+
+.error-popup {
+    background-color: #dc3545;
+    /* Red color for error */
+}
+
+.error-popup::after{
+    content:"❌"
+}
