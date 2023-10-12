@@ -5,7 +5,7 @@
     transform: translateX(-50%);
     padding: 10px;
     color: #fff;
-    width: fit-content;
+    width: 400px;
     text-align: center;
     z-index: 1000;
     border-radius: 5px;
@@ -26,5 +26,5 @@
 }
 
 .error-popup::after{
-    content:"❌"
+    content:"❌";
 }

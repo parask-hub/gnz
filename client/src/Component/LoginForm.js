@@ -23,6 +23,7 @@ const LoginForm = ({ handleCloseForm }) => {
   const [popup, setPopup] = useState(null); // State for managing popups
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(() => {
     window.recaptchaVerifier = new RecaptchaVerifier(
@@ -52,7 +53,7 @@ const LoginForm = ({ handleCloseForm }) => {
     onCaptchaVerify();
 
     const appVerifier = window.recaptchaVerifier;
-    const formatPh = "+" + ph;
+    const formatPh = `+${ph.replace(/\D/g, "")}`;
 
     signInWithPhoneNumber(auth, formatPh, appVerifier)
       .then((confirmationResult) => {
@@ -60,29 +61,80 @@ const LoginForm = ({ handleCloseForm }) => {
         setLoading(false);
         setShowOTP(true);
         displayPopup("OTP sent successfully", "success");
+
+        // Set isNewUser when OTP is sent
+        setIsNewUser(confirmationResult._tokenResponse?.isNewUser);
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
-        // displayPopup("Error sending OTP", "error");
+        displayPopup("Error sending OTP", "error");
       });
   };
 
-  const onOtpVerify = () => {
+  const onOtpVerify = async () => {
     setLoading(true);
-    window.confirmationResult
-      .confirm(otp)
-      .then(async (res) => {
-        console.log(res);
-        setUser(res.user);
-        setLoading(false);
-        displayPopup("Login successful", "success");
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-        displayPopup("Invalid OTP. Please try again.", "error");
-      });
+
+    try {
+      const res = await window.confirmationResult.confirm(otp);
+
+      // Set isNewUser state based on _tokenResponse
+      setIsNewUser(res._tokenResponse?.isNewUser);
+
+      // setIsNewUser(res.user.displayName == "");
+
+      setUser(res.user);
+      displayPopup("OTP Verified", "success");
+      registerUser();
+    } catch (err) {
+      console.log(err);
+      displayPopup("Invalid OTP", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const registerUser = async () => {
+    setLoading(true);
+
+    try {
+      const userData = {
+        mobileNumber: user.phoneNumber,
+        firstname: firstName,
+        lastname: lastName,
+      };
+
+      // Make an API request to register the user using fetch
+      const registrationResponse = await fetch(
+        "http://localhost:5000/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
+
+      // Check if the response is successful
+      if (!registrationResponse.ok) {
+        throw new Error("Error in Creating account");
+      }
+
+      // Parse the JSON response
+      const responseData = await registrationResponse.json();
+
+      // Handle success
+      console.log(responseData.message);
+      setIsNewUser(responseData.showNamefield);
+      displayPopup("Account Created successfully", "success");
+    } catch (error) {
+      // Handle errors
+      console.error(error);
+      displayPopup("Error in Creating account", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onCaptchaVerify = () => {
@@ -98,7 +150,7 @@ const LoginForm = ({ handleCloseForm }) => {
           ✕
         </button>
         <h1>Login Form</h1>
-        {user ? (
+        {isNewUser ? (
           <div>
             <div className="namefield">
               <p>Enter Your Name:</p>
@@ -118,8 +170,7 @@ const LoginForm = ({ handleCloseForm }) => {
               </div>
             </div>
 
-            {/* <button className="button" onClick={onRegister}> */}
-            <button className="button">
+            <button className="button" onClick={registerUser}>
               {loading && (
                 <img
                   src="https://i.gifer.com/ZKZx.gif"
