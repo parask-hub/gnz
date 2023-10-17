@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles/UserProfile.css";
 
-function UserProfile() {
+function UserProfile({ data }) {
   return (
     <>
       <div className="Pg">
@@ -25,25 +25,25 @@ function UserProfile() {
                   <span>
                     <b>Interest : </b>
                   </span>
-                  <span className="ans">MyBio</span>
+                  <span className="ans">{data.interest}</span>
                 </div>
                 <div className="profileattributes">
                   <span>
                     <b>Achievements : </b>
                   </span>
-                  <span className="ans">MyBio</span>
+                  <span className="ans">{data.achievements}</span>
                 </div>
                 <div className="profileattributes">
                   <span>
                     <b>Gender : </b>
                   </span>
-                  <span className="ans">MyBio</span>
+                  <span className="ans">{data.gender}</span>
                 </div>
                 <div className="profileattributes">
                   <span>
                     <b>English Fluency: </b>
                   </span>
-                  <span className="ans">MyBio</span>
+                  <span className="ans">{data.englishFluency}</span>
                 </div>
                 <div className="profileattributes">
                   <span>
@@ -59,11 +59,7 @@ function UserProfile() {
           <div className="block">
             <h3>Previous Session History</h3>
             <hr />
-            <p className="ans">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Voluptatum nobis repellat laudantium assumenda at suscipit aut
-              doloremque modi debitis sequi!
-            </p>
+            <p className="ans">{data.aboutMe}</p>
           </div>
           <div className="block">
             <h3>Wallet Details</h3>

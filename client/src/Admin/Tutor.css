@@ -1,0 +1,61 @@
+.tutor-container {
+    padding: 20px;
+}
+
+.tutor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.add-tutor-btn{
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.tutor-table th,
+.tutor-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.tutor-table th {
+    background-color: #f2f2f2;
+}
+
+.edit-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagination span {
+    margin: 0 10px;
+}

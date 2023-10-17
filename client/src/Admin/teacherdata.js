@@ -1,4 +1,4 @@
-const tutorProfiles = [
+const teacherdata = [
   {
     id: 1,
     name: "John Doe",
@@ -229,4 +229,4 @@ const tutorProfiles = [
   },
 ];
 
-export default tutorProfiles;
+export default teacherdata;

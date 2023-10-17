@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./styles/Home.css";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-import SettingsPopup from "./SettingsPopup";
+
 import Footer from "./Footer";
 import UserProfile from "./UserProfile";
 import OneToOne from "./OneToOne";
@@ -10,9 +10,15 @@ import TutorProfileUP from "./TutorProfileUP";
 import Landing from "./Landing";
 import Support from "./Support";
 
-export default function Home() {
+export default function Home({
+  isLoggedIn,
+  toggleUserState,
+  setLoggedUser,
+  data,
+}) {
+  console.log("in Home : " + isLoggedIn);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [selectedTab, setSelectedTab] = useState(
     isLoggedIn ? "UserProfile" : "QuickLogin"
   );
@@ -32,11 +38,25 @@ export default function Home() {
 
   return (
     <>
-      <Navbar
-        isLoggedIn={isLoggedIn}
-        handleItemClickSetting={handleItemClickSetting}
-        handleClose={handleClose}
-      />
+      {data ? (
+        <Navbar
+          isLoggedIn={isLoggedIn}
+          handleItemClickSetting={handleItemClickSetting}
+          handleClose={handleClose}
+          toggleUserState={toggleUserState}
+          setLoggedUser={setLoggedUser}
+          data={data}
+        />
+      ) : (
+        <>
+          <img
+            src="https://i.gifer.com/ZKZx.gif"
+            height={"20px"}
+            style={{ marginRight: "5px" }}
+          />
+        </>
+      )}
+
       <div className="the-total-page">
         <Sidebar
           isLoggedIn={isLoggedIn}
@@ -48,7 +68,18 @@ export default function Home() {
           <div className="pg">
             {isLoggedIn ? (
               <>
-                {selectedTab === "UserProfile" && <UserProfile />}
+                {selectedTab === "UserProfile" &&
+                  (data ? (
+                    <UserProfile data={data} />
+                  ) : (
+                    <div>
+                      <img
+                        src="https://i.gifer.com/ZKZx.gif"
+                        height={"20px"}
+                        style={{ marginRight: "5px" }}
+                      />
+                    </div>
+                  ))}
                 {selectedTab === "OneToOne" && <OneToOne />}
                 {selectedTab === "TutorProfileUP" && <TutorProfileUP />}
                 {selectedTab === "Support" && <Support />}
@@ -59,6 +90,8 @@ export default function Home() {
                 {selectedTab === "QuickLogin" && <Landing />}
                 {selectedTab === "Support" && <Support />}
                 {selectedTab === "Inbox" && <Support />}
+                {selectedTab === "TTT" && <Support />}
+
                 {/* Add non-logged-in components as needed */}
               </>
             )}

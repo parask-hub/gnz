@@ -11,7 +11,7 @@ const BlurBackground = () => {
   return <div className="blur-background"></div>;
 };
 
-const LoginForm = ({ handleCloseForm }) => {
+const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
   const [profilePhoto, setProfilePhoto] = useState(
     "https://example.com/profile-photo.jpg"
   );
@@ -54,6 +54,9 @@ const LoginForm = ({ handleCloseForm }) => {
 
     const appVerifier = window.recaptchaVerifier;
     const formatPh = `+${ph.replace(/\D/g, "")}`;
+    console.log(formatPh);
+    setPh(formatPh);
+    console.log("ph : " + ph);
 
     signInWithPhoneNumber(auth, formatPh, appVerifier)
       .then((confirmationResult) => {
@@ -63,7 +66,7 @@ const LoginForm = ({ handleCloseForm }) => {
         displayPopup("OTP sent successfully", "success");
 
         // Set isNewUser when OTP is sent
-        setIsNewUser(confirmationResult._tokenResponse?.isNewUser);
+        // setIsNewUser(confirmationResult._tokenResponse?.isNewUser);
       })
       .catch((error) => {
         console.log(error);
@@ -78,14 +81,39 @@ const LoginForm = ({ handleCloseForm }) => {
     try {
       const res = await window.confirmationResult.confirm(otp);
 
-      // Set isNewUser state based on _tokenResponse
-      setIsNewUser(res._tokenResponse?.isNewUser);
+      if (res && res.user) {
+        setUser(res.user);
+        displayPopup("OTP Verified", "success");
 
-      // setIsNewUser(res.user.displayName == "");
+        console.log(user.phoneNumber);
 
-      setUser(res.user);
-      displayPopup("OTP Verified", "success");
-      registerUser();
+        // Call your server to check if the user exists
+        const response = await fetch(
+          `http://localhost:5000/api/auth/isuserexist/${user.phoneNumber}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.exists);
+          if (data.exists) {
+            setIsNewUser(!data.exists);
+            await registerUser();
+          } else {
+            setIsNewUser(!data.exists); // Set isNewUser based on the response
+          }
+        } else {
+          console.error("Error checking user existence");
+        }
+      } else {
+        console.error("Invalid user data in confirmation result");
+        displayPopup("Invalid user data", "error");
+      }
     } catch (err) {
       console.log(err);
       displayPopup("Invalid OTP", "error");
@@ -96,6 +124,7 @@ const LoginForm = ({ handleCloseForm }) => {
 
   const registerUser = async () => {
     setLoading(true);
+    console.log("register starts");
 
     try {
       const userData = {
@@ -115,6 +144,7 @@ const LoginForm = ({ handleCloseForm }) => {
           body: JSON.stringify(userData),
         }
       );
+      console.log("data passed");
 
       // Check if the response is successful
       if (!registrationResponse.ok) {
@@ -122,11 +152,15 @@ const LoginForm = ({ handleCloseForm }) => {
       }
 
       // Parse the JSON response
+      console.log("Response Taken");
       const responseData = await registrationResponse.json();
+      console.log("it should happen and take response ");
+      console.log(responseData);
+      setUser(responseData.user);
+      await setLoggedUser({ data: responseData.user });
 
-      // Handle success
-      console.log(responseData.message);
-      setIsNewUser(responseData.showNamefield);
+      console.log("Working");
+      console.log("user data  : " + user);
       displayPopup("Account Created successfully", "success");
     } catch (error) {
       // Handle errors
@@ -134,6 +168,7 @@ const LoginForm = ({ handleCloseForm }) => {
       displayPopup("Error in Creating account", "error");
     } finally {
       setLoading(false);
+      toggleUserState();
     }
   };
 

@@ -8,6 +8,9 @@ export default function Navbar({
   isLoggedIn,
   handleSettingsClick,
   handleClose,
+  toggleUserState,
+  setLoggedUser,
+  data,
 }) {
   return (
     <div className="Navbar">
@@ -28,7 +31,13 @@ export default function Navbar({
 
         <div className="text">
           <span style={{ fontSize: "20px" }}>
-            {isLoggedIn ? <h2>Abhinav Garg</h2> : <h2>Welcome To GenZ</h2>}
+            {isLoggedIn ? (
+              <h2>
+                {data.firstname} {data.lastname}
+              </h2>
+            ) : (
+              <h2>Welcome To GenZ</h2>
+            )}
           </span>
           <span style={{ fontSize: "15px", color: "grey" }}>
             {isLoggedIn ? (
@@ -44,6 +53,9 @@ export default function Navbar({
           isLoggedIn={isLoggedIn}
           handleSettingsClick={handleSettingsClick}
           handleClose={handleClose}
+          toggleUserState={toggleUserState}
+          setLoggedUser={setLoggedUser}
+          data={data}
         />
       </div>
     </div>

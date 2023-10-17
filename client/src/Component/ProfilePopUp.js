@@ -4,7 +4,13 @@ import LoginForm from "./LoginForm";
 import "./styles/ProfilePopUp.css";
 import SmallMenuPopUp from "./SmallMenuPopUp";
 
-const ProfilePopUp = ({ isLoggedIn, handleClose }) => {
+const ProfilePopUp = ({
+  isLoggedIn,
+  handleClose,
+  toggleUserState,
+  setLoggedUser,
+  data,
+}) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -40,7 +46,7 @@ const ProfilePopUp = ({ isLoggedIn, handleClose }) => {
   };
 
   const handleLogout = () => {
-    // handle logout logic
+    toggleUserState();
   };
 
   const handleCloseForm = () => {
@@ -64,6 +70,9 @@ const ProfilePopUp = ({ isLoggedIn, handleClose }) => {
                 handleCloseSettings={handleCloseSettings}
                 handleLogout={handleLogout}
                 isSettingsOpen={isSettingsOpen}
+                toggleUserState={toggleUserState}
+                setLoggedUser={setLoggedUser}
+                data={data}
               />
             </div>
           ) : (
@@ -71,7 +80,11 @@ const ProfilePopUp = ({ isLoggedIn, handleClose }) => {
               <h3>Login</h3>
               <div>
                 {isLoginFormVisible && (
-                  <LoginForm handleCloseForm={handleCloseForm} />
+                  <LoginForm
+                    handleCloseForm={handleCloseForm}
+                    toggleUserState={toggleUserState}
+                    setLoggedUser={setLoggedUser}
+                  />
                 )}
               </div>
             </div>

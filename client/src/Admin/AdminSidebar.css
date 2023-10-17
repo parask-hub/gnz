@@ -1,0 +1,17 @@
+/* AdminSidebar.css */
+.admin-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.admin-sidebar li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.admin-sidebar li.active {
+    background-color: #c0c0c0;
+    border-radius: 10px;
+    /* Change this to your preferred active tab color */
+    /* color: white; */
+}

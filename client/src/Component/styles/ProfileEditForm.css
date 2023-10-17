@@ -1,0 +1,273 @@
+/* ProfileEditForm.css */
+
+
+
+.avatar {
+    width: 200px;
+    height: 200px;
+}
+
+.profile-edit-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 90vw;
+    /* width: 400px; */
+    /* Adjust the width as needed */
+    height: 90vh;
+    overflow-y: scroll;
+    z-index: 9999;
+    max-width: 100%;
+}
+
+.profile-edit-form h2 {
+    text-align: center;
+}
+
+.profile-edit-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-edit-form label {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-edit-form input,
+.profile-edit-form textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.submit-btn {
+    background-color: #004998;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+    ;
+}
+
+
+
+.pro-close-btn {
+    background-color: rgb(225, 27, 27);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Add media queries for responsiveness */
+
+
+
+/* ProfileEditForm.css */
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.text-primary {
+    color: #05172a;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #dee2e6;
+    margin: 1rem 0;
+}
+
+.frow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /* margin-right: -15px;
+    margin-left: -15px; */
+}
+
+.flcont {
+    width: 200px;
+}
+
+.fcont {
+    position: relative;
+    width: 60%;
+    min-height: 1px;
+    /* padding-right: 15px; */
+    /* padding-left: 15px; */
+}
+
+.text-center {
+    text-align: center;
+}
+
+.avatar {
+    border-radius: 50%;
+    max-width: 100%;
+    height: auto;
+}
+
+.img-thumbnail {
+    padding: 0.25rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    max-width: 100%;
+    height: auto;
+}
+
+.upload-photo-text {
+    font-size: 14px;
+}
+
+
+
+.formlabel {
+    width: 200px;
+    font-weight: bold;
+    text-align: left;
+}
+
+
+
+.form-control {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    align-self: self-start;
+    color: #495057;
+    width: 300px;
+
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
+
+
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.alert-dismissable {
+    padding-right: 35px;
+}
+
+.panel-close {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
+
+.panel-close:hover {
+    color: #000;
+}
+
+.fa-coffee {
+    margin-right: 5px;
+}
+
+/* Form styling */
+
+
+/* .control-label {
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+} */
+
+.radio-group {
+    display: flex;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* .form-group{
+    width: 100%;
+} */
+
+.radio-group label {
+    margin-right: 15px;
+}
+
+.radio-group input {
+    margin-right: 5px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.submit-btn,
+.pro-close-btn,
+.close-button {
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.pro-close-btn {
+    background-color: #e31b1b;
+    color: #fff;
+    border: none;
+}
+
+.close-button {
+    background-color: transparent;
+    color: #000;
+    border: none;
+}
+
+
+
+@media (max-width: 600px) {
+    .profile-edit-form {
+        width: 90%;
+    }
+    .form-control{
+        width: 100%;
+    }
+        
+        
+}
