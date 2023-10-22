@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/OneToOne.css";
 import TutorProfileBox from "./TutorProfileBox";
 import SortButton from "./SortButton";
-import tutorProfiles from "./TutorData";
 const connectLogo = process.env.PUBLIC_URL + "/Logos/connect.png";
 
 function OneToOne() {
@@ -12,16 +11,49 @@ function OneToOne() {
   const [selectedTutorProfile, setSelectedTutorProfile] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState(null);
+  const [tutorProfiles, setTutorProfiles] = useState([]);
+  const [isFilterVisible, setFilterVisible] = useState(false);
+
+  const filterRef = useRef(null);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/tutor/tutorget")
+      .then((response) => response.json())
+      .then((data) => setTutorProfiles(data))
+      .catch((error) => console.error("Error fetching tutor data:", error));
+  }, []);
 
   const handleProfileBoxClick = (tutorProfile) => {
     setSelectedTutorProfile(tutorProfile);
-    const tutorProfileUPUrl = `/tutor-profile/${tutorProfile.id}`;
+    const tutorProfileUPUrl = `/tutor-profile/${tutorProfile._id}`;
     window.open(tutorProfileUPUrl, "_blank");
   };
 
   const handleSort = (option) => {
     setSortOption(option);
+    setFilterVisible(false);
   };
+
+  const parseExperience = (experienceString) => {
+    return parseFloat(experienceString.match(/\d+/)[0]);
+  };
+
+  const handleFilterToggle = () => {
+    setFilterVisible(!isFilterVisible);
+  };
+
+  const handleClickOutside = (event) => {
+    if (filterRef.current && !filterRef.current.contains(event.target)) {
+      setFilterVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const filteredProfiles = tutorProfiles
     .filter((tutorProfile) =>
@@ -29,17 +61,17 @@ function OneToOne() {
     )
     .sort((a, b) => {
       if (sortOption === "experienceHighToLow") {
-        return b.experience - a.experience;
+        return parseExperience(b.experience) - parseExperience(a.experience);
       } else if (sortOption === "experienceLowToHigh") {
-        return a.experience - b.experience;
+        return parseExperience(a.experience) - parseExperience(b.experience);
       } else if (sortOption === "ordersHighToLow") {
-        return b.orders - a.orders;
+        return b.ordersCount - a.ordersCount;
       } else if (sortOption === "ordersLowToHigh") {
-        return a.orders - b.orders;
+        return a.ordersCount - b.ordersCount;
       } else if (sortOption === "priceHighToLow") {
-        return b.hourlyRate - a.hourlyRate;
+        return b.rate - a.rate;
       } else if (sortOption === "priceLowToHigh") {
-        return a.hourlyRate - b.hourlyRate;
+        return a.rate - b.rate;
       } else if (sortOption === "ratingHighToLow") {
         return b.rating - a.rating;
       } else if (sortOption === "ratingLowToHigh") {
@@ -77,8 +109,10 @@ function OneToOne() {
               className="search-icon"
             />
           </span>
-          <span>
-            {/* Pass the handleSort function to SortButton */}
+          <span
+            ref={filterRef}
+            className={`filter-dropdown ${isFilterVisible ? "show" : ""}`}
+          >
             <SortButton onSort={handleSort} />
           </span>
         </div>

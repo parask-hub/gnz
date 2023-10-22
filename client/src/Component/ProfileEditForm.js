@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./styles/ProfileEditForm.css";
+import Popup from "./PopUp";
 
 const ProfileEditForm = ({ handleClose, setLoggedUser, data }) => {
   const [firstname, setFirstname] = useState(data.firstname);
+  const [popup, setPopup] = useState(null);
   const [lastname, setLastname] = useState(data.lastname);
   const [interest, setInterest] = useState(data.interest);
   const [achievements, setAchievements] = useState(data.achievements);
@@ -40,16 +42,30 @@ const ProfileEditForm = ({ handleClose, setLoggedUser, data }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("User information updated successfully:", data);
         await setLoggedUser({ data: data.user });
-        // Add any additional logic or UI updates as needed
-        handleClose(); // Close the form after a successful update
+        console.log("User information updated successfully:", data);
+        displayPopup("Profile Updated Successfully", "success");
+
+        setTimeout(() => {
+          handleClose(); // Close the form after a successful update
+        }, 3000);
       } else {
         console.error("Failed to update user information");
+        displayPopup("Error in Updation", "error");
       }
     } catch (error) {
       console.error("Error updating user information:", error);
+      displayPopup("Error in Updation", "error");
     }
+  };
+
+  const displayPopup = (message, type) => {
+    setPopup({ message, type });
+
+    // Close the popup after 3 seconds
+    setTimeout(() => {
+      setPopup(null);
+    }, 3000);
   };
 
   const BlurBackground = () => {
@@ -201,6 +217,7 @@ const ProfileEditForm = ({ handleClose, setLoggedUser, data }) => {
           <hr></hr>
         </div>
       </div>
+      {popup && <Popup message={popup.message} type={popup.type} />}
     </>
   );
 };

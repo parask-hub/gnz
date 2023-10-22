@@ -1,18 +1,13 @@
-import React, { useState } from "react";
-import "./Tutor.css"; // Make sure to have a corresponding CSS file
-import tutorData from "./teacherdata";
+import React, { useState, useEffect } from "react";
+import "./Tutor.css";
 import TutorEditForm from "./TutorEditForm";
 
 const Tutor = () => {
   const tutorsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
-
-  const indexOfLastTutor = currentPage * tutorsPerPage;
-  const indexOfFirstTutor = indexOfLastTutor - tutorsPerPage;
-  const currentTutors = tutorData.slice(indexOfFirstTutor, indexOfLastTutor);
-
-  const totalPages = Math.ceil(tutorData.length / tutorsPerPage);
-
+  const [tutorData, setTutorData] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isEditProfileOpen, setEditProfileOpen] = useState(false);
   const [newTutorForm, setNewTutorForm] = useState({
     name: "",
     email: "",
@@ -20,8 +15,30 @@ const Tutor = () => {
     areaOfInterest: "",
   });
 
-  // const [showNewTutorForm, setShowNewTutorForm] = useState(false);
-  const [isEditProfileOpen, setEditProfileOpen] = useState(false);
+  // Fetch data from the API when the component mounts
+  useEffect(() => {
+    fetchData();
+  }, [currentPage]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/tutor/tutorget");
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      setTutorData(data);
+      setTotalPages(Math.ceil(data.length / tutorsPerPage));
+    } catch (error) {
+      console.error("Error fetching tutor data:", error.message);
+    }
+  };
+
+  const indexOfLastTutor = currentPage * tutorsPerPage;
+  const indexOfFirstTutor = indexOfLastTutor - tutorsPerPage;
+  const currentTutors = Array.isArray(tutorData)
+    ? tutorData.slice(indexOfFirstTutor, indexOfLastTutor)
+    : [];
 
   const openEditProfile = () => {
     setEditProfileOpen(true);
@@ -39,24 +56,32 @@ const Tutor = () => {
     }));
   };
 
-  const handleAddTutorSubmit = (e) => {
-    e.preventDefault();
-    console.log("New Tutor Data:", newTutorForm);
-    setNewTutorForm({
-      name: "",
-      email: "",
-      mobileNumber: "",
-      areaOfInterest: "",
-    });
-    // setShowNewTutorForm(false);
-  };
-
   const handleEditTutor = (tutorId) => {
     console.log("Edit Tutor with ID:", tutorId);
+    // Implement edit functionality if needed
   };
 
-  const handleDeleteTutor = (tutorId) => {
-    console.log("Delete Tutor with ID:", tutorId);
+  const handleDeleteTutor = async (tutorId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/tutor/tutordelete/${tutorId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const updatedData = await response.json();
+      setTutorData(updatedData);
+      fetchData();
+    } catch (error) {
+      console.error("Error deleting tutor:", error.message);
+    }
+  };
+
+  const handleRefresh = () => {
+    fetchData();
   };
 
   return (
@@ -65,47 +90,9 @@ const Tutor = () => {
         <button className="add-tutor-btn" onClick={openEditProfile}>
           Add New Tutor
         </button>
-        {/* {showNewTutorForm && (
-          <form onSubmit={handleAddTutorSubmit}>
-            <label>Name:</label>
-            <input
-              type="text"
-              name="name"
-              value={newTutorForm.name}
-              onChange={handleNewTutorChange}
-              required
-            />
-
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={newTutorForm.email}
-              onChange={handleNewTutorChange}
-              required
-            />
-
-            <label>Mobile Number:</label>
-            <input
-              type="text"
-              name="mobileNumber"
-              value={newTutorForm.mobileNumber}
-              onChange={handleNewTutorChange}
-              required
-            />
-
-            <label>Area of Interest:</label>
-            <input
-              type="text"
-              name="areaOfInterest"
-              value={newTutorForm.areaOfInterest}
-              onChange={handleNewTutorChange}
-              required
-            />
-
-            <button type="submit">Add Tutor</button>
-          </form>
-        )} */}
+        <button className="refresh-btn" onClick={handleRefresh}>
+          Refresh
+        </button>
       </div>
 
       <table className="tutor-table">
@@ -121,8 +108,8 @@ const Tutor = () => {
         </thead>
         <tbody>
           {currentTutors.map((tutor) => (
-            <tr key={tutor.id}>
-              <td>{tutor.id}</td>
+            <tr key={tutor._id}>
+              <td>{tutor._id}</td>
               <td>{tutor.name}</td>
               <td>{tutor.email}</td>
               <td>{tutor.mobileNumber}</td>
@@ -130,13 +117,13 @@ const Tutor = () => {
               <td>
                 <button
                   className="edit-btn"
-                  onClick={() => handleEditTutor(tutor.id)}
+                  onClick={() => handleEditTutor(tutor._id)}
                 >
                   Edit
                 </button>
                 <button
                   className="delete-btn"
-                  onClick={() => handleDeleteTutor(tutor.id)}
+                  onClick={() => handleDeleteTutor(tutor._id)}
                 >
                   Delete
                 </button>
@@ -163,12 +150,9 @@ const Tutor = () => {
           Next
         </button>
       </div>
+
       {isEditProfileOpen && (
-        <TutorEditForm
-          onCancel={closeEditProfile}
-          // data={data}
-          // setLoggedUser={setLoggedUser}
-        />
+        <TutorEditForm onCancel={closeEditProfile} fetchData={fetchData} />
       )}
     </div>
   );

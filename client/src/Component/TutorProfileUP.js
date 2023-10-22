@@ -1,25 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./styles/TutorProfileUP.css";
 
-import tutorProfiles from "./TutorData";
-
-function TutorProfileUP() {
+function TutorProfileUP({ firstname, lastname, mobileNumber }) {
   const { tutorId } = useParams();
-  const tutorProfile = tutorProfiles.find(
-    (profile) => profile.id === parseInt(tutorId)
-  );
+  const [tutorProfile, setTutorProfile] = useState(null);
+
+  useEffect(() => {
+    // Fetch tutor profile data based on tutorId
+    fetch(`http://localhost:5000/api/tutor/tutorget/${tutorId}`)
+      .then((response) => response.json())
+      .then((data) => setTutorProfile(data))
+      .catch((error) =>
+        console.error("Error fetching tutor profile data:", error)
+      );
+  }, [tutorId]);
 
   const handleCopyLink = () => {
-    const tutorProfileLink = `${window.location.origin}/tutor-profile/${tutorProfile.id}`;
-    navigator.clipboard
-      .writeText(tutorProfileLink)
-      .then(() => alert("Link copied to clipboard"))
-      .catch((error) => console.error("Unable to copy to clipboard", error));
+    if (tutorProfile) {
+      const tutorProfileLink = `${window.location.origin}/tutor-profile/${tutorProfile._id}`;
+      navigator.clipboard
+        .writeText(tutorProfileLink)
+        .then(() => alert("Link copied to clipboard"))
+        .catch((error) => console.error("Unable to copy to clipboard", error));
+    }
+  };
+
+  const userDataJSON = localStorage.getItem("userData");
+  const userData = JSON.parse(userDataJSON);
+  console.log(userData.firstname);
+  const handleChatNowClick = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/service/chat/sendemail/${tutorProfile._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            userName: `${userData.firstname}  ${userData.lastname}`, // Replace with the user's name
+            // userEmail: "user@example.com", // Replace with the user's email
+            userMobile: `${userData.mobileNumber}`, // Replace with the user's mobile number
+          }),
+        }
+      );
+
+      if (response.status === 200) {
+        alert("Chat request sent to the tutor.");
+      } else {
+        alert("Failed to send chat request. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Error sending chat request:", error);
+    }
   };
 
   if (!tutorProfile) {
-    return <div>Tutor not found</div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -33,7 +72,6 @@ function TutorProfileUP() {
       <div
         style={{
           padding: "10px",
-
           background: "white",
           display: "flex",
           alignItems: "center",
@@ -91,7 +129,7 @@ function TutorProfileUP() {
                   alt={tutorProfile.name}
                 />
               </div>
-              <div className="chatbtn">
+              <div className="chatbtn" onClick={handleChatNowClick}>
                 <button>Chat Now</button>
               </div>
               <div className="cardbody">

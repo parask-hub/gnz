@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
 
 const teacherSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  profilePicture: {
+    type: String, // Store file path or link
+    default: "No Data Available",
+  },
+
   email: {
     type: String,
     required: true,
@@ -8,8 +17,15 @@ const teacherSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
+  image: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+
   mobileNumber: {
     type: String,
   },

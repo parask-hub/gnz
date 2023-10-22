@@ -77,6 +77,11 @@ input[type="text"] {
     color: rgb(69, 68, 68);
 }
 
+
+
+.search-input input{
+    border: none;
+}
 /* Style the search icon */
 .search-icon {
     width: 30px;

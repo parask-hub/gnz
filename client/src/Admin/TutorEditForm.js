@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import "../Component/styles/ProfileEditForm.css"; // Make sure to have a corresponding CSS file
+import "../Component/styles/ProfileEditForm.css";
 
-const EditForm = ({ tutorDetails, onSave, onCancel }) => {
+const EditForm = ({ tutorDetails, onSave, onCancel, fetchData }) => {
   const [editedDetails, setEditedDetails] = useState({ ...tutorDetails });
 
   const BlurBackground = () => {
     return <div className="blur-background"></div>;
   };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedDetails((prevDetails) => ({
@@ -15,8 +16,29 @@ const EditForm = ({ tutorDetails, onSave, onCancel }) => {
     }));
   };
 
-  const handleSave = () => {
-    onSave(editedDetails);
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:5000/api/tutor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedDetails),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const savedData = await response.json();
+      onSave(savedData);
+      fetchData();
+      onCancel();
+    } catch (error) {
+      console.error("Error saving data:", error.message);
+    }
   };
 
   return (
@@ -70,18 +92,6 @@ const EditForm = ({ tutorDetails, onSave, onCancel }) => {
                       type="email"
                       name="email"
                       value={editedDetails.email}
-                      onChange={handleInputChange}
-                    />
-                  </span>
-                </div>
-                <div className="form-group">
-                  <span className="formlabel">Password:</span>
-                  <span>
-                    <input
-                      className="form-control"
-                      type="password"
-                      name="password"
-                      value={editedDetails.password}
                       onChange={handleInputChange}
                     />
                   </span>
@@ -158,41 +168,6 @@ const EditForm = ({ tutorDetails, onSave, onCancel }) => {
                   </span>
                 </div>
                 {/* Additional fields */}
-                <div className="form-group">
-                  <span className="formlabel">Hours Meet Taken:</span>
-                  <span>
-                    <input
-                      className="form-control"
-                      type="number"
-                      name="hoursMeetTaken"
-                      value={editedDetails.hoursMeetTaken}
-                      onChange={handleInputChange}
-                    />
-                  </span>
-                </div>
-                <div className="form-group">
-                  <span className="formlabel">Orders Count:</span>
-                  <span>
-                    <input
-                      className="form-control"
-                      type="number"
-                      name="ordersCount"
-                      value={editedDetails.ordersCount}
-                      onChange={handleInputChange}
-                    />
-                  </span>
-                </div>
-                <div className="form-group">
-                  <span className="formlabel">User Reviews:</span>
-                  <span>
-                    <textarea
-                      className="form-control"
-                      name="userReviews"
-                      value={editedDetails.userReviews}
-                      onChange={handleInputChange}
-                    ></textarea>
-                  </span>
-                </div>
                 <div className="form-group">
                   <span className="formlabel">Video Call Availability:</span>
                   <span>

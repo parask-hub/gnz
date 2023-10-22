@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Home from "./Component/Home";
 import TutorProfileUP from "./Component/TutorProfileUP";
+import VideoCallPage from "./Component/VideoCallPage";
 import AdminHome from "./Admin/AdminHome";
 
 import {
@@ -15,24 +16,25 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
 
-  const setLoggedUser = async ({ data }) => {
-    await setUserData(data);
-    console.log("data = ", userData);
-    console.log("data imported : ", data);
+  useEffect(() => {
+    // Load user data from localStorage when the app starts
+    const userDataJSON = localStorage.getItem("userData");
+    if (userDataJSON) {
+      const userDataObj = JSON.parse(userDataJSON);
+      setUserData(userDataObj);
+    }
+  }, []); // Empty dependency array, so it only runs once when the component mounts
+
+  const setLoggedUser = ({ data }) => {
+    setUserData(data);
+    // Store the data in localStorage when it changes
+    const userDataJSON = JSON.stringify(data);
+    localStorage.setItem("userData", userDataJSON);
   };
-  // console.log(userData);
 
   const toggleUserState = () => {
     setIsLoggedIn(!isLoggedIn);
-    console.log("toggled : " + isLoggedIn);
   };
-
-  // useEffect to handle side effects when isLoggedIn changes
-  useEffect(() => {
-    // Do something when isLoggedIn changes
-    console.log("data = ", userData);
-    console.log("isLoggedIn changed:", isLoggedIn);
-  }, [isLoggedIn, userData]); // Dependency array to specify what variables to watch for changes
 
   return (
     <div>
@@ -53,9 +55,16 @@ function App() {
             />
             <Route
               path="/tutor-profile/:tutorId"
-              element={<TutorProfileUP />}
+              element={
+                <TutorProfileUP
+                  firstname={userData.firstname}
+                  lastname={userData.lastname}
+                  mobileNumber={userData.mobileNumber}
+                />
+              }
             />
-            <Route path="/admin" element={<AdminHome />}></Route>
+            <Route path="/admin" element={<AdminHome />} />
+            <Route path="/VideoCalling" element={<VideoCallPage />} />
           </Routes>
         </div>
       </Router>

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./styles/Home.css";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-
 import Footer from "./Footer";
 import UserProfile from "./UserProfile";
 import OneToOne from "./OneToOne";
@@ -18,10 +17,10 @@ export default function Home({
 }) {
   console.log("in Home : " + isLoggedIn);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
   const [selectedTab, setSelectedTab] = useState(
     isLoggedIn ? "UserProfile" : "QuickLogin"
   );
+  const mainContentRef = useRef(null);
 
   const handleItemClick = (tab) => {
     setIsSettingsOpen(false);
@@ -35,6 +34,11 @@ export default function Home({
   const handleClose = () => {
     setIsSettingsOpen(false);
   };
+
+  // Use useEffect to scroll to the top when the selected tab changes
+  useEffect(() => {
+    mainContentRef.current.scrollTo(0, 0);
+  }, [selectedTab]);
 
   return (
     <>
@@ -64,22 +68,12 @@ export default function Home({
           handleItemClick={handleItemClick}
           handleItemClickSetting={handleItemClickSetting}
         />
-        <div className="maincontent">
+        <div className="maincontent" ref={mainContentRef}>
           <div className="pg">
             {isLoggedIn ? (
               <>
                 {selectedTab === "UserProfile" &&
-                  (data ? (
-                    <UserProfile data={data} />
-                  ) : (
-                    <div>
-                      <img
-                        src="https://i.gifer.com/ZKZx.gif"
-                        height={"20px"}
-                        style={{ marginRight: "5px" }}
-                      />
-                    </div>
-                  ))}
+                  (data ? <UserProfile data={data} /> : <div>...</div>)}
                 {selectedTab === "OneToOne" && <OneToOne />}
                 {selectedTab === "TutorProfileUP" && <TutorProfileUP />}
                 {selectedTab === "Support" && <Support />}
@@ -99,7 +93,6 @@ export default function Home({
           </div>
         </div>
       </div>
-      {/* {isSettingsOpen && <SettingsPopup handleClose={handleClose} />} */}
     </>
   );
 }

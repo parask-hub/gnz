@@ -2,7 +2,7 @@ import React from "react";
 import "./styles/TutorProfileBox.css";
 
 function TutorProfileBox({ tutorProfile }) {
-  const { name, image, orders, description, hourlyRate } = tutorProfile;
+  const { name, image, ordersCount, description, rate } = tutorProfile;
 
   return (
     <div className="profileBox">
@@ -20,7 +20,7 @@ function TutorProfileBox({ tutorProfile }) {
           />
         </div>
         <div style={{ fontSize: "12px" }}>
-          <p>Orders: {orders}</p>
+          <p>Orders: {ordersCount}</p>
         </div>
       </div>
       <div className="rightportion">
@@ -28,7 +28,7 @@ function TutorProfileBox({ tutorProfile }) {
         <span style={{ fontSize: "13px" }}>{description}</span>
         <div className="rightbottom">
           <div>
-            <b>{`Rs ${hourlyRate}/Hr`}</b>
+            <b>{`Rs ${rate}/Hr`}</b>
           </div>
           <div>
             <p>
