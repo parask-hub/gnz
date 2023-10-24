@@ -3,6 +3,12 @@ const Teacher = require("../models/teacherSchema");
 const createAccount = async (req, res) => {
   try {
     const newTeacher = new Teacher(req.body);
+
+    if (req.file) {
+      // If a file was uploaded, save the file path in the `image` field of the newTeacher object
+      newTeacher.image = req.file.path;
+    }
+
     const savedTeacher = await newTeacher.save();
     console.log("Tutor account created successfully");
     res.json(savedTeacher);

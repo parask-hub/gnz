@@ -6,37 +6,43 @@ const ProfileEditForm = ({ handleClose, setLoggedUser, data }) => {
   const [firstname, setFirstname] = useState(data.firstname);
   const [popup, setPopup] = useState(null);
   const [lastname, setLastname] = useState(data.lastname);
+  const [image, setImage] = useState("");
   const [interest, setInterest] = useState(data.interest);
   const [achievements, setAchievements] = useState(data.achievements);
   const [gender, setGender] = useState(data.gender);
   const [englishFluency, setEnglishFluency] = useState(data.englishFluency);
   const [aboutMe, setAboutMe] = useState(data.aboutMe);
 
+  console.log(image);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Assuming userId is available, replace 'yourUserId' with the actual user ID
     const userId = data._id;
 
-    const formData = {
-      firstname,
-      lastname,
-      interest,
-      achievements,
-      gender,
-      englishFluency,
-      aboutMe,
-    };
+    // Create a new FormData object
+    const formData = new FormData();
+
+    // Append text data to the FormData object
+    formData.append("firstname", firstname);
+    formData.append("lastname", lastname);
+    formData.append("interest", interest);
+    formData.append("achievements", achievements);
+    formData.append("gender", gender);
+    formData.append("englishFluency", englishFluency);
+    formData.append("aboutMe", aboutMe);
+
+    // Append the image file to the FormData object
+    if (image) {
+      formData.append("profilePicture", image);
+    }
 
     try {
       const response = await fetch(
         `http://localhost:5000/api/user/update/${userId}`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
+          body: formData, // Use the FormData object
         }
       );
 
@@ -86,13 +92,27 @@ const ProfileEditForm = ({ handleClose, setLoggedUser, data }) => {
             {/* Left column */}
             <div className="flcont">
               <div className="text-center">
-                <img
-                  src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                  className="avatar img-circle img-thumbnail"
-                  alt="avatar"
-                />
+                {data.profilePicture !== "" ? ( // Check if profilePicture exists
+                  <img
+                    src={`http://localhost:5000/${data.profilePicture}`} // Use the actual profile picture
+                    className="avatar img-circle img-thumbnail"
+                    alt="avatar"
+                  />
+                ) : (
+                  <img
+                    src="https://bootdey.com/img/Content/avatar/avatar7.png" // Use the default image
+                    className="avatar img-circle img-thumbnail"
+                    alt="avatar"
+                  />
+                )}
                 <span>
-                  <input type="file" style={{ width: "100%" }} />
+                  <input
+                    onChange={(e) => {
+                      setImage(e.target.files[0]);
+                    }}
+                    type="file"
+                    style={{ width: "100%" }}
+                  />
                 </span>
               </div>
             </div>

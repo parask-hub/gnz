@@ -8,7 +8,7 @@ function TutorProfileBox({ tutorProfile }) {
     <div className="profileBox">
       <div className="leftportion">
         <div>
-          <img
+          {/* <img
             src={image}
             alt=""
             style={{
@@ -17,7 +17,32 @@ function TutorProfileBox({ tutorProfile }) {
               background: "cover",
               borderRadius: "50%",
             }}
-          />
+          /> */}
+          {image != "" ? ( // Check if profilePicture exists
+            <img
+              src={`http://localhost:5000/${image}`} // Use the actual profile picture
+              className="avatar img-circle img-thumbnail"
+              alt="avatar"
+              style={{
+                height: "80px",
+                width: "80px",
+                background: "cover",
+                borderRadius: "50%",
+              }}
+            />
+          ) : (
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar7.png" // Use the default image
+              className="avatar img-circle img-thumbnail"
+              alt="avatar"
+              style={{
+                height: "80px",
+                width: "80px",
+                background: "cover",
+                borderRadius: "50%",
+              }}
+            />
+          )}
         </div>
         <div style={{ fontSize: "12px" }}>
           <p>Orders: {ordersCount}</p>

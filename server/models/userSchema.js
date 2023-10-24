@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   },
   profilePicture: {
     type: String, // Store file path or link
-    default: "No Data Available",
+    default: "",
   },
   aboutMe: {
     type: String,

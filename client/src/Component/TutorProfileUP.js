@@ -125,7 +125,7 @@ function TutorProfileUP({ firstname, lastname, mobileNumber }) {
                     borderRadius: "50%",
                     objectFit: "cover",
                   }}
-                  src={tutorProfile.image}
+                  src={`http://localhost:5000/${tutorProfile.image}`}
                   alt={tutorProfile.name}
                 />
               </div>

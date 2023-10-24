@@ -5,10 +5,6 @@ const teacherSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  profilePicture: {
-    type: String, // Store file path or link
-    default: "No Data Available",
-  },
 
   email: {
     type: String,
@@ -21,6 +17,7 @@ const teacherSchema = new mongoose.Schema({
   },
   image: {
     type: String,
+    default: "",
   },
   description: {
     type: String,

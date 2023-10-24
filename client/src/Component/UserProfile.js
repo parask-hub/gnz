@@ -8,7 +8,7 @@ function UserProfile({ data }) {
         <div className="userleftportion">
           <div className="userprofileBox">
             <div className="Image">
-              <img
+              {/* <img
                 style={{
                   height: "200px",
                   width: "200px",
@@ -17,7 +17,33 @@ function UserProfile({ data }) {
                 }}
                 src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
                 alt=""
-              />
+              /> */}
+
+              {data.profilePicture != "" ? ( // Check if profilePicture exists
+                <img
+                  src={`http://localhost:5000/${data.profilePicture}`} // Use the actual profile picture
+                  className="avatar img-circle img-thumbnail"
+                  alt="avatar"
+                  style={{
+                    height: "200px",
+                    width: "200px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                />
+              ) : (
+                <img
+                  src="https://bootdey.com/img/Content/avatar/avatar7.png" // Use the default image
+                  className="avatar img-circle img-thumbnail"
+                  alt="avatar"
+                  style={{
+                    height: "200px",
+                    width: "200px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                />
+              )}
             </div>
             <div className="cardbody">
               <div>

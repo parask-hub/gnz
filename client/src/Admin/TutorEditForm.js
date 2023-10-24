@@ -3,9 +3,15 @@ import "../Component/styles/ProfileEditForm.css";
 
 const EditForm = ({ tutorDetails, onSave, onCancel, fetchData }) => {
   const [editedDetails, setEditedDetails] = useState({ ...tutorDetails });
+  const [imageFile, setImageFile] = useState(null);
 
   const BlurBackground = () => {
     return <div className="blur-background"></div>;
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
   };
 
   const handleInputChange = (e) => {
@@ -20,12 +26,17 @@ const EditForm = ({ tutorDetails, onSave, onCancel, fetchData }) => {
     e.preventDefault();
 
     try {
+      const formData = new FormData(); // Create a FormData object to send the image file
+      formData.append("image", imageFile); // Add the image file to the form data
+
+      // Append other fields from editedDetails to the FormData
+      for (const key in editedDetails) {
+        formData.append(key, editedDetails[key]);
+      }
+
       const response = await fetch("http://localhost:5000/api/tutor", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editedDetails),
+        body: formData, // Send the FormData object containing the image and other data
       });
 
       if (!response.ok) {
@@ -64,7 +75,13 @@ const EditForm = ({ tutorDetails, onSave, onCancel, fetchData }) => {
                   alt="avatar"
                 />
                 <span>
-                  <input type="file" style={{ width: "100%" }} />
+                  <input
+                    type="file"
+                    name="image"
+                    value={editedDetails.image}
+                    onChange={handleImageChange}
+                    style={{ width: "100%" }}
+                  />
                 </span>
               </div>
             </div>

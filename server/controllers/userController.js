@@ -6,11 +6,19 @@ const updateUser = async (req, res) => {
 
     const existingUser = await User.findById(userId);
 
+    console.log(req);
+
     if (!existingUser) {
       return res.status(404).json({ message: "User not found" });
     }
 
     // Update the fields only if they are provided in the request
+
+    if (req.body.coins) {
+      existingUser.coins =
+        parseInt(existingUser.coins) + parseInt(req.body.coins);
+    }
+
     if (req.body.firstname) {
       existingUser.firstname = req.body.firstname;
     }
@@ -39,8 +47,9 @@ const updateUser = async (req, res) => {
       existingUser.aboutMe = req.body.aboutMe;
     }
 
-    if (req.body.profilePicture) {
-      existingUser.profilePicture = req.body.profilePicture;
+    if (req.file) {
+      // If an image file is uploaded, store its path as the profile picture
+      existingUser.profilePicture = req.file.path;
     }
 
     const updatedUser = await existingUser.save();

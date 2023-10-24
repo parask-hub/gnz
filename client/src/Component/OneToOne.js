@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles/OneToOne.css";
 import TutorProfileBox from "./TutorProfileBox";
 import SortButton from "./SortButton";
+import RechargeForm from "./RechargeForm";
 const connectLogo = process.env.PUBLIC_URL + "/Logos/connect.png";
 
 function OneToOne() {
@@ -13,6 +14,10 @@ function OneToOne() {
   const [sortOption, setSortOption] = useState(null);
   const [tutorProfiles, setTutorProfiles] = useState([]);
   const [isFilterVisible, setFilterVisible] = useState(false);
+  const [showRechargeForm, setShowRechargeForm] = useState(false);
+
+  const userDataStr = localStorage.getItem("userData");
+  const userData = JSON.parse(userDataStr);
 
   const filterRef = useRef(null);
 
@@ -90,8 +95,10 @@ function OneToOne() {
             <h3 style={{ marginLeft: "10px" }}>1:1 Connect</h3>
           </div>
           <div className="row2content">
-            <p>Available Balance: Rs 200</p>
-            <button>Recharge Wallet</button>
+            <p>Available Balance: {userData.coins}</p>
+            <button onClick={() => setShowRechargeForm(true)}>
+              Recharge Wallet
+            </button>
           </div>
         </div>
 
@@ -134,6 +141,9 @@ function OneToOne() {
           )}
         </div>
       </div>
+      {showRechargeForm && (
+        <RechargeForm handleClose={() => setShowRechargeForm(false)} />
+      )}
     </>
   );
 }
