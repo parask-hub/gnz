@@ -13,7 +13,7 @@ const teacherSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    // required: true,
+    default: Math.random().toString(36).slice(-8), // Generates an 8-character random string
   },
   image: {
     type: String,

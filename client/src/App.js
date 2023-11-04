@@ -4,6 +4,11 @@ import Home from "./Component/Home";
 import TutorProfileUP from "./Component/TutorProfileUP";
 import VideoCallPage from "./Component/VideoCallPage";
 import AdminHome from "./Admin/AdminHome";
+import TutorLogin from "./TutorComponents/TutorLogin";
+import TutorHome from "./TutorComponents/TutorHome";
+import TNotifications from "./TutorComponents/TNotifications";
+import TProfileEdit from "./TutorComponents/TProfileEdit";
+import TutorProfilePage from "./TutorComponents/TutorProfilePage";
 
 import {
   BrowserRouter as Router,
@@ -65,6 +70,9 @@ function App() {
             />
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/VideoCalling" element={<VideoCallPage />} />
+            <Route path="/ourtutor" element={<TutorLogin />} />
+            <Route path="/tutor/:tutorId" element={<TutorHome />} />
+            <Route path="/tutor/:tutorId/" element={<TutorHome />} />
           </Routes>
         </div>
       </Router>

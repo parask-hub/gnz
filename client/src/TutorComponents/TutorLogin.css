@@ -1,0 +1,54 @@
+.t-tutor-container{
+    height: 100vh;
+    width: 100vw;
+    background-color: #c0c0c0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.t-form-container{
+    height: fit-content;
+    padding: 20px;
+    
+    width: 40vw;
+    min-width: 300px;
+    margin: auto;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.t-input{
+    width:fit-content;
+    margin: auto;
+}
+
+.input-field{
+    padding: 10px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+   
+}
+
+
+.input-field input{
+    border: 1px solid grey;
+    padding: 10px;
+    outline: none;
+    font-size: 16px;
+    color: black;
+background: transparent;
+}
+.button {
+    padding: 10px 20px;
+    background-color: #004998;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+}

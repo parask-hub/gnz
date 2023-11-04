@@ -1,4 +1,15 @@
 const Teacher = require("../models/teacherSchema");
+const jwt = require("jsonwebtoken");
+
+const secretKey = "your-secret-key";
+
+const generateAccessToken = (user) => {
+  return jwt.sign(user, secretKey, { expiresIn: "15m" }); // Token expires in 15 minutes
+};
+
+const generateRefreshToken = (user) => {
+  return jwt.sign(user, secretKey); // Refresh token does not expire
+};
 
 const createAccount = async (req, res) => {
   try {
@@ -11,6 +22,41 @@ const createAccount = async (req, res) => {
 
     const savedTeacher = await newTeacher.save();
     console.log("Tutor account created successfully");
+    const nodemailer = require("nodemailer");
+
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: "paraskhilosiyapkofficial@gmail.com",
+        pass: "xaft pokv yvnh youl",
+      },
+    });
+
+    const mailOptions = {
+      from: "paraskhilosiyapkofficial@gmail.com",
+      to: savedTeacher.email,
+      subject: "Congratulations On being Part OF 'Genz' Tutors",
+      html: `
+        <p>Congratulations! You have been selected to be a tutor at Genz.</p>
+        <p>Your Credentials:</p>
+        <ul>
+          <li><strong>Password:</strong> ${savedTeacher.password}</li>
+          <li><strong>Email:</strong> ${savedTeacher.email}</li>
+          <li><strong>Mobile Number:</strong> ${savedTeacher.mobileNumber}</li>
+        </ul>
+        <p>Click <a href="localhost:3000/ourtutor">here</a> to log in to your account.</p>
+      `,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log("Chat request email sent:", info.response);
+        window.alert("Email sent to the tutor regarding their credentials.");
+        // res.status(200).send("Chat request sent successfully");
+      }
+    });
     res.json(savedTeacher);
   } catch (error) {
     console.error("Error creating tutor account:", error.message);
@@ -81,10 +127,55 @@ const deleteTutor = async (req, res) => {
   }
 };
 
+const tutorLogin = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await Teacher.findOne({
+      $or: [{ email: username }, { mobileNumber: username }],
+      password: password,
+    });
+
+    if (user) {
+      const accessToken = generateAccessToken({
+        id: user._id,
+        username: user.username,
+      });
+      const refreshToken = generateRefreshToken({
+        id: user._id,
+        username: user.username,
+      });
+      return res.status(200).json({ accessToken, refreshToken, id: user._id });
+    } else {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const tokengeneration = (req, res) => {
+  const refreshToken = req.body.refreshToken;
+
+  jwt.verify(refreshToken, secretKey, (err, user) => {
+    if (err) {
+      return res.sendStatus(403);
+    }
+
+    const accessToken = generateAccessToken({
+      id: user.id,
+      username: user.username,
+    });
+    res.json({ accessToken });
+  });
+};
+
 module.exports = {
   createAccount,
   editTutor,
   getAccounts,
   deleteTutor,
   getAccountById,
+  tutorLogin,
+  tokengeneration,
 };

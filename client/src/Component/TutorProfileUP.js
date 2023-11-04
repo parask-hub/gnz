@@ -145,7 +145,7 @@ function TutorProfileUP({ firstname, lastname, mobileNumber }) {
                     <span>
                       <b>Rate Per Call : </b>
                     </span>
-                    <span>{tutorProfile.hourlyRate}</span>
+                    <span>{tutorProfile.rate}</span>
                   </div>
                   <div className="profileattributes">
                     <span>

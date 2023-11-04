@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const tutorController = require("../controllers/tutorController");
 const path = require("path");
 const multer = require("multer");
@@ -22,5 +23,7 @@ router.get("/tutorget", tutorController.getAccounts);
 router.put("/tutoredit/:id", tutorController.editTutor);
 router.delete("/tutordelete/:id", tutorController.deleteTutor);
 router.get("/tutorget/:tutorId", tutorController.getAccountById);
+router.post("/login", tutorController.tutorLogin);
+router.post("/refresh-token", tutorController.tokengeneration);
 
 module.exports = router;

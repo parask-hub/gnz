@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Tutor.css";
 import TutorEditForm from "./TutorEditForm";
+import Modal from "./Modal";
 
 const Tutor = () => {
   const tutorsPerPage = 5;
@@ -14,6 +15,12 @@ const Tutor = () => {
     mobileNumber: "",
     areaOfInterest: "",
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTutor, setSelectedTutor] = useState(null);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   // Fetch data from the API when the component mounts
   useEffect(() => {
@@ -56,9 +63,9 @@ const Tutor = () => {
     }));
   };
 
-  const handleEditTutor = (tutorId) => {
-    console.log("Edit Tutor with ID:", tutorId);
-    // Implement edit functionality if needed
+  const handleViewTutor = ({ tutor }) => {
+    console.log("Edit Tutor with ID:", tutor);
+    setIsModalOpen(true);
   };
 
   const handleDeleteTutor = async (tutorId) => {
@@ -117,9 +124,12 @@ const Tutor = () => {
               <td>
                 <button
                   className="edit-btn"
-                  onClick={() => handleEditTutor(tutor._id)}
+                  onClick={() => {
+                    setSelectedTutor(tutor);
+                    setIsModalOpen(true);
+                  }}
                 >
-                  Edit
+                  View
                 </button>
                 <button
                   className="delete-btn"
@@ -154,6 +164,11 @@ const Tutor = () => {
       {isEditProfileOpen && (
         <TutorEditForm onCancel={closeEditProfile} fetchData={fetchData} />
       )}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        tutorProfile={selectedTutor}
+      />
     </div>
   );
 };

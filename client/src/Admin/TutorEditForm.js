@@ -44,8 +44,10 @@ const EditForm = ({ tutorDetails, onSave, onCancel, fetchData }) => {
       }
 
       const savedData = await response.json();
-      onSave(savedData);
+      console.log(savedData);
+      // onSave(savedData);
       fetchData();
+
       onCancel();
     } catch (error) {
       console.error("Error saving data:", error.message);
