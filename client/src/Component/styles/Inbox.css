@@ -1,0 +1,30 @@
+/* NotificationBox.css */
+
+.inbox-container {
+    width:60vw;
+    min-width: 300px;
+    height: fit-content;
+    margin: 0 auto;
+}
+
+.inbox {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: rgb(102, 187, 102);
+        border-radius: 10px;
+    /* Default background color for unread notifications */
+}
+
+.inbox.read {
+    background-color: #ff9595;
+    /* Background color for read notifications */
+}
+
+.inbox-timer {
+    text-align: right;
+    margin-top: 5px;
+    color: red;
+}
+

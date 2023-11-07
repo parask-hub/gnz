@@ -25,4 +25,6 @@ router.post(
   userController.updateUser
 );
 
+router.get("/getUserData/:userId", userController.getUserData);
+
 module.exports = router;

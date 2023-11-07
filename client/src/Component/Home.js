@@ -8,6 +8,7 @@ import OneToOne from "./OneToOne";
 import TutorProfileUP from "./TutorProfileUP";
 import Landing from "./Landing";
 import Support from "./Support";
+import Inbox from "./Inbox";
 
 export default function Home({
   isLoggedIn,
@@ -67,6 +68,7 @@ export default function Home({
           selectedTab={selectedTab}
           handleItemClick={handleItemClick}
           handleItemClickSetting={handleItemClickSetting}
+          data={data}
         />
         <div className="maincontent" ref={mainContentRef}>
           <div className="pg">
@@ -77,7 +79,7 @@ export default function Home({
                 {selectedTab === "OneToOne" && <OneToOne />}
                 {selectedTab === "TutorProfileUP" && <TutorProfileUP />}
                 {selectedTab === "Support" && <Support />}
-                {selectedTab === "Inbox" && <Support />}
+                {selectedTab === "Inbox" && <Inbox data={data} />}
               </>
             ) : (
               <>

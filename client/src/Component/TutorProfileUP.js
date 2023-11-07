@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./styles/TutorProfileUP.css";
+import axios from "axios";
 
 function TutorProfileUP({ firstname, lastname, mobileNumber }) {
   const { tutorId } = useParams();
@@ -55,6 +56,27 @@ function TutorProfileUP({ firstname, lastname, mobileNumber }) {
     } catch (error) {
       console.error("Error sending chat request:", error);
     }
+  };
+
+  const chatNotification = () => {
+    const userId = userData._id;
+    const object = {
+      senderId: userId,
+      senderModel: "User",
+      receiverId: tutorProfile._id,
+      receiverModel: "Teacher",
+      message: `New Chat Request from the ${userData.firstname} ${userData.lastname} Basically for testing process of expiration state `,
+      status: false,
+    };
+
+    axios
+      .post("http://localhost:5000/api/notification/send", object)
+      .then((res) => {
+        alert("notification sent");
+      })
+      .catch((error) => {
+        console.error("Error sending notification:", error);
+      });
   };
 
   if (!tutorProfile) {
@@ -129,7 +151,13 @@ function TutorProfileUP({ firstname, lastname, mobileNumber }) {
                   alt={tutorProfile.name}
                 />
               </div>
-              <div className="chatbtn" onClick={handleChatNowClick}>
+              <div
+                className="chatbtn"
+                onClick={() => {
+                  handleChatNowClick();
+                  chatNotification();
+                }}
+              >
                 <button>Chat Now</button>
               </div>
               <div className="cardbody">

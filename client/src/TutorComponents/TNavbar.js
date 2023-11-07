@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import TutorProfilePage from "./TutorProfilePage";
 import NotificationBox from "./NotificationBox";
+import axios from "axios";
 
 Modal.setAppElement("#root"); // Set the root element for accessibility
 
-function TNavbar() {
+function TNavbar({ tutorId }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => {
@@ -15,6 +16,29 @@ function TNavbar() {
   const closeModal = () => {
     setModalIsOpen(false);
   };
+
+  const [count, setCount] = useState(0);
+
+  const fetchNotificationCount = () => {
+    axios
+      .get(`http://localhost:5000/api/notification/count/${tutorId}`)
+      .then((response) => {
+        setCount(response.data.count);
+      })
+      .catch((error) => {
+        console.error("Error fetching notification count:", error);
+      });
+  };
+  useEffect(() => {
+    // Fetch the initial notification count
+    fetchNotificationCount();
+
+    // Poll for the notification count every 30 seconds
+    const intervalId = setInterval(fetchNotificationCount, 5000);
+
+    // Clean up the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, [tutorId]);
 
   return (
     <div
@@ -35,7 +59,9 @@ function TNavbar() {
           <h1>GenZ</h1>
         </span>
       </p>
-      <button onClick={openModal}>View Notification</button>
+      <button onClick={openModal}>
+        View Notification &nbsp; <b>{count}</b>
+      </button>
 
       <Modal
         isOpen={modalIsOpen}
@@ -46,7 +72,7 @@ function TNavbar() {
           {/* Content for the notification modal */}
           {/* You can render any information related to the notification here */}
           {/* For example: */}
-          <NotificationBox />
+          <NotificationBox tutorId={tutorId} />
 
           <button onClick={closeModal}>Close Modal</button>
         </div>

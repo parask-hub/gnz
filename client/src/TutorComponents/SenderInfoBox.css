@@ -1,0 +1,36 @@
+/* UserProfile.css */
+
+.user-profile-card {
+    width: fit-content;
+
+    border: 1px solid #ccc;
+    padding: 20px;
+    /* margin: 20px; */
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+
+.user-profile-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.user-profile-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.user-profile-details {
+    margin-top: 10px;
+}
+
+.user-profile-detail-label {
+    font-weight: bold;
+}
+
+.user-profile-detail-value {
+    margin-left: 10px;
+}

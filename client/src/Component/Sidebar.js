@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import "./styles/Sidebar.css";
+import axios from "axios";
 
 const profileLogo = process.env.PUBLIC_URL + "/Logos/profile.png";
 const connectLogo = process.env.PUBLIC_URL + "/Logos/connect.png";
@@ -10,10 +11,34 @@ const Sidebar = ({
   isLoggedIn,
   selectedTab,
   handleItemClick,
+  data,
   handleSettingsClick,
   handleItemClickSetting,
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [count, setCount] = useState(0);
+
+  const fetchNotificationCount = () => {
+    axios
+      .get(`http://localhost:5000/api/notification/count/${data._id}`)
+      .then((response) => {
+        setCount(response.data.count);
+      })
+      .catch((error) => {
+        console.error("Error fetching notification count:", error);
+      });
+  };
+
+  useEffect(() => {
+    // Fetch the initial notification count
+    fetchNotificationCount();
+
+    // Poll for the notification count every 30 seconds
+    const intervalId = setInterval(fetchNotificationCount, 5000);
+
+    // Clean up the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, [data._id]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -103,7 +128,9 @@ const Sidebar = ({
                 src="https://img.icons8.com/ios-glyphs/30/download-mail.png"
                 alt="download-mail"
               />
-              <span className="sidebar-text">Inbox</span>
+              <span className="sidebar-text">
+                Inbox &nbsp; <b>{count}</b>
+              </span>
             </li>
           </>
         ) : (
