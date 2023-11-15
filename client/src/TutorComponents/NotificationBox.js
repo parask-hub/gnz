@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import SenderInfoBox from "./SenderInfoBox";
+import { useNavigate } from "react-router-dom";
+
+import { v4 as uuidv4 } from "uuid";
 
 import "./NotificationBox.css"; // Import your CSS file
 
 const NotificationBox = ({ tutorId }) => {
+  const navigate = useNavigate();
+
   const [notifications, setNotifications] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState(null);
@@ -76,12 +81,19 @@ const NotificationBox = ({ tutorId }) => {
 
   // Function to handle accepting the notification
   const acceptNotification = () => {
+    const roomName = uuidv4();
+    const domain = "meet.jit.si";
+    const meetLink = `https://${domain}/${roomName}`;
+
+    // Move to the VideoCalling route with the roomName as a query parameter
+    window.open(`/VideoCalling?roomName=${roomName}`, "_blank");
+    // navigate(`/VideoCalling?roomName=${roomName}`);
     const object = {
       senderId: tutorId,
       senderModel: "Teacher",
       receiverId: senderData._id,
       receiverModel: "User",
-      message: `Your Chat Request Is Accepted`,
+      message: `Your Chat Request Is Accepted. Join the meeting: ${meetLink}`,
       status: false,
     };
 
@@ -102,32 +114,34 @@ const NotificationBox = ({ tutorId }) => {
         <p>No Notifications Yet!</p>
       ) : (
         <div>
-          {notifications.map((notification, index) => (
-            <div
-              key={index}
-              className={`notification ${
-                notification.read ? "read" : "unread"
-              }`}
-              onClick={() => {
-                if (!notification.read) {
-                  markAsRead(notification._id); // Mark the notification as read
-                }
-                openModal(notification); // Open the modal
-              }}
-            >
-              <strong>{notification.senderModel}:</strong>{" "}
-              {notification.message}
-              <div className="notification-timer">
-                {notification.read ? (
-                  "Read"
-                ) : (
-                  <span>
-                    Unread - <span>5:00</span>
-                  </span>
-                )}
+          {notifications
+            .filter((notification) => notification.state === "active")
+            .map((notification, index) => (
+              <div
+                key={index}
+                className={`notification ${
+                  notification.read ? "read" : "unread"
+                }`}
+                onClick={() => {
+                  if (!notification.read) {
+                    markAsRead(notification._id); // Mark the notification as read
+                  }
+                  openModal(notification); // Open the modal
+                }}
+              >
+                <strong>{notification.senderModel}:</strong>{" "}
+                {notification.message}
+                <div className="notification-timer">
+                  {notification.read ? (
+                    "Read"
+                  ) : (
+                    <span>
+                      Unread - <span>5:00</span>
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
       <Modal

@@ -1,4 +1,5 @@
 const User = require("../models/userSchema");
+const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
   const { mobileNumber, firstname, lastname } = req.body;
@@ -10,10 +11,9 @@ const registerUser = async (req, res) => {
     // If user exists
     if (user) {
       // Check if the names are different, update them if necessary
-
       if (
-        (user.firstname !== firstname && firstname != "") ||
-        (user.lastname !== lastname && lastname != "")
+        (user.firstname !== firstname && firstname !== "") ||
+        (user.lastname !== lastname && lastname !== "")
       ) {
         user.firstname = firstname;
         user.lastname = lastname;
@@ -44,13 +44,19 @@ const registerUser = async (req, res) => {
 
     await user.save();
 
+    // Generate a JWT token
+    const token = jwt.sign({ mobileNumber }, "your-secret-key", {
+      expiresIn: "1h",
+    });
+
     // Log the new user object
     console.log("New User:", user.toObject());
 
-    // Return the new user object
+    // Return the new user object and the JWT token
     res.json({
       message: "User registered successfully",
       user: user.toObject(),
+      token,
     });
   } catch (error) {
     console.error(error);

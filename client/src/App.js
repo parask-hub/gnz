@@ -31,10 +31,11 @@ function App() {
   }, []); // Empty dependency array, so it only runs once when the component mounts
 
   const setLoggedUser = ({ data }) => {
-    setUserData(data);
+    setUserData(data.user);
     // Store the data in localStorage when it changes
-    const userDataJSON = JSON.stringify(data);
+    const userDataJSON = JSON.stringify(data.user);
     localStorage.setItem("userData", userDataJSON);
+    localStorage.setItem("GenzToken", JSON.stringify(data.token));
   };
 
   const toggleUserState = () => {
@@ -69,7 +70,10 @@ function App() {
               }
             />
             <Route path="/admin" element={<AdminHome />} />
-            <Route path="/VideoCalling" element={<VideoCallPage />} />
+            <Route
+              path="/VideoCalling"
+              element={<VideoCallPage data={userData} />}
+            />
             <Route path="/ourtutor" element={<TutorLogin />} />
             <Route path="/tutor/:tutorId" element={<TutorHome />} />
             <Route path="/tutor/:tutorId/" element={<TutorHome />} />

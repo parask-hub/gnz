@@ -83,30 +83,32 @@ const NotificationBox = ({ data }) => {
           <p>No Notifications Yet!</p>
         ) : (
           <div>
-            {notifications.map((notification, index) => (
-              <div
-                key={index}
-                className={`inbox ${notification.read ? "read" : "unread"}`}
-                onClick={() => {
-                  if (!notification.read) {
-                    markAsRead(notification._id); // Mark the notification as read
-                  }
-                  openModal(notification); // Open the modal
-                }}
-              >
-                <strong>{notification.senderModel}:</strong>{" "}
-                {notification.message}
-                <div className="inbox-timer">
-                  {notification.read ? (
-                    "Read"
-                  ) : (
-                    <span>
-                      Unread - <span>5:00</span>
-                    </span>
-                  )}
+            {notifications
+              .filter((notification) => notification.state === "active")
+              .map((notification, index) => (
+                <div
+                  key={index}
+                  className={`inbox ${notification.read ? "read" : "unread"}`}
+                  onClick={() => {
+                    if (!notification.read) {
+                      markAsRead(notification._id); // Mark the notification as read
+                    }
+                    openModal(notification); // Open the modal
+                  }}
+                >
+                  <strong>{notification.senderModel}:</strong>{" "}
+                  {notification.message}
+                  <div className="inbox-timer">
+                    {notification.read ? (
+                      "Read"
+                    ) : (
+                      <span>
+                        Unread - <span>5:00</span>
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         )}
       </div>

@@ -157,7 +157,7 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
       console.log("it should happen and take response ");
       console.log(responseData);
       setUser(responseData.user);
-      await setLoggedUser({ data: responseData.user });
+      await setLoggedUser({ data: responseData });
 
       console.log("Working");
       console.log("user data  : " + user);

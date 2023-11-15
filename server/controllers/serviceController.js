@@ -50,6 +50,17 @@ const sendEmailForChatRequest = async (req, res) => {
   }
 };
 
+const meetingend = (req, res) => {
+  const meetingEndTime = new Date();
+  const meetingDuration = meetingEndTime - meetingStartTime;
+
+  // Do something with the duration (e.g., store in a database)
+  console.log("Meeting duration:", meetingDuration);
+
+  res.status(200).send("Meeting ended");
+};
+
 module.exports = {
   sendEmailForChatRequest,
+  meetingend,
 };

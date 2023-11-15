@@ -7,4 +7,6 @@ router.post(
   serviceController.sendEmailForChatRequest
 );
 
+router.post("/meeting/end", serviceController.meetingend);
+
 module.exports = router;
