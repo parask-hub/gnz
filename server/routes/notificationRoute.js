@@ -33,4 +33,8 @@ router.post("/send", notificationController.sendNotification);
 router.get("/receive/:id/:model", notificationController.receiveNotifications);
 router.post("/markread/:notificationId", notificationController.markRead);
 router.get("/count/:userId", notificationController.countOfActiveandUnread);
+router.put(
+  "/accept/:notificationId",
+  notificationController.setNotificationAccepted
+);
 module.exports = router;

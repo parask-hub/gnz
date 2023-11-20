@@ -4,6 +4,7 @@ import React from "react";
 import "./AdminMainComponent.css";
 import Home from "./Home";
 import Tutor from "./Tutor";
+import Sessions from "./Sessions";
 
 const AdminMainComponent = ({ activeTab }) => {
   return (
@@ -18,7 +19,11 @@ const AdminMainComponent = ({ activeTab }) => {
           <Tutor />
         </div>
       )}
-      {activeTab === "Users" && <div>Users Component</div>}
+      {activeTab === "Sessions" && (
+        <div>
+          <Sessions />
+        </div>
+      )}
       {/* Add more components based on tabs */}
     </div>
   );

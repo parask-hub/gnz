@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import TutorProfilePage from "./TutorProfilePage";
+import TProfileEditForm from "./TProfileEditForm";
 import NotificationBox from "./NotificationBox";
 import axios from "axios";
 
 Modal.setAppElement("#root"); // Set the root element for accessibility
 
-function TNavbar({ tutorId }) {
+function TNavbar({ tutorId, tutorProfile }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isEditProfileOpen, setEditProfileOpen] = useState(false);
+
+  const openEditProfile = () => {
+    setEditProfileOpen(true);
+  };
+
+  const closeEditProfile = () => {
+    setEditProfileOpen(false);
+  };
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -63,6 +73,8 @@ function TNavbar({ tutorId }) {
         View Notification &nbsp; <b>{count}</b>
       </button>
 
+      <span onClick={openEditProfile}>Edit Profile</span>
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -77,6 +89,14 @@ function TNavbar({ tutorId }) {
           <button onClick={closeModal}>Close Modal</button>
         </div>
       </Modal>
+      {isEditProfileOpen && (
+        <TProfileEditForm
+          handleClose={closeEditProfile}
+          tutorId={tutorId}
+          tutorProfile={tutorProfile}
+          // setLoggedUser={setLoggedUser}
+        />
+      )}
     </div>
   );
 }

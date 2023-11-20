@@ -45,7 +45,7 @@ export default function TutorHome() {
         padding: "10px",
       }}
     >
-      <TNavbar tutorId={tutorId} />
+      <TNavbar tutorId={tutorId} tutorProfile={tutorProfile} />
 
       <div>
         <TutorProfilePage tutorProfile={tutorProfile} />

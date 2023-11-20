@@ -16,8 +16,7 @@ const NotificationBox = ({ tutorId }) => {
   const [selectedNotification, setSelectedNotification] = useState(null);
   const [notificationData, setNotificationData] = useState(null);
   const [senderData, setSenderData] = useState(null);
-
-  // ${tutorId}
+  const [activeTab, setActiveTab] = useState("inbox"); // Added state for active tab
 
   useEffect(() => {
     // Fetch notifications for the specified tutorId (as in your existing code)
@@ -79,8 +78,7 @@ const NotificationBox = ({ tutorId }) => {
     }
   };
 
-  // Function to handle accepting the notification
-  const acceptNotification = () => {
+  const acceptNotification = async () => {
     const roomName = uuidv4();
     const domain = "meet.jit.si";
     const meetLink = `https://${domain}/${roomName}`;
@@ -93,13 +91,26 @@ const NotificationBox = ({ tutorId }) => {
       senderModel: "Teacher",
       receiverId: senderData._id,
       receiverModel: "User",
-      message: `Your Chat Request Is Accepted. Join the meeting: ${meetLink}`,
+      message: `${meetLink}`,
       status: false,
+      // state: "accepted",
     };
 
-    axios
+    await axios
       .post("http://localhost:5000/api/notification/send", object)
       .then((res) => {
+        const notificationId = res.data.notificationId;
+        try {
+          axios.put(
+            `/http://localhost:5000/api/notification/accept/${notificationId}`
+          );
+
+          // Handle the response as needed
+          console.log("Notification state updated:", res.data);
+        } catch (error) {
+          // Handle errors
+          console.error("Error updating notification state:", error);
+        }
         alert("notification sent");
       })
       .catch((error) => {
@@ -107,42 +118,70 @@ const NotificationBox = ({ tutorId }) => {
       });
   };
 
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <div className="notification-container">
       <h2>Notifications</h2>
-      {notifications.length === 0 ? (
-        <p>No Notifications Yet!</p>
-      ) : (
-        <div>
-          {notifications
-            .filter((notification) => notification.state === "active")
-            .map((notification, index) => (
-              <div
-                key={index}
-                className={`notification ${
-                  notification.read ? "read" : "unread"
-                }`}
-                onClick={() => {
-                  if (!notification.read) {
-                    markAsRead(notification._id); // Mark the notification as read
-                  }
-                  openModal(notification); // Open the modal
-                }}
-              >
-                <strong>{notification.senderModel}:</strong>{" "}
-                {notification.message}
-                <div className="notification-timer">
-                  {notification.read ? (
-                    "Read"
-                  ) : (
-                    <span>
-                      Unread - <span>5:00</span>
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
+      <div className="tabs">
+        <div
+          className={`tab ${activeTab === "inbox" ? "active" : ""}`}
+          onClick={() => handleTabClick("inbox")}
+        >
+          Inbox
         </div>
+        <div
+          className={`tab ${activeTab === "accepted" ? "active" : ""}`}
+          onClick={() => handleTabClick("accepted")}
+        >
+          Accepted Requests
+        </div>
+      </div>
+      {activeTab === "inbox" ? (
+        <div>
+          {notifications.length === 0 ? (
+            <p>No Notifications Yet!</p>
+          ) : (
+            <div>
+              {notifications
+                .filter(
+                  (notification) =>
+                    notification.state === "active" ||
+                    notification.state == "accepted"
+                )
+                .map((notification, index) => (
+                  <div
+                    key={index}
+                    className={`notification ${
+                      notification.read ? "read" : "unread"
+                    }`}
+                    onClick={() => {
+                      if (!notification.read) {
+                        markAsRead(notification._id); // Mark the notification as read
+                      }
+                      openModal(notification); // Open the modal
+                    }}
+                  >
+                    <strong>{notification.senderModel}:</strong>{" "}
+                    {notification.message}
+                    <div className="notification-timer">
+                      {notification.read ? (
+                        "Read"
+                      ) : (
+                        <span>
+                          Unread - <span>5:00</span>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div>Here are the accepted request</div>
       )}
       <Modal
         isOpen={modalVisible}

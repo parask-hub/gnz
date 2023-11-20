@@ -89,7 +89,7 @@ const editTutor = async (req, res) => {
     );
     if (updatedTeacher) {
       console.log("Tutor profile edited successfully");
-      res.json(updatedTeacher);
+      res.status(200).json(updatedTeacher);
     } else {
       console.error("Tutor not found for editing");
       res.status(404).json({ error: "Tutor not found for editing" });

@@ -26,10 +26,10 @@ const AdminSidebar = ({ setActiveTab }) => {
           Tutors
         </li>
         <li
-          onClick={() => handleClick("Users")}
-          className={activeTab === "Users" ? "active" : ""}
+          onClick={() => handleClick("Sessions")}
+          className={activeTab === "Sessions" ? "active" : ""}
         >
-          Users
+          Sessions
         </li>
         {/* Add more links as needed */}
       </ul>

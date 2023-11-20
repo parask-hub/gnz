@@ -18,6 +18,36 @@ const countOfActiveandUnread = async (req, res) => {
   }
 };
 
+const setNotificationAccepted = async (req, res) => {
+  const { notificationId } = req.params;
+
+  try {
+    // Check if the notification exists
+    const notification = await Notification.findById(notificationId);
+
+    if (!notification) {
+      return res.status(404).json({ msg: "Notification not found" });
+    }
+
+    // Check if the notification state is valid
+    if (notification.state !== "active") {
+      return res.status(400).json({ msg: "Invalid notification state" });
+    }
+
+    // Update the notification state to "accepted"
+    notification.state = "accepted";
+    await notification.save();
+
+    res.json({
+      message: "Notification state updated to accepted",
+      notification,
+    });
+  } catch (error) {
+    console.error("Error updating notification state:", error);
+    res.status(500).json({ msg: "Failed to update notification state" });
+  }
+};
+
 const sendNotification = async (req, res) => {
   // code to send notification goes here
   const {
@@ -28,11 +58,30 @@ const sendNotification = async (req, res) => {
     message,
     timestamp,
     read,
+    state,
   } = req.body;
+
   try {
-    notification = new Notification(req.body);
+    // Conditionally set the state based on the value received from the frontend
+    const notificationState = state === "accepted" ? "accepted" : "active";
+
+    // Create a new Notification with the conditionally set state
+    const notification = new Notification({
+      senderId,
+      senderModel,
+      receiverId,
+      receiverModel,
+      message,
+      timestamp,
+      read,
+      state: notificationState,
+    });
+
+    // Save the notification
     await notification.save();
-    res.send({ message: "success" });
+    res
+      .status(201)
+      .json({ message: "success", notificationId: notification._id });
   } catch (error) {
     console.log("Error in sending notification: ", error);
     res.status(500).json({ msg: "Failed to send notification." });
@@ -98,4 +147,5 @@ module.exports = {
   receiveNotifications,
   markRead,
   countOfActiveandUnread,
+  setNotificationAccepted,
 };
