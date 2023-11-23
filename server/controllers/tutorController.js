@@ -82,11 +82,18 @@ const getAccountById = async (req, res) => {
 
 const editTutor = async (req, res) => {
   try {
+    // Check if a file is included in the request
+    console.log("Requested is : ", req.body);
+    if (req.file) {
+      req.body.image = req.file.filename; // Update the image field with the new filename
+    }
+
     const updatedTeacher = await Teacher.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
+
     if (updatedTeacher) {
       console.log("Tutor profile edited successfully");
       res.status(200).json(updatedTeacher);
@@ -99,7 +106,6 @@ const editTutor = async (req, res) => {
     res.status(500).json({ error: "Failed to edit tutor profile" });
   }
 };
-
 const getAccounts = async (req, res) => {
   try {
     const tutors = await Teacher.find();

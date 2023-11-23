@@ -48,7 +48,7 @@ const ProfileEditForm = ({ handleClose, setLoggedUser, data }) => {
 
       if (response.ok) {
         const data = await response.json();
-        await setLoggedUser({ data: data.user });
+        await setLoggedUser({ data: data });
         console.log("User information updated successfully:", data);
         displayPopup("Profile Updated Successfully", "success");
 

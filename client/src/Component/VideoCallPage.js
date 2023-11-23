@@ -9,41 +9,10 @@ function VideoCallPage({ data }) {
   const [roomName, setRoomName] = useState("");
   const [meetingStartTime, setMeetingStartTime] = useState(null);
   const [timer, setTimer] = useState("");
+  const [timeSpent, setTimeSpent] = useState(0);
+  const [totalSessionTime, setTotalSessionTime] = useState(0);
   let timerElement = document.querySelector(".css-h6c4xs-timer");
-
-  const handleApiReady = (externalApi) => {
-    externalApi.addEventListener("videoConferenceJoined", () => {
-      console.log("Joined the conference.");
-      if (!meetingStartTime) {
-        setMeetingStartTime(new Date());
-      }
-    });
-
-    externalApi.addEventListener("videoConferenceLeft", () => {
-      console.log("Left the conference.");
-      notifyServerMeetingEnd();
-    });
-  };
-
-  const notifyServerMeetingEnd = () => {
-    // Notify the server that the meeting has ended
-    axios
-      .post("http://localhost:5000/api/service/meeting/end", {
-        duration: calculateMeetingDuration(),
-      })
-      .then(() => console.log("Server notified"))
-      .catch((error) => console.error("Error notifying server:", error));
-  };
-
-  const calculateMeetingDuration = () => {
-    if (meetingStartTime) {
-      const meetingEndTime = new Date();
-      const meetingDuration = meetingEndTime - meetingStartTime;
-      console.log(meetingDuration);
-      return meetingDuration;
-    }
-    return 0; // Return 0 if the meeting start time is not set (possibly not joined)
-  };
+  const joinedParticipants = {};
 
   useEffect(() => {
     timerElement = document.querySelector(".css-h6c4xs-timer");
@@ -82,6 +51,69 @@ function VideoCallPage({ data }) {
       iframeRef.style.width = "100%";
       iframeRef.style.height = "100vh";
     }
+  };
+
+  const handleApiReady = (api) => {
+    console.log("HandleApI Ready called");
+    setMeetingStartTime(Date.now());
+
+    api.addEventListener("participantJoined", handleParticipantJoined);
+    api.addEventListener("participantLeft", handleParticipantLeft);
+  };
+
+  const handleParticipantJoined = (participant) => {
+    console.log("here the participant enters");
+    joinedParticipants[participant.id] = Date.now();
+  };
+
+  const handleParticipantLeft = (participant) => {
+    const joinTime = joinedParticipants[participant.id];
+    const leaveTime = Date.now();
+    const timeInMeeting = leaveTime - joinTime;
+    setTimeSpent(timeInMeeting);
+    setTotalSessionTime((prevTotal) => prevTotal + timeInMeeting);
+    console.log(
+      `Participant ${participant.id} spent ${timeInMeeting} milliseconds in the meeting.`
+    );
+
+    // Update session details when the last participant leaves
+    if (Object.keys(joinedParticipants).length === 1) {
+      updateSessionDetails(leaveTime);
+    }
+  };
+
+  const updateSessionDetails = async (endTime) => {
+    try {
+      // Calculate session cost based on time spent or any other criteria
+      const sessionCost = calculateSessionCost(timeSpent);
+
+      // Make an HTTP request to create or update session details on the server
+      const sessionData = {
+        studentId: data.userId,
+        teacherId: "teacherId123", // Replace with the actual teacher ID
+        startTime: meetingStartTime,
+        endTime,
+        sessionStatus: "completed",
+        sessionCost,
+        sessionType: "videoCall",
+        totalSessionTime: totalSessionTime / (1000 * 60), // Convert milliseconds to minutes
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/api/session/createOrUpdateSession",
+        sessionData
+      );
+
+      console.log("Session details updated successfully:", response.data);
+    } catch (error) {
+      console.error("Error updating session details:", error);
+    }
+  };
+
+  const calculateSessionCost = (timeInMeeting) => {
+    // Implement your logic to calculate session cost based on time spent or any other criteria
+    // This is just a placeholder, replace it with your actual calculation
+    return timeInMeeting * 0.001; // Assuming timeInMeeting is in milliseconds
   };
 
   const meetLink = `https://${domain}/${roomName}`;

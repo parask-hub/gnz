@@ -31,7 +31,10 @@ const sessionSchema = new mongoose.Schema({
     enum: ["videoCall", "chat"],
     required: true,
   },
-  // Add more fields as needed
+  totalSessionTime: {
+    type: Number, // in minutes
+    default: 0,
+  },
 });
 
 const Session = mongoose.model("Session", sessionSchema);

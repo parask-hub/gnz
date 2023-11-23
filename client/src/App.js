@@ -6,9 +6,6 @@ import VideoCallPage from "./Component/VideoCallPage";
 import AdminHome from "./Admin/AdminHome";
 import TutorLogin from "./TutorComponents/TutorLogin";
 import TutorHome from "./TutorComponents/TutorHome";
-import TNotifications from "./TutorComponents/TNotifications";
-import TProfileEdit from "./TutorComponents/TProfileEdit";
-import TutorProfilePage from "./TutorComponents/TutorProfilePage";
 
 import {
   BrowserRouter as Router,
@@ -25,8 +22,13 @@ function App() {
     // Load user data from localStorage when the app starts
     const userDataJSON = localStorage.getItem("userData");
     if (userDataJSON) {
-      const userDataObj = JSON.parse(userDataJSON);
-      setUserData(userDataObj);
+      try {
+        const userDataObj = JSON.parse(userDataJSON);
+        setUserData(userDataObj);
+      } catch (error) {
+        console.error("Error parsing user data JSON:", error);
+        // Handle the error as needed, e.g., set default user data
+      }
     }
   }, []); // Empty dependency array, so it only runs once when the component mounts
 

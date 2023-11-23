@@ -81,7 +81,7 @@ const NotificationBox = ({ tutorId }) => {
   const acceptNotification = async () => {
     const roomName = uuidv4();
     const domain = "meet.jit.si";
-    const meetLink = `https://${domain}/${roomName}`;
+    const meetLink = `http://${domain}/${roomName}`;
 
     // Move to the VideoCalling route with the roomName as a query parameter
     window.open(`/VideoCalling?roomName=${roomName}`, "_blank");

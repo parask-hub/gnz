@@ -1,47 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-// import "/styles/ProfileEditForm.css";
 import "../Component/styles/ProfileEditForm.css";
-// import Popup from "./PopUp";
 
 const TProfileEditForm = ({ handleClose, tutorId, tutorProfile }) => {
-  const [data, setData] = useState({
-    name: "",
-    rate: 0,
-    areaOfInterest: "",
-    description: "",
-  });
-
-  // Use data from the state in your component
   const [name, setname] = useState(tutorProfile.name);
   const [image, setImage] = useState(null);
   const [rate, setRate] = useState(tutorProfile.rate);
   const [areaOfInterest, setAreaOfInterest] = useState(
     tutorProfile.areaOfInterest
   );
-  //   const [achievements, setAchievements] = useState(data);
   const [description, setDescription] = useState(tutorProfile.description);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create an object with the fields to update
-    const updateFields = {
-      name,
-      areaOfInterest,
-      rate,
-      description,
-    };
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("areaOfInterest", areaOfInterest);
+    formData.append("rate", rate);
+    formData.append("description", description);
 
+    if (image) {
+      formData.append("image", image);
+    }
+    console.log(formData);
     try {
-      // Make a PUT request to the API endpoint with the updated fields
-      const response = await axios.put(
+      const response = await fetch(
         `http://localhost:5000/api/tutor/tutoredit/${tutorId}`,
-        updateFields
+        {
+          method: "PUT",
+          body: formData,
+          headers: {
+            // Add any other headers as needed
+            // 'Authorization': 'Bearer YourAccessToken',
+            Accept: "application/json",
+          },
+        }
       );
 
-      if (response.status === 200) {
-        console.log("Teacher information updated successfully:", response.data);
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Teacher information updated successfully:", data);
         // Add any additional logic you want to perform after a successful update
       } else {
         console.error("Failed to update teacher information");
@@ -79,10 +78,8 @@ const TProfileEditForm = ({ handleClose, tutorId, tutorProfile }) => {
                 )}
                 <span>
                   <input
-                    onChange={(e) => {
-                      setImage(e.target.files[0]);
-                    }}
                     type="file"
+                    onChange={(e) => setImage(e.target.files[0])}
                     style={{ width: "100%" }}
                   />
                 </span>
