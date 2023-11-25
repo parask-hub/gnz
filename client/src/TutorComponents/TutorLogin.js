@@ -12,12 +12,13 @@ const TutorLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const domain = "127.0.0.1";
 
   useEffect(() => {
     const tokenInterval = setInterval(() => {
       // Refresh the access token every 14 minutes
       axios
-        .post("http://localhost:5000/api/tutor/refresh-token", { refreshToken })
+        .post(`http://${domain}:5000/api/tutor/refresh-token`, { refreshToken })
         .then((response) => {
           setAccessToken(response.data.accessToken);
         })
@@ -34,7 +35,7 @@ const TutorLogin = () => {
     setLoading(true);
 
     axios
-      .post("http://localhost:5000/api/tutor/login", { username, password })
+      .post(`http://${domain}:5000/api/tutor/login`, { username, password })
       .then((response) => {
         setAccessToken(response.data.accessToken);
         setRefreshToken(response.data.refreshToken);

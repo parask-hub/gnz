@@ -20,9 +20,9 @@ function OneToOne() {
   const userData = JSON.parse(userDataStr);
 
   const filterRef = useRef(null);
-
+  const domain = "127.0.0.1";
   useEffect(() => {
-    fetch("http://localhost:5000/api/tutor/tutorget")
+    fetch(`http://${domain}:5000/api/tutor/tutorget`)
       .then((response) => response.json())
       .then((data) => setTutorProfiles(data))
       .catch((error) => console.error("Error fetching tutor data:", error));

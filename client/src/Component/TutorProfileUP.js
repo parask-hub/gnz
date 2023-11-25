@@ -6,10 +6,11 @@ import axios from "axios";
 function TutorProfileUP({ firstname, lastname, mobileNumber }) {
   const { tutorId } = useParams();
   const [tutorProfile, setTutorProfile] = useState(null);
+  const domain = "127.0.0.1";
 
   useEffect(() => {
     // Fetch tutor profile data based on tutorId
-    fetch(`http://localhost:5000/api/tutor/tutorget/${tutorId}`)
+    fetch(`http://${domain}:5000/api/tutor/tutorget/${tutorId}`)
       .then((response) => response.json())
       .then((data) => setTutorProfile(data))
       .catch((error) =>
@@ -33,7 +34,7 @@ function TutorProfileUP({ firstname, lastname, mobileNumber }) {
   const handleChatNowClick = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/service/chat/sendemail/${tutorProfile._id}`,
+        `http://${domain}:5000/api/service/chat/sendemail/${tutorProfile._id}`,
         {
           method: "POST",
           headers: {
@@ -70,7 +71,7 @@ function TutorProfileUP({ firstname, lastname, mobileNumber }) {
     };
 
     axios
-      .post("http://localhost:5000/api/notification/send", object)
+      .post(`http://${domain}:5000/api/notification/send`, object)
       .then((res) => {
         alert("notification sent");
       })
@@ -147,7 +148,7 @@ function TutorProfileUP({ firstname, lastname, mobileNumber }) {
                     borderRadius: "50%",
                     objectFit: "cover",
                   }}
-                  src={`http://localhost:5000/${tutorProfile.image}`}
+                  src={`http://${domain}:5000/${tutorProfile.image}`}
                   alt={tutorProfile.name}
                 />
               </div>

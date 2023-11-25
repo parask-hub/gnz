@@ -15,6 +15,7 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
   const [profilePhoto, setProfilePhoto] = useState(
     "https://example.com/profile-photo.jpg"
   );
+  const domain = "127.0.0.1";
   const [otp, setOtp] = useState("");
   const [ph, setPh] = useState("");
   const [showOtp, setShowOTP] = useState(false);
@@ -89,7 +90,7 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
 
         // Call your server to check if the user exists
         const response = await fetch(
-          `http://localhost:5000/api/auth/isuserexist/${user.phoneNumber}`,
+          `http://${domain}:5000/api/auth/isuserexist/${user.phoneNumber}`,
           {
             method: "GET",
             headers: {
@@ -135,7 +136,7 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
 
       // Make an API request to register the user using fetch
       const registrationResponse = await fetch(
-        "http://localhost:5000/api/auth/register",
+        `http://${domain}:5000/api/auth/register`,
         {
           method: "POST",
           headers: {

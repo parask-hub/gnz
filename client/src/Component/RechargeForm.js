@@ -14,6 +14,7 @@ function RechargeForm({ handleClose }) {
   const BlurBackground = () => {
     return <div className="blur-background"></div>;
   };
+  const domain = "127.0.0.1";
 
   const initPayment = (data) => {
     console.log(data);
@@ -26,10 +27,10 @@ function RechargeForm({ handleClose }) {
       order_id: data.id,
       handler: async (response) => {
         try {
-          const verifyUrl = "http://localhost:5000/api/payment/verifyPayment";
+          const verifyUrl = `http://${domain}:5000/api/payment/verifyPayment`;
           const { data } = await axios.post(verifyUrl, response);
           console.log(data);
-          const updateUserUrl = `http://localhost:5000/api/user/update/${userId}`; // Replace with your user update API endpoint
+          const updateUserUrl = `http://${domain}:5000/api/user/update/${userId}`; // Replace with your user update API endpoint
           const updateResponse = await axios.post(updateUserUrl, {
             coins: amount,
           });
@@ -54,7 +55,7 @@ function RechargeForm({ handleClose }) {
 
   const handlePayment = async () => {
     try {
-      const orderUrl = "http://localhost:5000/api/payment/rechargeRequest";
+      const orderUrl = `http://${domain}:5000/api/payment/rechargeRequest`;
       const response = await fetch(orderUrl, {
         method: "POST",
         headers: {

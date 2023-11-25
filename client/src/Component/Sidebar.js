@@ -17,10 +17,11 @@ const Sidebar = ({
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [count, setCount] = useState(0);
+  const domain = "127.0.0.1";
 
   const fetchNotificationCount = () => {
     axios
-      .get(`http://localhost:5000/api/notification/count/${data._id}`)
+      .get(`http://${domain}:5000/api/notification/count/${data._id}`)
       .then((response) => {
         setCount(response.data.count);
       })

@@ -2,6 +2,7 @@ import React from "react";
 import "../Component/styles/TutorProfileUP.css";
 
 const TutorProfilePage = ({ tutorProfile }) => {
+  const domain = "127.0.0.1";
   return (
     <div>
       <div
@@ -29,7 +30,7 @@ const TutorProfilePage = ({ tutorProfile }) => {
                     borderRadius: "50%",
                     objectFit: "cover",
                   }}
-                  src={`http://localhost:5000/${tutorProfile.image}`}
+                  src={`http://${domain}:5000/${tutorProfile.image}`}
                   alt={tutorProfile.name}
                 />
               </div>

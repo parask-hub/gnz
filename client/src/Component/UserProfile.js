@@ -2,6 +2,7 @@ import React from "react";
 import "./styles/UserProfile.css";
 
 function UserProfile({ data }) {
+  const domain = "127.0.0.1";
   return (
     <>
       <div className="Pg">
@@ -21,7 +22,7 @@ function UserProfile({ data }) {
 
               {data.profilePicture != "" ? ( // Check if profilePicture exists
                 <img
-                  src={`http://localhost:5000/${data.profilePicture}`} // Use the actual profile picture
+                  src={`http://${domain}:5000/${data.profilePicture}`} // Use the actual profile picture
                   className="avatar img-circle img-thumbnail"
                   alt="avatar"
                   style={{
@@ -91,8 +92,7 @@ function UserProfile({ data }) {
             <h3>Wallet Details</h3>
             <hr />
             <p className="ans">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Assumenda aut porro, magni rerum distinctio maxime.
+              <b> Your Balance : {data.coins}</b>
             </p>
           </div>
           <div className="block">

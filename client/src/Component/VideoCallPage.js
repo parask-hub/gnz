@@ -6,6 +6,7 @@ import axios from "axios";
 
 function VideoCallPage({ data }) {
   const domain = "meet.jit.si";
+  const backendDomain = "127.0.0.1";
   const [roomName, setRoomName] = useState("");
   const [meetingStartTime, setMeetingStartTime] = useState(null);
   const [timer, setTimer] = useState("");
@@ -100,7 +101,7 @@ function VideoCallPage({ data }) {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/session/createOrUpdateSession",
+        `http://${backendDomain}:5000/api/session/createOrUpdateSession`,
         sessionData
       );
 

@@ -17,11 +17,11 @@ const NotificationBox = ({ tutorId }) => {
   const [notificationData, setNotificationData] = useState(null);
   const [senderData, setSenderData] = useState(null);
   const [activeTab, setActiveTab] = useState("inbox"); // Added state for active tab
+  const domain = "127.0.0.1";
 
   useEffect(() => {
-    // Fetch notifications for the specified tutorId (as in your existing code)
     axios
-      .get(`http://localhost:5000/api/notification/receive/${tutorId}/Teacher`)
+      .get(`http://${domain}:5000/api/notification/receive/${tutorId}/Teacher`)
       .then((response) => {
         setNotifications(response.data.noti);
       })
@@ -50,7 +50,7 @@ const NotificationBox = ({ tutorId }) => {
 
   const markAsRead = (notificationId) => {
     axios
-      .post(`http://localhost:5000/api/notification/markread/${notificationId}`)
+      .post(`http://${domain}:5000/api/notification/markread/${notificationId}`)
       .then((response) => {
         // Update the notification's "read" status in your state
         const updatedNotifications = notifications.map((notification) => {
@@ -69,7 +69,7 @@ const NotificationBox = ({ tutorId }) => {
   const fetchSenderData = async (userId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/user/getUserData/${userId}`
+        `http://${domain}:5000/api/user/getUserData/${userId}`
       );
       return response.data;
     } catch (error) {
@@ -97,12 +97,12 @@ const NotificationBox = ({ tutorId }) => {
     };
 
     await axios
-      .post("http://localhost:5000/api/notification/send", object)
+      .post(`http://${domain}:5000/api/notification/send`, object)
       .then((res) => {
         const notificationId = res.data.notificationId;
         try {
           axios.put(
-            `/http://localhost:5000/api/notification/accept/${notificationId}`
+            `http://${domain}:5000/api/notification/accept/${notificationId}`
           );
 
           // Handle the response as needed

@@ -12,6 +12,7 @@ const ProfileEditForm = ({ handleClose, setLoggedUser, data }) => {
   const [gender, setGender] = useState(data.gender);
   const [englishFluency, setEnglishFluency] = useState(data.englishFluency);
   const [aboutMe, setAboutMe] = useState(data.aboutMe);
+  const domain = "127.0.0.1";
 
   console.log(image);
 
@@ -39,7 +40,7 @@ const ProfileEditForm = ({ handleClose, setLoggedUser, data }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/user/update/${userId}`,
+        `http://${domain}:5000/api/user/update/${userId}`,
         {
           method: "POST",
           body: formData, // Use the FormData object
@@ -94,7 +95,7 @@ const ProfileEditForm = ({ handleClose, setLoggedUser, data }) => {
               <div className="text-center">
                 {data.profilePicture !== "" ? ( // Check if profilePicture exists
                   <img
-                    src={`http://localhost:5000/${data.profilePicture}`} // Use the actual profile picture
+                    src={`http://${domain}:5000/${data.profilePicture}`} // Use the actual profile picture
                     className="avatar img-circle img-thumbnail"
                     alt="avatar"
                   />

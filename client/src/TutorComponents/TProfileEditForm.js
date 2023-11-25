@@ -6,6 +6,7 @@ const TProfileEditForm = ({ handleClose, tutorId, tutorProfile }) => {
   const [name, setname] = useState(tutorProfile.name);
   const [image, setImage] = useState(null);
   const [rate, setRate] = useState(tutorProfile.rate);
+  const domain = "127.0.0.1";
   const [areaOfInterest, setAreaOfInterest] = useState(
     tutorProfile.areaOfInterest
   );
@@ -26,7 +27,7 @@ const TProfileEditForm = ({ handleClose, tutorId, tutorProfile }) => {
     console.log(formData);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tutor/tutoredit/${tutorId}`,
+        `http://${domain}:5000/api/tutor/tutoredit/${tutorId}`,
         {
           method: "PUT",
           body: formData,
@@ -71,7 +72,7 @@ const TProfileEditForm = ({ handleClose, tutorId, tutorProfile }) => {
               <div className="text-center">
                 {tutorProfile && tutorProfile.image && (
                   <img
-                    src={`http://localhost:5000/${tutorProfile.image}`}
+                    src={`http://${domain}:5000/${tutorProfile.image}`}
                     className="avatar img-circle img-thumbnail"
                     alt="avatar"
                   />

@@ -4,6 +4,7 @@ import "../Component/styles/ProfileEditForm.css";
 const EditForm = ({ tutorDetails, onSave, onCancel, fetchData }) => {
   const [editedDetails, setEditedDetails] = useState({ ...tutorDetails });
   const [imageFile, setImageFile] = useState(null);
+  const domain = "127.0.0.1";
 
   const BlurBackground = () => {
     return <div className="blur-background"></div>;
@@ -34,7 +35,7 @@ const EditForm = ({ tutorDetails, onSave, onCancel, fetchData }) => {
         formData.append(key, editedDetails[key]);
       }
 
-      const response = await fetch("http://localhost:5000/api/tutor", {
+      const response = await fetch(`http://${domain}:5000/api/tutor`, {
         method: "POST",
         body: formData, // Send the FormData object containing the image and other data
       });

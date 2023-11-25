@@ -16,10 +16,11 @@ import {
 export default function TutorHome() {
   const { tutorId } = useParams();
   const [tutorProfile, setTutorProfile] = useState(null);
+  const domain = "127.0.0.1";
 
   useEffect(() => {
     const fetchTutorProfile = async () => {
-      await fetch(`http://localhost:5000/api/tutor/tutorget/${tutorId}`)
+      await fetch(`http://${domain}:5000/api/tutor/tutorget/${tutorId}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);

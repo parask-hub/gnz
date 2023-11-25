@@ -3,6 +3,7 @@ import "./styles/TutorProfileBox.css";
 
 function TutorProfileBox({ tutorProfile }) {
   const { name, image, ordersCount, description, rate } = tutorProfile;
+  const domain = "127.0.0.1";
 
   return (
     <div className="profileBox">
@@ -20,7 +21,7 @@ function TutorProfileBox({ tutorProfile }) {
           /> */}
           {image != "" ? ( // Check if profilePicture exists
             <img
-              src={`http://localhost:5000/${image}`} // Use the actual profile picture
+              src={`http://${domain}:5000/${image}`} // Use the actual profile picture
               className="avatar img-circle img-thumbnail"
               alt="avatar"
               style={{

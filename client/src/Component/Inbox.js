@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import axios from "axios";
 import "./styles/Inbox.css";
 
+const domain = "127.0.0.1";
 const NotificationBox = ({ data }) => {
   const [notifications, setNotifications] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -18,7 +19,7 @@ const NotificationBox = ({ data }) => {
   useEffect(() => {
     // Fetch notifications for the specified tutorId (as in your existing code)
     axios
-      .get(`http://localhost:5000/api/notification/receive/${data._id}/Teacher`)
+      .get(`http://${domain}:5000/api/notification/receive/${data._id}/Teacher`)
       .then((response) => {
         setNotifications(response.data.noti);
       })
@@ -47,7 +48,7 @@ const NotificationBox = ({ data }) => {
 
   const markAsRead = (notificationId) => {
     axios
-      .post(`http://localhost:5000/api/notification/markread/${notificationId}`)
+      .post(`http://${domain}:5000/api/notification/markread/${notificationId}`)
       .then((response) => {
         // Update the notification's "read" status in your state
         const updatedNotifications = notifications.map((notification) => {
@@ -66,7 +67,7 @@ const NotificationBox = ({ data }) => {
   const fetchSenderData = async (userId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/user/getUserData/${userId}`
+        `http://${domain}:5000/api/user/getUserData/${userId}`
       );
       return response.data;
     } catch (error) {

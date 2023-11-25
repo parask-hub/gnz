@@ -17,6 +17,7 @@ const Tutor = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTutor, setSelectedTutor] = useState(null);
+  const domain = "127.0.0.1";
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -29,7 +30,7 @@ const Tutor = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/tutor/tutorget");
+      const response = await fetch(`http://${domain}:5000/api/tutor/tutorget`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -71,7 +72,7 @@ const Tutor = () => {
   const handleDeleteTutor = async (tutorId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tutor/tutordelete/${tutorId}`,
+        `http://${domain}:5000/api/tutor/tutordelete/${tutorId}`,
         {
           method: "DELETE",
         }

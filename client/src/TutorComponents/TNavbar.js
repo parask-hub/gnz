@@ -8,6 +8,7 @@ import axios from "axios";
 Modal.setAppElement("#root"); // Set the root element for accessibility
 
 function TNavbar({ tutorId, tutorProfile }) {
+  const domain = "127.0.0.1";
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isEditProfileOpen, setEditProfileOpen] = useState(false);
 
@@ -31,7 +32,7 @@ function TNavbar({ tutorId, tutorProfile }) {
 
   const fetchNotificationCount = () => {
     axios
-      .get(`http://localhost:5000/api/notification/count/${tutorId}`)
+      .get(`http://${domain}:5000/api/notification/count/${tutorId}`)
       .then((response) => {
         setCount(response.data.count);
       })
