@@ -176,6 +176,65 @@ const tokengeneration = (req, res) => {
   });
 };
 
+const updateCoins = async (req, res) => {
+  const { teacherId } = req.params;
+  const { coins } = req.body;
+
+  try {
+    // Find the teacher by ID
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    // Validate if coins is a valid number
+    const coinsValue = Number(coins);
+    if (isNaN(coinsValue)) {
+      return res.status(400).json({ message: "Invalid coins value" });
+    }
+
+    // Update the coins field
+    teacher.coins += coinsValue;
+
+    // Save the updated teacher
+    await teacher.save();
+
+    return res
+      .status(200)
+      .json({ message: "Coins updated successfully", teacher });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const resetCoins = async (req, res) => {
+  const { teacherId } = req.params;
+
+  try {
+    // Find the teacher by ID
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    // Set the coins field to 0
+    teacher.coins = 0;
+
+    // Save the updated teacher
+    await teacher.save();
+
+    return res
+      .status(200)
+      .json({ message: "Coins reset to 0 successfully", teacher });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   createAccount,
   editTutor,
@@ -184,4 +243,6 @@ module.exports = {
   getAccountById,
   tutorLogin,
   tokengeneration,
+  updateCoins,
+  resetCoins,
 };

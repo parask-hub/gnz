@@ -55,11 +55,11 @@ const Modal = ({ isOpen, onClose, tutorProfile }) => {
           <b>Rating:</b>&nbsp; {tutorProfile.rating}
         </p>
         <p>
-          User Reviews:{" "}
+          <b>User Reviews :</b>{" "}
           {tutorProfile.userReviews && tutorProfile.userReviews.join(", ")}
         </p>
         <p>
-          Video Call Availability:{" "}
+          <b>Video Call Availability :</b>{" "}
           {tutorProfile.videoCallAvailability ? "Yes" : "No"}
         </p>
       </div>

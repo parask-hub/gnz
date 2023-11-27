@@ -1,0 +1,121 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.Tcontainer {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.Tresponsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+.Taction-button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.Taction-button:hover {
+    background-color: #45a049;
+}
+.Tcompleted-checkbox {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+}
+
+.Tcompleted-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.Tcompleted-checkbox label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border: 2px solid #4caf50;
+    border-radius: 4px;
+}
+
+.completed-row {
+    background-color: lightcoral;
+}
+.Tcompleted-checkbox input:checked+label:after {
+    content: '\2713';
+    font-size: 12px;
+    color: #4caf50;
+    position: absolute;
+    top: 2px;
+    left: 4px;
+}
+
+@media screen and (max-width: 600px) {
+    .Tresponsive-table {
+        border: 0;
+    }
+
+    .Tresponsive-table thead {
+        display: none;
+    }
+
+    .Tresponsive-table,
+    .Tresponsive-table tbody,
+    .Tresponsive-table tr,
+    .Tresponsive-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .Tresponsive-table td {
+        text-align: right;
+        padding: 10px;
+        margin-bottom: 5px;
+    }
+
+    .Tresponsive-table td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+    }
+}

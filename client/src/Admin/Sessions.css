@@ -6,13 +6,13 @@
     overflow-x: auto;
 }
 
-.tutor-table {
+.session-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.add-tutor-btn{
+.add-tutor-btn {
     background-color: green;
     color: white;
     padding: 10px;
@@ -20,16 +20,16 @@
     cursor: pointer;
 }
 
-.tutor-table th,
-.tutor-table td {
+.session-table th,
+.session-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
     white-space: nowrap;
-        /* Prevent text from wrapping to the next line */
-        overflow: hidden;
-        /* Hide any text that overflows the cell */
-        text-overflow: ellipsis;
+    /* Prevent text from wrapping to the next line */
+    overflow: hidden;
+    /* Hide any text that overflows the cell */
+    text-overflow: ellipsis;
 }
 
 .tutor-table th {
@@ -74,4 +74,9 @@
 .actions-column {
     display: flex;
     gap: 10px;
+}
+
+.ids{
+    width:"20px";
+    overflow-x: scroll;
 }

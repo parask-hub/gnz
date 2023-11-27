@@ -62,6 +62,10 @@ const teacherSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  coins: {
+    type: Number,
+    default: 0,
+  },
   // Add more fields as needed
 });
 

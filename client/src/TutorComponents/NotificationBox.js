@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import SenderInfoBox from "./SenderInfoBox";
-import { useNavigate } from "react-router-dom";
-
 import { v4 as uuidv4 } from "uuid";
-
 import "./NotificationBox.css"; // Import your CSS file
+import { useNavigate } from "react-router-dom";
+// import { GoogleLogin } from "react-google-login";
+// const { google } = require("googleapis");
+// const { authenticate } = require("@google-cloud/local-auth");
+const credentials = require("./credential.json");
 
 const NotificationBox = ({ tutorId }) => {
   const navigate = useNavigate();
-
   const [notifications, setNotifications] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState(null);
@@ -18,8 +19,10 @@ const NotificationBox = ({ tutorId }) => {
   const [senderData, setSenderData] = useState(null);
   const [activeTab, setActiveTab] = useState("inbox"); // Added state for active tab
   const domain = "127.0.0.1";
+  // const SCOPES = ["https://www.googleapis.com/auth/calendar.events"];
 
   useEffect(() => {
+    // Fetch notifications for the specified tutorId (as in your existing code)
     axios
       .get(`http://${domain}:5000/api/notification/receive/${tutorId}/Teacher`)
       .then((response) => {
@@ -50,7 +53,7 @@ const NotificationBox = ({ tutorId }) => {
 
   const markAsRead = (notificationId) => {
     axios
-      .post(`http://${domain}:5000/api/notification/markread/${notificationId}`)
+      .post(`http://localhost:5000/api/notification/markread/${notificationId}`)
       .then((response) => {
         // Update the notification's "read" status in your state
         const updatedNotifications = notifications.map((notification) => {
@@ -69,7 +72,7 @@ const NotificationBox = ({ tutorId }) => {
   const fetchSenderData = async (userId) => {
     try {
       const response = await axios.get(
-        `http://${domain}:5000/api/user/getUserData/${userId}`
+        `http://localhost:5000/api/user/getUserData/${userId}`
       );
       return response.data;
     } catch (error) {
@@ -82,6 +85,7 @@ const NotificationBox = ({ tutorId }) => {
     const roomName = uuidv4();
     const domain = "meet.jit.si";
     const meetLink = `http://${domain}/${roomName}`;
+    const backendDomain = "127.0.0.1";
 
     // Move to the VideoCalling route with the roomName as a query parameter
     window.open(`/VideoCalling?roomName=${roomName}`, "_blank");
@@ -97,20 +101,20 @@ const NotificationBox = ({ tutorId }) => {
     };
 
     await axios
-      .post(`http://${domain}:5000/api/notification/send`, object)
+      .post(`http://localhost:5000/api/notification/send`, object)
       .then((res) => {
         const notificationId = res.data.notificationId;
-        try {
-          axios.put(
-            `http://${domain}:5000/api/notification/accept/${notificationId}`
-          );
+        // try {
+        //   axios.put(
+        //     `http://localhost:5000/api/notification/accept/${notificationId}`
+        //   );
 
-          // Handle the response as needed
-          console.log("Notification state updated:", res.data);
-        } catch (error) {
-          // Handle errors
-          console.error("Error updating notification state:", error);
-        }
+        //   // Handle the response as needed
+        //   console.log("Notification state updated:", res.data);
+        // } catch (error) {
+        //   // Handle errors
+        //   console.error("Error updating notification state:", error);
+        // }
         alert("notification sent");
       })
       .catch((error) => {
@@ -118,8 +122,140 @@ const NotificationBox = ({ tutorId }) => {
       });
   };
 
+  // const acceptNotification = async () => {
+  //   try {
+  //     const auth = await authenticate({
+  //       keyFile: "./path/to/credentials.json",
+  //       scopes: SCOPES,
+  //     });
+
+  //     const calendar = google.calendar({ version: "v3", auth });
+
+  //     // Get the current time
+  //     const currentTime = new Date();
+
+  //     // Set the start time as the current time
+  //     const startTime = currentTime.toISOString();
+
+  //     // Set the end time as 1 hour after the current time
+  //     const endTime = new Date(currentTime);
+  //     endTime.setHours(currentTime.getHours() + 1);
+
+  //     // Create the Google Calendar event
+  //     const event = {
+  //       summary: "Meeting Title",
+  //       location: "Meeting Location",
+  //       description: "Meeting Description",
+  //       start: {
+  //         dateTime: startTime,
+  //         timeZone: "Asia/Kolkata",
+  //       },
+  //       end: {
+  //         dateTime: endTime.toISOString(),
+  //         timeZone: "Asia/Kolkata",
+  //       },
+  //       conferenceData: {
+  //         createRequest: {
+  //           requestId: "your-unique-id",
+  //         },
+  //       },
+  //     };
+
+  //     // Insert the event and get the Google Meet link
+  //     const res = await calendar.events.insert({
+  //       calendarId: "primary",
+  //       resource: event,
+  //       conferenceDataVersion: 1,
+  //     });
+
+  //     // Extract and display the Google Meet link
+  //     console.log("Event created: %s", res.data.htmlLink);
+  //   } catch (err) {
+  //     console.error("Error creating event:", err);
+  //   }
+  // };
+
+  // const acceptNotification = async (response) => {
+  //   try {
+  //     const accessToken = response.accessToken;
+
+  //     // Authenticate with the Google Calendar API
+  //     const auth = await authenticate({
+  //       token: accessToken,
+  //     });
+
+  //     // Create a Google Calendar event with a Google Meet link
+  //     const calendar = google.calendar({ version: "v3", auth });
+  //     const event = {
+  //       summary: "Meeting Title",
+  //       description: "Meeting Description",
+  //       start: {
+  //         dateTime: new Date().toISOString(),
+  //         timeZone: "Asia/Kolkata",
+  //       },
+  //       end: {
+  //         dateTime: new Date(
+  //           new Date().getTime() + 60 * 60 * 1000
+  //         ).toISOString(), // 1 hour later
+  //         timeZone: "Asia/Kolkata",
+  //       },
+  //       conferenceData: {
+  //         createRequest: {
+  //           requestId: "your-unique-id",
+  //         },
+  //       },
+  //     };
+
+  //     const calendarEvent = await calendar.events.insert({
+  //       calendarId: "primary",
+  //       resource: event,
+  //       conferenceDataVersion: 1,
+  //     });
+
+  //     // Extract the Google Meet link and use it as needed
+  //     const meetLink = calendarEvent.data.hangoutLink;
+  //     console.log("Google Meet link:", meetLink);
+
+  //     // Now you can use the meetLink as needed, e.g., store it, display it, or share it
+  //   } catch (err) {
+  //     console.error("Error creating event:", err);
+  //   }
+  // };
+
+  const handleGoogleLoginFailure = (error) => {
+    console.error("Google Sign-In failed:", error);
+  };
+
+  // const handleAcceptButtonClick = async () => {
+  // try {
+  //   // Trigger Google Sign-In by calling the signIn method on the GoogleLogin component
+  //   if (googleLoginRef.current) {
+  //     googleLoginRef.current.signIn();
+  //   }
+  // } catch (err) {
+  //   console.error("Error handling accept button click:", err);
+  // }
+  // };
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+
+  // to update the coins
+  const coinsToAdd = 123;
+  const onMeetEnd = async () => {
+    try {
+      const response = await axios.put(
+        `/api/teachers/update-coins/${tutorId}`,
+        {
+          coins: coinsToAdd,
+        }
+      );
+
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error updating coins:", error);
+    }
   };
 
   return (
@@ -273,6 +409,13 @@ const NotificationBox = ({ tutorId }) => {
             <button className="modal-button" onClick={closeModal}>
               Close
             </button>
+            {/* <GoogleLogin
+              clientId="YOUR"
+              buttonText="Login with Google"
+              onSuccess={acceptNotification} // Triggers on successful Google Sign-In
+              onFailure={handleGoogleLoginFailure}
+              cookiePolicy={"single_host_origin"}
+            /> */}
           </div>
         )}
       </Modal>

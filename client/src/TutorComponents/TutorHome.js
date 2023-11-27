@@ -51,8 +51,6 @@ export default function TutorHome() {
       <div>
         <TutorProfilePage tutorProfile={tutorProfile} />
       </div>
-      {/* <TNavbar /> */}
-      {/* <TutorProfilePage tutorProfile={tutorProfile} /> */}
     </div>
   );
 }

@@ -12,8 +12,35 @@ const NotificationBox = ({ data }) => {
   const [senderData, setSenderData] = useState(null);
   const [showAcceptedRequests, setShowAcceptedRequests] = useState(false);
 
-  const openMeetLink = (link) => {
-    window.open(link, "_blank"); // Opens the link in a new tab or window
+  const createOrUpdateSession = async (notification) => {
+    console.log("here is the session creation");
+    const sessionData = {
+      studentId: notification.receiverId,
+      teacherId: notification.senderId,
+      startTime: new Date().toISOString(), // You may want to set a specific start time
+      sessionStatus: "ongoing",
+      sessionCost: 0,
+      sessionType: "videoCall",
+      totalSessionTime: 0,
+    };
+
+    try {
+      const response = await axios.post(
+        `http://${domain}:5000/api/session//createOrUpdateSession`,
+        sessionData
+      );
+
+      // Handle the response as needed
+      console.log("Session created/updated:", response.data);
+    } catch (error) {
+      console.error("Error creating/updating session:", error);
+    }
+  };
+
+  const openMeetLink = (notification) => {
+    console.log(notification);
+    createOrUpdateSession(notification);
+    window.open(notification.message, "_blank"); // Opens the link in a new tab or window
   };
 
   useEffect(() => {
@@ -117,9 +144,7 @@ const NotificationBox = ({ data }) => {
                     >
                       <strong>{notification.senderModel}:</strong> Your Request
                       To Join The Meet Is accepted <br />
-                      <button
-                        onClick={() => openMeetLink(notification.message)}
-                      >
+                      <button onClick={() => openMeetLink(notification)}>
                         Open Meet Link
                       </button>
                       <div className="inbox-timer">

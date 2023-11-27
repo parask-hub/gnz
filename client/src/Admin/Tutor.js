@@ -103,46 +103,48 @@ const Tutor = () => {
         </button>
       </div>
 
-      <table className="tutor-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Mobile Number</th>
-            <th>Area of Interest</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentTutors.map((tutor) => (
-            <tr key={tutor._id}>
-              <td>{tutor._id}</td>
-              <td>{tutor.name}</td>
-              <td>{tutor.email}</td>
-              <td>{tutor.mobileNumber}</td>
-              <td>{tutor.areaOfInterest}</td>
-              <td>
-                <button
-                  className="edit-btn"
-                  onClick={() => {
-                    setSelectedTutor(tutor);
-                    setIsModalOpen(true);
-                  }}
-                >
-                  View
-                </button>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDeleteTutor(tutor._id)}
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="table-container">
+        <table className="tutor-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile Number</th>
+              <th>Area of Interest</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentTutors.map((tutor) => (
+              <tr key={tutor._id} className="table-row">
+                <td>{tutor._id}</td>
+                <td>{tutor.name}</td>
+                <td>{tutor.email}</td>
+                <td>{tutor.mobileNumber}</td>
+                <td>{tutor.areaOfInterest}</td>
+                <td className="actions-column">
+                  <button
+                    className="edit-btn"
+                    onClick={() => {
+                      setSelectedTutor(tutor);
+                      setIsModalOpen(true);
+                    }}
+                  >
+                    View
+                  </button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDeleteTutor(tutor._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <div className="pagination">
         <span>

@@ -27,6 +27,10 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
   const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(() => {
+    console.log("ph:", ph);
+  }, [ph]); // Run the effect whenever 'ph' changes
+
+  useEffect(() => {
     window.recaptchaVerifier = new RecaptchaVerifier(
       auth,
       "recaptcha-container",
@@ -49,15 +53,16 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
     }, 3000);
   };
 
-  const onSignup = () => {
+  const onSignup = async () => {
     setLoading(true);
     onCaptchaVerify();
 
     const appVerifier = window.recaptchaVerifier;
     const formatPh = `+${ph.replace(/\D/g, "")}`;
     console.log(formatPh);
-    setPh(formatPh);
-    console.log("ph : " + ph);
+
+    // Using the callback function to log the updated state
+    // await setPh(formatPh);
 
     signInWithPhoneNumber(auth, formatPh, appVerifier)
       .then((confirmationResult) => {
@@ -80,17 +85,16 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
     setLoading(true);
 
     try {
-      const res = await window.confirmationResult.confirm(otp);
+      const authResult = await window.confirmationResult.confirm(otp);
 
-      if (res && res.user) {
-        setUser(res.user);
+      if (authResult && authResult.user) {
+        await setUser(authResult.user);
         displayPopup("OTP Verified", "success");
 
-        console.log(user.phoneNumber);
-
-        // Call your server to check if the user exists
+        console.log("ph in verifiction is: ", ph);
+        // Check if the user exists on the server
         const response = await fetch(
-          `http://${domain}:5000/api/auth/isuserexist/${user.phoneNumber}`,
+          `http://${domain}:5000/api/auth/isuserexist/+${ph}`,
           {
             method: "GET",
             headers: {
@@ -101,22 +105,24 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data.exists);
+          console.log("User exists on the server:", data.exists);
+
+          await setIsNewUser(!data.exists);
+
           if (data.exists) {
-            setIsNewUser(!data.exists);
+            // Perform actions for existing users
             await registerUser();
-          } else {
-            setIsNewUser(!data.exists); // Set isNewUser based on the response
           }
         } else {
-          console.error("Error checking user existence");
+          console.error("Error checking user existence:", response.statusText);
+          displayPopup("Error checking user existence", "error");
         }
       } else {
         console.error("Invalid user data in confirmation result");
         displayPopup("Invalid user data", "error");
       }
     } catch (err) {
-      console.log(err);
+      console.error("Error during OTP verification:", err);
       displayPopup("Invalid OTP", "error");
     } finally {
       setLoading(false);
@@ -129,7 +135,7 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
 
     try {
       const userData = {
-        mobileNumber: user.phoneNumber,
+        mobileNumber: "+" + ph,
         firstname: firstName,
         lastname: lastName,
       };
@@ -157,7 +163,7 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
       const responseData = await registrationResponse.json();
       console.log("it should happen and take response ");
       console.log(responseData);
-      setUser(responseData.user);
+      await setUser(responseData.user);
       await setLoggedUser({ data: responseData });
 
       console.log("Working");
@@ -249,7 +255,13 @@ const LoginForm = ({ handleCloseForm, toggleUserState, setLoggedUser }) => {
                 <div className="numberfields">
                   Enter Your Number :
                   <span>
-                    <PhoneInput country={"in"} value={ph} onChange={setPh} />
+                    <PhoneInput
+                      country={"in"}
+                      value={ph}
+                      onChange={(value, country, event, formattedValue) => {
+                        setPh(value);
+                      }}
+                    />
                   </span>
                 </div>
 

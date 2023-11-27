@@ -3,6 +3,12 @@ const Notification = require("../models/notificationSchema");
 const countOfActiveandUnread = async (req, res) => {
   try {
     const userId = req.params.userId;
+
+    // Check if userId is provided and not null
+    if (!userId) {
+      return res.status(400).json({ error: "userId is required" });
+    }
+
     const query = {
       receiverId: userId,
       state: "active",

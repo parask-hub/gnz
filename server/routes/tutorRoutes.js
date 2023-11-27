@@ -25,5 +25,7 @@ router.delete("/tutordelete/:id", tutorController.deleteTutor);
 router.get("/tutorget/:tutorId", tutorController.getAccountById);
 router.post("/login", tutorController.tutorLogin);
 router.post("/refresh-token", tutorController.tokengeneration);
+router.put("/update-coins/:teacherId", tutorController.updateCoins);
+router.put("/Reset-coins/:teacherId", tutorController.resetCoins);
 
 module.exports = router;

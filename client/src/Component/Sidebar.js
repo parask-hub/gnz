@@ -20,6 +20,11 @@ const Sidebar = ({
   const domain = "127.0.0.1";
 
   const fetchNotificationCount = () => {
+    if (!data || !data._id) {
+      // No valid data, do not make the API call
+      return;
+    }
+
     axios
       .get(`http://${domain}:5000/api/notification/count/${data._id}`)
       .then((response) => {
@@ -31,15 +36,17 @@ const Sidebar = ({
   };
 
   useEffect(() => {
-    // Fetch the initial notification count
-    fetchNotificationCount();
+    // Fetch the initial notification count only if data is available
+    if (data && data._id) {
+      fetchNotificationCount();
 
-    // Poll for the notification count every 30 seconds
-    const intervalId = setInterval(fetchNotificationCount, 5000);
+      // Poll for the notification count every 30 seconds
+      const intervalId = setInterval(fetchNotificationCount, 5000);
 
-    // Clean up the interval when the component is unmounted
-    return () => clearInterval(intervalId);
-  }, [data._id]);
+      // Clean up the interval when the component is unmounted
+      return () => clearInterval(intervalId);
+    }
+  }, [data]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
