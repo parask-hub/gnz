@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../Component/styles/ProfileEditForm.css";
 
@@ -12,6 +12,11 @@ const TProfileEditForm = ({ handleClose, tutorId, tutorProfile }) => {
   );
   const [description, setDescription] = useState(tutorProfile.description);
 
+  const handleImageChange = (e) => {
+    // Update the image state immediately when a file is selected
+    setImage(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -24,7 +29,7 @@ const TProfileEditForm = ({ handleClose, tutorId, tutorProfile }) => {
     if (image) {
       formData.append("image", image);
     }
-    console.log(formData);
+
     try {
       const response = await fetch(
         `http://${domain}:5000/api/tutor/tutoredit/${tutorId}`,
@@ -32,9 +37,7 @@ const TProfileEditForm = ({ handleClose, tutorId, tutorProfile }) => {
           method: "PUT",
           body: formData,
           headers: {
-            // Add any other headers as needed
-            // 'Authorization': 'Bearer YourAccessToken',
-            Accept: "application/json",
+            Accept: "multipart/form-data",
           },
         }
       );
@@ -80,7 +83,7 @@ const TProfileEditForm = ({ handleClose, tutorId, tutorProfile }) => {
                 <span>
                   <input
                     type="file"
-                    onChange={(e) => setImage(e.target.files[0])}
+                    onChange={handleImageChange}
                     style={{ width: "100%" }}
                   />
                 </span>
@@ -133,7 +136,11 @@ const TProfileEditForm = ({ handleClose, tutorId, tutorProfile }) => {
                   </span>
                 </div>
                 <div className="button-group">
-                  <button type="submit" className="submit-btn">
+                  <button
+                    onClick={handleSubmit}
+                    type="submit"
+                    className="submit-btn"
+                  >
                     Save
                   </button>
                   <button className="pro-close-btn" onClick={handleClose}>

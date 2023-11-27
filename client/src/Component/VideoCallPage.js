@@ -54,68 +54,68 @@ function VideoCallPage({ data }) {
     }
   };
 
-  const handleApiReady = (api) => {
-    console.log("HandleApI Ready called");
-    setMeetingStartTime(Date.now());
+  // const handleApiReady = (api) => {
+  //   console.log("HandleApI Ready called");
+  //   setMeetingStartTime(Date.now());
 
-    api.addEventListener("participantJoined", handleParticipantJoined);
-    api.addEventListener("participantLeft", handleParticipantLeft);
-  };
+  //   api.addEventListener("participantJoined", handleParticipantJoined);
+  //   api.addEventListener("participantLeft", handleParticipantLeft);
+  // };
 
-  const handleParticipantJoined = (participant) => {
-    console.log("here the participant enters");
-    joinedParticipants[participant.id] = Date.now();
-  };
+  // const handleParticipantJoined = (participant) => {
+  //   console.log("here the participant enters");
+  //   joinedParticipants[participant.id] = Date.now();
+  // };
 
-  const handleParticipantLeft = (participant) => {
-    const joinTime = joinedParticipants[participant.id];
-    const leaveTime = Date.now();
-    const timeInMeeting = leaveTime - joinTime;
-    setTimeSpent(timeInMeeting);
-    setTotalSessionTime((prevTotal) => prevTotal + timeInMeeting);
-    console.log(
-      `Participant ${participant.id} spent ${timeInMeeting} milliseconds in the meeting.`
-    );
+  // const handleParticipantLeft = (participant) => {
+  //   const joinTime = joinedParticipants[participant.id];
+  //   const leaveTime = Date.now();
+  //   const timeInMeeting = leaveTime - joinTime;
+  //   setTimeSpent(timeInMeeting);
+  //   setTotalSessionTime((prevTotal) => prevTotal + timeInMeeting);
+  //   console.log(
+  //     `Participant ${participant.id} spent ${timeInMeeting} milliseconds in the meeting.`
+  //   );
 
-    // Update session details when the last participant leaves
-    if (Object.keys(joinedParticipants).length === 1) {
-      updateSessionDetails(leaveTime);
-    }
-  };
+  //   // Update session details when the last participant leaves
+  //   if (Object.keys(joinedParticipants).length === 1) {
+  //     updateSessionDetails(leaveTime);
+  //   }
+  // };
 
-  const updateSessionDetails = async (endTime) => {
-    try {
-      // Calculate session cost based on time spent or any other criteria
-      const sessionCost = calculateSessionCost(timeSpent);
+  // const updateSessionDetails = async (endTime) => {
+  //   try {
+  //     // Calculate session cost based on time spent or any other criteria
+  //     const sessionCost = calculateSessionCost(timeSpent);
 
-      // Make an HTTP request to create or update session details on the server
-      const sessionData = {
-        studentId: data.userId,
-        teacherId: "teacherId123", // Replace with the actual teacher ID
-        startTime: meetingStartTime,
-        endTime,
-        sessionStatus: "completed",
-        sessionCost,
-        sessionType: "videoCall",
-        totalSessionTime: totalSessionTime / (1000 * 60), // Convert milliseconds to minutes
-      };
+  //     // Make an HTTP request to create or update session details on the server
+  //     const sessionData = {
+  //       studentId: data.userId,
+  //       teacherId: "teacherId123", // Replace with the actual teacher ID
+  //       startTime: meetingStartTime,
+  //       endTime,
+  //       sessionStatus: "completed",
+  //       sessionCost,
+  //       sessionType: "videoCall",
+  //       totalSessionTime: totalSessionTime / (1000 * 60), // Convert milliseconds to minutes
+  //     };
 
-      const response = await axios.post(
-        `http://${backendDomain}:5000/api/session/createOrUpdateSession`,
-        sessionData
-      );
+  //     const response = await axios.post(
+  //       `http://${backendDomain}:5000/api/session/createOrUpdateSession`,
+  //       sessionData
+  //     );
 
-      console.log("Session details updated successfully:", response.data);
-    } catch (error) {
-      console.error("Error updating session details:", error);
-    }
-  };
+  //     console.log("Session details updated successfully:", response.data);
+  //   } catch (error) {
+  //     console.error("Error updating session details:", error);
+  //   }
+  // };
 
-  const calculateSessionCost = (timeInMeeting) => {
-    // Implement your logic to calculate session cost based on time spent or any other criteria
-    // This is just a placeholder, replace it with your actual calculation
-    return timeInMeeting * 0.001; // Assuming timeInMeeting is in milliseconds
-  };
+  // const calculateSessionCost = (timeInMeeting) => {
+  //   // Implement your logic to calculate session cost based on time spent or any other criteria
+  //   // This is just a placeholder, replace it with your actual calculation
+  //   return timeInMeeting * 0.001; // Assuming timeInMeeting is in milliseconds
+  // };
 
   const meetLink = `https://${domain}/${roomName}`;
 
