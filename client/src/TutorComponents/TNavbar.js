@@ -5,6 +5,7 @@ import TProfileEditForm from "./TProfileEditForm";
 import NotificationBox from "./NotificationBox";
 import axios from "axios";
 import TSessions from "./TSessions"; // Import the Session component or use your existing component for displaying sessions
+import TWalletTransaction from "./TWalletTransaction";
 
 Modal.setAppElement("#root"); // Set the root element for accessibility
 
@@ -13,6 +14,15 @@ function TNavbar({ tutorId, tutorProfile }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isEditProfileOpen, setEditProfileOpen] = useState(false);
   const [isSessionModalOpen, setSessionModalOpen] = useState(false); // New state for session modal
+  const [isTransactionModalOpen, setTransactionModalOpen] = useState(false);
+
+  const openTransactionModal = () => {
+    setTransactionModalOpen(true);
+  };
+
+  const closeTransactionModal = () => {
+    setTransactionModalOpen(false);
+  };
 
   const openEditProfile = () => {
     setEditProfileOpen(true);
@@ -129,16 +139,31 @@ function TNavbar({ tutorId, tutorProfile }) {
         </span>
 
         <span
+          onClick={openTransactionModal} // Open the TransactionData modal on click
           style={{
-            padding: "10px",
+            cursor: "pointer",
+            border: "1px solid grey",
+            padding: "9px",
+            borderRadius: "10px",
             backgroundColor: "green",
             color: "yellow",
-            borderRadius: "10px",
           }}
+          className="nav-btn"
         >
-          <b>Wallet : {tutorProfile.coins}</b>
+          <b> Wallet : {tutorProfile.coins}</b>
         </span>
       </span>
+
+      <Modal
+        isOpen={isTransactionModalOpen}
+        onRequestClose={closeTransactionModal}
+        contentLabel="Transaction Data Modal"
+      >
+        <div>
+          <TWalletTransaction data={tutorId} />
+          <button onClick={closeTransactionModal}>Close Modal</button>
+        </div>
+      </Modal>
 
       <Modal
         isOpen={modalIsOpen}
@@ -157,7 +182,7 @@ function TNavbar({ tutorId, tutorProfile }) {
         contentLabel="Session Modal"
       >
         <div>
-          <TSessions tutorId={tutorId} />
+          <TSessions tutorId={tutorId} tutorProfile={tutorProfile} />
           <button onClick={closeSessionModal}>Close Modal</button>
         </div>
       </Modal>

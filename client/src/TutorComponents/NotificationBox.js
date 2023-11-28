@@ -5,10 +5,11 @@ import SenderInfoBox from "./SenderInfoBox";
 import { v4 as uuidv4 } from "uuid";
 import "./NotificationBox.css"; // Import your CSS file
 import { useNavigate } from "react-router-dom";
+import TWalletTransaction from "./TWalletTransaction";
 // import { GoogleLogin } from "react-google-login";
 // const { google } = require("googleapis");
 // const { authenticate } = require("@google-cloud/local-auth");
-const credentials = require("./credential.json");
+// const credentials = require("./credential.json");
 
 const NotificationBox = ({ tutorId }) => {
   const navigate = useNavigate();
@@ -268,12 +269,12 @@ const NotificationBox = ({ tutorId }) => {
         >
           Inbox
         </div>
-        <div
+        {/* <div
           className={`tab ${activeTab === "accepted" ? "active" : ""}`}
           onClick={() => handleTabClick("accepted")}
         >
           Accepted Requests
-        </div>
+        </div> */}
       </div>
       {activeTab === "inbox" ? (
         <div>
@@ -317,7 +318,8 @@ const NotificationBox = ({ tutorId }) => {
           )}
         </div>
       ) : (
-        <div>Here are the accepted request</div>
+        //<TWalletTransaction data={tutorId} />
+        <p>here You can use space</p>
       )}
       <Modal
         isOpen={modalVisible}

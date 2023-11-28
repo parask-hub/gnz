@@ -34,6 +34,21 @@ function RechargeForm({ handleClose }) {
           const updateResponse = await axios.post(updateUserUrl, {
             coins: amount,
           });
+          const transactionresponse = await axios.post(
+            "http://localhost:5000/api/service/addwallet",
+            {
+              userId,
+              userType: "student", // or "teacher" based on user type
+              amount,
+              type: "credit",
+              reason: "recharge through wallet",
+            }
+          );
+          console.log(
+            "Transaction added successfully:",
+            transactionresponse.data
+          );
+
           console.log(updateResponse.data.user);
           localStorage.setItem(
             "userData",

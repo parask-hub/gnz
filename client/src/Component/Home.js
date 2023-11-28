@@ -76,7 +76,7 @@ export default function Home({
               <>
                 {selectedTab === "UserProfile" &&
                   (data ? <UserProfile data={data} /> : <div>...</div>)}
-                {selectedTab === "OneToOne" && <OneToOne />}
+                {selectedTab === "OneToOne" && <OneToOne data={data} />}
                 {selectedTab === "TutorProfileUP" && <TutorProfileUP />}
                 {selectedTab === "Support" && <Support />}
                 {selectedTab === "Inbox" && <Inbox data={data} />}

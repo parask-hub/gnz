@@ -1,4 +1,5 @@
 const Teacher = require("../models/teacherSchema");
+const WalletTransaction = require("../models/walletTransactionSchema");
 
 const sendEmailForChatRequest = async (req, res) => {
   try {
@@ -60,7 +61,41 @@ const meetingend = (req, res) => {
   res.status(200).send("Meeting ended");
 };
 
+const addTransaction = async (req, res) => {
+  try {
+    const { userId, userType, amount, type, reason } = req.body;
+
+    const newTransaction = new WalletTransaction({
+      userId,
+      userType,
+      amount,
+      type,
+      reason,
+    });
+
+    const savedTransaction = await newTransaction.save();
+    res.status(201).json(savedTransaction);
+  } catch (error) {
+    console.error("Error saving wallet transaction:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getWalletTransaction = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const transactions = await WalletTransaction.find({ userId });
+    res.status(200).json(transactions);
+  } catch (error) {
+    console.error("Error fetching wallet transactions:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   sendEmailForChatRequest,
   meetingend,
+  addTransaction,
+  getWalletTransaction,
 };

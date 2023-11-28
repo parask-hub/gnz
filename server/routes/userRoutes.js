@@ -26,5 +26,6 @@ router.post(
 );
 
 router.get("/getUserData/:userId", userController.getUserData);
+router.put("/updatecoins/:userId", userController.updateCoins);
 
 module.exports = router;

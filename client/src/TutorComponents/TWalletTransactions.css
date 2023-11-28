@@ -1,0 +1,54 @@
+
+
+.transactions-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.user-input {
+    margin-bottom: 10px;
+}
+
+.fetch-button {
+    padding: 8px 16px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+.transactions-table {
+    margin-top: 20px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.transactions-table  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+ .transactions-table th,
+ .transactions-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.transactions-table th {
+    background-color: #f2f2f2;
+}
+
+.credit {
+    color: #008000;
+    font-weight: bold;
+}
+
+.debit {
+    color: #ff0000;
+    font-weight: bold;
+}

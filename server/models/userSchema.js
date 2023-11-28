@@ -53,20 +53,20 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Wallet", // Assuming Wallet is the name of your wallet schema
   },
-  sessionDetails: {
-    conductedSessions: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Session", // Assuming Session is the name of your session schema
-      },
-    ],
-    feedbackReceived: [
-      {
-        feedbackerName: String,
-        feedbackMessage: String,
-      },
-    ],
-  },
+  // sessionDetails: {
+  //   conductedSessions: [
+  //     {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: "Session", // Assuming Session is the name of your session schema
+  //     },
+  //   ],
+  //   feedbackReceived: [
+  //     {
+  //       feedbackerName: String,
+  //       feedbackMessage: String,
+  //     },
+  //   ],
+  // },
   // Add more fields as needed
 });
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import "./styles/Inbox.css";
+import WalletTransactions from "./WalletTranscation";
 
 const domain = "127.0.0.1";
 const NotificationBox = ({ data }) => {
@@ -112,15 +113,15 @@ const NotificationBox = ({ data }) => {
       <div className="inbox-container">
         <h2>Notifications</h2>
         <div className="toggle-buttons">
-          <button onClick={handleToggleAcceptedRequests}>
-            Accepted Requests
-          </button>
+          <button onClick={handleToggleAcceptedRequests}>Wallet Info</button>
           <button onClick={() => setShowAcceptedRequests(false)}>
             Inbox Notifications
           </button>
         </div>
         {showAcceptedRequests ? (
-          <div>Here Are The Accepted Request</div>
+          <div>
+            <WalletTransactions data={data} />
+          </div>
         ) : (
           <div>
             {notifications.length === 0 ? (

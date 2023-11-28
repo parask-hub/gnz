@@ -79,4 +79,38 @@ const getUserData = async (req, res) => {
   }
 };
 
-module.exports = { updateUser, getUserData };
+const updateCoins = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { action, amount } = req.body;
+
+    // Find the user by userId
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update the coins based on the action
+    if (action === "increase") {
+      user.coins += amount;
+    } else if (action === "decrease") {
+      if (user.coins < amount) {
+        return res.status(400).json({ error: "Insufficient coins" });
+      }
+      user.coins -= amount;
+    } else {
+      return res.status(400).json({ error: "Invalid action" });
+    }
+
+    // Save the updated user
+    await user.save();
+
+    return res.json({ success: true, coins: user.coins });
+  } catch (error) {
+    console.error("Error updating coins:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports = { updateUser, getUserData, updateCoins };

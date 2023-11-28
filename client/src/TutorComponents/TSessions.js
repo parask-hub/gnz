@@ -1,32 +1,86 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Outlet,
-  Link,
-  useParams,
-  useResolvedPath,
-} from "react-router-dom";
-import "./TSession.css";
 import Modal from "react-modal";
+import "./TSession.css";
 
-const TSessions = ({ tutorId }) => {
+const TSessions = ({ tutorId, tutorProfile }) => {
   const [sessions, setSessions] = useState([]);
   const [selectedSession, setSelectedSession] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sessionDuration, setSessionDuration] = useState("");
 
-  const markAsCompleted = async (sessionId, isChecked) => {
+  const markAsCompleted = async (session, isChecked) => {
+    if (!isChecked) {
+      return;
+    }
+
+    // Open the modal to enter session duration
+    setSelectedSession(session);
+    setIsModalOpen(true);
+  };
+
+  const handleSubmitDuration = async () => {
     try {
+      // Perform the desired action with sessionDuration
+
+      const amount = sessionDuration * tutorProfile.rate;
+      console.log(selectedSession);
+
+      const coinsResponse = await axios.put(
+        `http://localhost:5000/api/user/updatecoins/${selectedSession.studentId}`,
+        {
+          action: "decrease",
+          amount,
+        }
+      );
+
+      const transactionresponse = await axios.post(
+        "http://localhost:5000/api/service/addwallet",
+        {
+          userId: selectedSession.studentId,
+          userType: "student", // or "teacher" based on user type
+          amount,
+          type: "debit",
+          reason: `Session with ${tutorProfile.name}`,
+        }
+      );
+      console.log("Transaction added successfully:", transactionresponse.data);
+      // You can update the UI or show a success message
+
+      console.log(coinsResponse.data); // Log the response from the backend
+
+      const tutorresponse = await axios.put(
+        `http://localhost:5000/api/tutor/update-coins/${selectedSession.teacherId}`,
+        {
+          coins: amount,
+        }
+      );
+
+      console.log(tutorresponse.data);
+
       const response = await axios.post(
         "http://localhost:5000/api/session/sessionstatuscompleted",
         {
-          sessionId: sessionId,
-          sessionStatus: isChecked ? "completed" : "ongoing",
+          sessionId: selectedSession._id,
+          sessionStatus: "completed",
         }
       );
+
+      const tutortransactionresponse = await axios.post(
+        "http://localhost:5000/api/service/addwallet",
+        {
+          userId: tutorProfile._id,
+          userType: "teacher", // or "teacher" based on user type
+          amount,
+          type: "credit",
+          reason: `Session with ${selectedSession.studentId}`,
+        }
+      );
+      console.log(
+        "Transaction added successfully:",
+        tutortransactionresponse.data
+      );
+
       alert("Marked As Completed");
       fetchSessions();
       console.log(response.data);
@@ -34,23 +88,6 @@ const TSessions = ({ tutorId }) => {
       console.error("Error marking session as completed:", error);
       // Handle the error as needed
     }
-    if (isChecked) {
-      setSelectedSession(sessionId);
-      setIsModalOpen(true);
-    } else {
-      // Handle the case where the checkbox is unchecked
-      // (if needed, e.g., close the modal or perform other actions)
-      setIsModalOpen(false);
-      setSelectedSession(null);
-      setSessionDuration("");
-    }
-  };
-
-  const handleSubmitDuration = () => {
-    // Perform the desired action with sessionDuration
-    console.log(
-      `Session ${selectedSession} marked as completed for ${sessionDuration} minutes.`
-    );
 
     // Close the modal and reset state
     setIsModalOpen(false);
@@ -70,17 +107,6 @@ const TSessions = ({ tutorId }) => {
   };
 
   useEffect(() => {
-    const fetchSessions = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/api/session/getsession/tutor/${tutorId}`
-        );
-        setSessions(response.data.sessions);
-      } catch (error) {
-        console.error("Error fetching sessions:", error);
-      }
-    };
-
     fetchSessions();
   }, [tutorId]);
 
@@ -128,9 +154,7 @@ const TSessions = ({ tutorId }) => {
                     type="checkbox"
                     id={`completed-${session._id}`}
                     checked={session.sessionStatus === "completed"}
-                    onChange={(e) =>
-                      markAsCompleted(session._id, e.target.checked)
-                    }
+                    onChange={(e) => markAsCompleted(session, e.target.checked)}
                     disabled={session.sessionStatus === "completed"}
                   />
                   <label htmlFor={`completed-${session._id}`}></label>
@@ -157,7 +181,9 @@ const TSessions = ({ tutorId }) => {
             value={sessionDuration}
             onChange={(e) => setSessionDuration(e.target.value)}
           />
-          <button onClick={handleSubmitDuration}>Submit</button>
+          <button className="durationBtn" onClick={handleSubmitDuration}>
+            Submit
+          </button>
         </div>
       </Modal>
     </div>

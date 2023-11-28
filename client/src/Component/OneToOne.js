@@ -6,7 +6,7 @@ import SortButton from "./SortButton";
 import RechargeForm from "./RechargeForm";
 const connectLogo = process.env.PUBLIC_URL + "/Logos/connect.png";
 
-function OneToOne() {
+function OneToOne({ data }) {
   const navigate = useNavigate();
 
   const [selectedTutorProfile, setSelectedTutorProfile] = useState(null);
